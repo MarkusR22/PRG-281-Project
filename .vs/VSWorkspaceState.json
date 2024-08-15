@@ -1,9 +1,7 @@
 {
   "ExpandedNodes": [
-    "",
-    "\\EventManagement",
-    "\\EventManagement\\EventManagement"
+    ""
   ],
-  "SelectedNode": "\\EventManagement\\EventManagement\\Program.cs",
+  "SelectedNode": "\\EventManagement.sln",
   "PreviewInSolutionExplorer": false
 }

@@ -11,8 +11,9 @@ namespace EventManagement
         static void Main(string[] args)
         {
             //Caydan Frank
-            //markus
-            Console.WriteLine("Hello Gooner!");
+            //Hello people
+            //This is a comment
+            Console.WriteLine("Hello Good mense"); // I am chaning this Joseph
         }
     }
 }
