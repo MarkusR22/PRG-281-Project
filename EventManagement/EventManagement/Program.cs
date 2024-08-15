@@ -13,7 +13,7 @@ namespace EventManagement
             //Caydan Frank
             //Hello people
             //This is a comment
-            Console.WriteLine("Hello Gooner!");
+            Console.WriteLine("Hello Good mense"); // I am chaning this Joseph
         }
     }
 }
