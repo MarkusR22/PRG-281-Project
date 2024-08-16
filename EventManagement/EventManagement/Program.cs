@@ -35,7 +35,7 @@ namespace EventManagement
                     Console.WriteLine("\nQuery data example:");
                     Console.WriteLine("=========================================\n");
 
-                    String sql = "create table Test (name varchar);";
+                    String sql = "select * from Test";
 
                     using (SqlCommand command = new SqlCommand(sql, connection))
                     {
@@ -44,7 +44,7 @@ namespace EventManagement
                         {
                             while (reader.Read())
                             {
-                                Console.WriteLine("tested");
+                                Console.WriteLine("{0}", reader.GetString(0));
                             }
                         }
                     }
