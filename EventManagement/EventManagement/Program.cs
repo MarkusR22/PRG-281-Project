@@ -5,9 +5,14 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace EventManagement
+
 {
     internal class Program
     {
+        public interface IMenuOption
+        {
+            void Execute();
+        }
         static void Main(string[] args)
         {
             //Caydan Frank
