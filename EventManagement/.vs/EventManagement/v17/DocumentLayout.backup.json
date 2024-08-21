@@ -3,7 +3,7 @@
   "WorkspaceRootPath": "C:\\Users\\user-pc\\Documents\\Belgium\\Second Year\\PRG 281\\PRG 281 Project\\PRG-281-Project2\\PRG-281-Project\\EventManagement\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{E08A4295-6904-4F0B-B841-AFEF824530FB}|EventManagement\\EventManagement.csproj|C:\\Users\\user-pc\\Documents\\Belgium\\Second Year\\PRG 281\\PRG 281 Project\\PRG-281-Project2\\PRG-281-Project\\EventManagement\\eventmanagement\\organizer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{E08A4295-6904-4F0B-B841-AFEF824530FB}|EventManagement\\EventManagement.csproj|c:\\users\\user-pc\\documents\\belgium\\second year\\prg 281\\prg 281 project\\prg-281-project2\\prg-281-project\\eventmanagement\\eventmanagement\\organizer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{E08A4295-6904-4F0B-B841-AFEF824530FB}|EventManagement\\EventManagement.csproj|solutionrelative:eventmanagement\\organizer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
@@ -23,7 +23,7 @@
       "RelativeMoniker": "D:0:0:{E08A4295-6904-4F0B-B841-AFEF824530FB}|EventManagement\\EventManagement.csproj|solutionrelative:eventmanagement\\iadmin.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{E08A4295-6904-4F0B-B841-AFEF824530FB}|EventManagement\\EventManagement.csproj|c:\\users\\user-pc\\documents\\belgium\\second year\\prg 281\\prg 281 project\\prg-281-project2\\prg-281-project\\eventmanagement\\eventmanagement\\iparticipant.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{E08A4295-6904-4F0B-B841-AFEF824530FB}|EventManagement\\EventManagement.csproj|C:\\Users\\user-pc\\Documents\\Belgium\\Second Year\\PRG 281\\PRG 281 Project\\PRG-281-Project2\\PRG-281-Project\\EventManagement\\eventmanagement\\iparticipant.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{E08A4295-6904-4F0B-B841-AFEF824530FB}|EventManagement\\EventManagement.csproj|solutionrelative:eventmanagement\\iparticipant.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
@@ -66,8 +66,7 @@
               "RelativeToolTip": "EventManagement\\IParticipant.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAABIAAAAaAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-08-21T08:08:58.387Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-08-21T08:08:58.387Z"
             },
             {
               "$type": "Document",
@@ -79,8 +78,7 @@
               "RelativeToolTip": "EventManagement\\IAdmin.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAABEAAAAhAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-08-21T07:52:40.643Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-08-21T07:52:40.643Z"
             },
             {
               "$type": "Document",
@@ -114,7 +112,7 @@
               "RelativeDocumentMoniker": "EventManagement\\Participant.cs",
               "ToolTip": "C:\\Users\\user-pc\\Documents\\Belgium\\Second Year\\PRG 281\\PRG 281 Project\\PRG-281-Project2\\PRG-281-Project\\EventManagement\\EventManagement\\Participant.cs",
               "RelativeToolTip": "EventManagement\\Participant.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABoAAAAUAAAAAAAAAA==",
+              "ViewState": "AgIAABUAAAAAAAAAAAAowCgAAAAQAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-08-20T17:53:59.946Z",
               "EditorCaption": ""
@@ -127,7 +125,7 @@
               "RelativeDocumentMoniker": "EventManagement\\Admin.cs",
               "ToolTip": "C:\\Users\\user-pc\\Documents\\Belgium\\Second Year\\PRG 281\\PRG 281 Project\\PRG-281-Project2\\PRG-281-Project\\EventManagement\\EventManagement\\Admin.cs",
               "RelativeToolTip": "EventManagement\\Admin.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABUAAAAhAAAAAAAAAA==",
+              "ViewState": "AgIAAAsAAAAAAAAAAAAQwCIAAAAQAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-08-20T17:53:35.805Z",
               "EditorCaption": ""
@@ -140,7 +138,7 @@
               "RelativeDocumentMoniker": "EventManagement\\Organizer.cs",
               "ToolTip": "C:\\Users\\user-pc\\Documents\\Belgium\\Second Year\\PRG 281\\PRG 281 Project\\PRG-281-Project2\\PRG-281-Project\\EventManagement\\EventManagement\\Organizer.cs",
               "RelativeToolTip": "EventManagement\\Organizer.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAkAAAAFAAAAAAAAAA==",
+              "ViewState": "AgIAAAgAAAAAAAAAAAAxwCQAAAA1AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-08-20T17:53:45.737Z",
               "EditorCaption": ""
@@ -155,8 +153,7 @@
               "RelativeToolTip": "EventManagement\\Program.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAABgAAAATAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-08-15T07:52:16.654Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-08-15T07:52:16.654Z"
             }
           ]
         }

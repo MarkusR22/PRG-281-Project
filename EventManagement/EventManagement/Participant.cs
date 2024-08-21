@@ -38,7 +38,7 @@ namespace EventManagement
 
                 Console.Write("Select an option (1-6): ");
                 string input = Console.ReadLine().Trim();
-                IMenu selectedOption = null;
+                
 
                 if (Enum.TryParse(input, out ParticipantMenuOptions chosenOption) && Enum.IsDefined(typeof(ParticipantMenuOptions), chosenOption))
                 {
