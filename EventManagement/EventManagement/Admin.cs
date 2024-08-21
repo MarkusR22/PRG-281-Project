@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace EventManagement
 {
+    
     internal class Admin
     {
         public enum AdminMenuOptions
@@ -18,10 +19,9 @@ namespace EventManagement
             Log_out
         }
 
-        public void DisplayMenu()
+        public static void DisplayMenu()
         {
-            while (true)
-            {
+
                 Console.WriteLine("Admin Menu:");
 
                 foreach (AdminMenuOptions option in Enum.GetValues(typeof(AdminMenuOptions)))
@@ -39,22 +39,23 @@ namespace EventManagement
                     switch (chosenOption)
                     {
                         case AdminMenuOptions.View_Upcoming_Events:
-                            selectedOption = new ViewUpcomingEventsOption();
+
                             break;
                         case AdminMenuOptions.Create_New_Event:
-                            selectedOption = new CreateNewEventOption();
+
+
                             break;
                         case AdminMenuOptions.Register_New_Organizer:
-                            selectedOption = new RegisterNewOrganizerOption();
+
                             break;
                         case AdminMenuOptions.Past_Feedback:
-                            selectedOption = new PastFeedbackOption();
+
                             break;
                         case AdminMenuOptions.Edit_Details:
-                            selectedOption = new EditDetailsOption();
+
                             break;
                         case AdminMenuOptions.Log_out:
-                            selectedOption = new LogoutOption();
+
                             break;
                     }
                 }
@@ -62,76 +63,8 @@ namespace EventManagement
                 {
                     Console.Clear();
                     Console.WriteLine("Invalid option, please try again.");
-                    continue;
                 }
-
-                selectedOption.Execute();
-            }
-        }
-
-        public class ViewUpcomingEventsOption : IMenu
-        {
-            public void Execute()
-            {
-                Console.Clear();
-                Console.WriteLine("Viewing upcoming events...");
-                // Implement the logic to view upcoming events
-                BackToMainMenu();
-            }
-        }
-
-        public class CreateNewEventOption : IMenu
-        {
-            public void Execute()
-            {
-                Console.Clear();
-                Console.WriteLine("Creating a new event...");
-                // Implement the logic to create a new event
-                BackToMainMenu();
-            }
-        }
-
-        public class RegisterNewOrganizerOption : IMenu
-        {
-            public void Execute()
-            {
-                Console.Clear();
-                Console.WriteLine("Registering a new organizer...");
-                // Implement the logic to register a new organizer
-                BackToMainMenu();
-            }
-        }
-
-        public class PastFeedbackOption : IMenu
-        {
-            public void Execute()
-            {
-                Console.Clear();
-                Console.WriteLine("Viewing past feedback...");
-                // Implement the logic to view past feedback
-                BackToMainMenu();
-            }
-        }
-
-        public class EditDetailsOption : IMenu
-        {
-            public void Execute()
-            {
-                Console.Clear();
-                Console.WriteLine("Editing details...");
-                // Implement the logic to edit details
-                BackToMainMenu();
-            }
-        }
-
-        public class LogoutOption : IMenu
-        {
-            public void Execute()
-            {
-                Console.Clear();
-                Console.WriteLine("Logging out...");
-                Environment.Exit(0);
-            }
+            
         }
 
         public static void BackToMainMenu()

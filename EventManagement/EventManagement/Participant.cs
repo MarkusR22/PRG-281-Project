@@ -39,22 +39,22 @@ namespace EventManagement
                     switch (chosenOption)
                     {
                         case ParticipantMenuOptions.View_Upcoming_Events:
-                            selectedOption = new ViewUpcomingEventsOption();
+
                             break;
                         case ParticipantMenuOptions.Create_New_Event:
-                            selectedOption = new CreateNewEventOption();
+
                             break;
                         case ParticipantMenuOptions.Register_New_Organizer:
-                            selectedOption = new RegisterNewOrganizerOption();
+
                             break;
                         case ParticipantMenuOptions.Past_Feedback:
-                            selectedOption = new PastFeedbackOption();
+
                             break;
                         case ParticipantMenuOptions.Edit_Details:
-                            selectedOption = new EditDetailsOption();
+
                             break;
                         case ParticipantMenuOptions.Log_out:
-                            selectedOption = new LogoutOption();
+
                             break;
                     }
                 }
@@ -65,74 +65,9 @@ namespace EventManagement
                     continue;
                 }
 
-                selectedOption.Execute();
             }
         }
 
-        public class ViewUpcomingEventsOption : IMenu
-        {
-            public void Execute()
-            {
-                Console.Clear();
-                Console.WriteLine("Viewing upcoming events...");
-                // Implement the logic to view upcoming events
-                BackToMainMenu();
-            }
-        }
-
-        public class CreateNewEventOption : IMenu
-        {
-            public void Execute()
-            {
-                Console.Clear();
-                Console.WriteLine("Creating a new event...");
-                // Implement the logic to create a new event
-                BackToMainMenu();
-            }
-        }
-
-        public class RegisterNewOrganizerOption : IMenu
-        {
-            public void Execute()
-            {
-                Console.Clear();
-                Console.WriteLine("Registering a new organizer...");
-                // Implement the logic to register a new organizer
-                BackToMainMenu();
-            }
-        }
-
-        public class PastFeedbackOption : IMenu
-        {
-            public void Execute()
-            {
-                Console.Clear();
-                Console.WriteLine("Viewing past feedback...");
-                // Implement the logic to view past feedback
-                BackToMainMenu();
-            }
-        }
-
-        public class EditDetailsOption : IMenu
-        {
-            public void Execute()
-            {
-                Console.Clear();
-                Console.WriteLine("Editing details...");
-                // Implement the logic to edit details
-                BackToMainMenu();
-            }
-        }
-
-        public class LogoutOption : IMenu
-        {
-            public void Execute()
-            {
-                Console.Clear();
-                Console.WriteLine("Logging out...");
-                Environment.Exit(0);
-            }
-        }
 
         public static void BackToMainMenu()
         {
