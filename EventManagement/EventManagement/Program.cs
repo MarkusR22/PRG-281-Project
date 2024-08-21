@@ -7,12 +7,10 @@ using System.Threading.Tasks;
 namespace EventManagement
 
 {
+
     internal class Program
     {
-        public interface IMenuOption
-        {
-            void Execute();
-        }
+        
         static void Main(string[] args)
         {
             //Caydan Frank
@@ -28,7 +26,8 @@ namespace EventManagement
             Console.ReadKey();
 
             MainMenuAdmin menu = new MainMenuAdmin();
-
+            menu.DisplayMenu();
+            Console.ReadLine();
 
         }
     }

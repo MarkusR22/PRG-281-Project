@@ -5,3 +5,10 @@ C:\Users\chesa\Source\Repos\MarkusR22\PRG-281-Project\EventManagement\EventManag
 C:\Users\chesa\Source\Repos\MarkusR22\PRG-281-Project\EventManagement\EventManagement\obj\Debug\EventManagement.csproj.CoreCompileInputs.cache
 C:\Users\chesa\Source\Repos\MarkusR22\PRG-281-Project\EventManagement\EventManagement\obj\Debug\EventManagement.exe
 C:\Users\chesa\Source\Repos\MarkusR22\PRG-281-Project\EventManagement\EventManagement\obj\Debug\EventManagement.pdb
+C:\Users\user-pc\Documents\Belgium\Second Year\PRG 281\PRG 281 Project\PRG-281-Project2\PRG-281-Project\EventManagement\EventManagement\bin\Debug\EventManagement.exe.config
+C:\Users\user-pc\Documents\Belgium\Second Year\PRG 281\PRG 281 Project\PRG-281-Project2\PRG-281-Project\EventManagement\EventManagement\bin\Debug\EventManagement.exe
+C:\Users\user-pc\Documents\Belgium\Second Year\PRG 281\PRG 281 Project\PRG-281-Project2\PRG-281-Project\EventManagement\EventManagement\bin\Debug\EventManagement.pdb
+C:\Users\user-pc\Documents\Belgium\Second Year\PRG 281\PRG 281 Project\PRG-281-Project2\PRG-281-Project\EventManagement\EventManagement\obj\Debug\EventManagement.csproj.AssemblyReference.cache
+C:\Users\user-pc\Documents\Belgium\Second Year\PRG 281\PRG 281 Project\PRG-281-Project2\PRG-281-Project\EventManagement\EventManagement\obj\Debug\EventManagement.csproj.CoreCompileInputs.cache
+C:\Users\user-pc\Documents\Belgium\Second Year\PRG 281\PRG 281 Project\PRG-281-Project2\PRG-281-Project\EventManagement\EventManagement\obj\Debug\EventManagement.exe
+C:\Users\user-pc\Documents\Belgium\Second Year\PRG 281\PRG 281 Project\PRG-281-Project2\PRG-281-Project\EventManagement\EventManagement\obj\Debug\EventManagement.pdb
