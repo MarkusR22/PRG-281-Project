@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace EventManagement
 {
     
-    internal class Admin
+    public class Admin
     {
         public enum AdminMenuOptions
         {
@@ -19,7 +19,7 @@ namespace EventManagement
             Log_out
         }
 
-        public static void DisplayMenu()
+        public void DisplayMenu()
         {
 
                 Console.WriteLine("Admin Menu:");
