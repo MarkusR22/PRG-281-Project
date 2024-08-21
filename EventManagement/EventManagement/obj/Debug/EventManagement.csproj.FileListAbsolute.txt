@@ -1,0 +1,7 @@
+C:\Users\chesa\Source\Repos\MarkusR22\PRG-281-Project\EventManagement\EventManagement\bin\Debug\EventManagement.exe.config
+C:\Users\chesa\Source\Repos\MarkusR22\PRG-281-Project\EventManagement\EventManagement\bin\Debug\EventManagement.exe
+C:\Users\chesa\Source\Repos\MarkusR22\PRG-281-Project\EventManagement\EventManagement\bin\Debug\EventManagement.pdb
+C:\Users\chesa\Source\Repos\MarkusR22\PRG-281-Project\EventManagement\EventManagement\obj\Debug\EventManagement.csproj.AssemblyReference.cache
+C:\Users\chesa\Source\Repos\MarkusR22\PRG-281-Project\EventManagement\EventManagement\obj\Debug\EventManagement.csproj.CoreCompileInputs.cache
+C:\Users\chesa\Source\Repos\MarkusR22\PRG-281-Project\EventManagement\EventManagement\obj\Debug\EventManagement.exe
+C:\Users\chesa\Source\Repos\MarkusR22\PRG-281-Project\EventManagement\EventManagement\obj\Debug\EventManagement.pdb

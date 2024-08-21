@@ -25,6 +25,11 @@ namespace EventManagement
             //gooner alert2
             //Here is another change for you grandpa
             //hallo
+            Console.ReadKey();
+
+            MainMenuAdmin menu = new MainMenuAdmin();
+
+
         }
     }
 }
