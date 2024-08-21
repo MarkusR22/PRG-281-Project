@@ -8,6 +8,8 @@ namespace EventManagement
 {
     internal class Organizer
     {
+        internal int Id;
+
         public enum OrganizerMenuOptions
         {
             View_Upcoming_Events = 1,
