@@ -6,8 +6,7 @@ using System.Threading.Tasks;
 
 namespace EventManagement
 {
-    public interface IMenuOption
+    internal interface IAdmin
     {
-        void Execute();
     }
 }

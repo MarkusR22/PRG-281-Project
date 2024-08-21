@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace EventManagement
 {
-    internal class MainMenuOrganizer
+    internal class Admin
     {
-        public enum OrganizerMenuOptions
+        public enum AdminMenuOptions
         {
             View_Upcoming_Events = 1,
             Create_New_Event,
@@ -22,9 +22,9 @@ namespace EventManagement
         {
             while (true)
             {
-                Console.WriteLine("Organizer Menu:");
+                Console.WriteLine("Admin Menu:");
 
-                foreach (OrganizerMenuOptions option in Enum.GetValues(typeof(OrganizerMenuOptions)))
+                foreach (AdminMenuOptions option in Enum.GetValues(typeof(AdminMenuOptions)))
                 {
                     string optionName = option.ToString().Replace("_", " ");
                     Console.WriteLine($"{(int)option}. {optionName}");
@@ -32,28 +32,28 @@ namespace EventManagement
 
                 Console.Write("Select an option (1-6): ");
                 string input = Console.ReadLine().Trim();
-                IMenuOption selectedOption = null;
+                IMenu selectedOption = null;
 
-                if (Enum.TryParse(input, out OrganizerMenuOptions chosenOption) && Enum.IsDefined(typeof(OrganizerMenuOptions), chosenOption))
+                if (Enum.TryParse(input, out AdminMenuOptions chosenOption) && Enum.IsDefined(typeof(AdminMenuOptions), chosenOption))
                 {
                     switch (chosenOption)
                     {
-                        case OrganizerMenuOptions.View_Upcoming_Events:
+                        case AdminMenuOptions.View_Upcoming_Events:
                             selectedOption = new ViewUpcomingEventsOption();
                             break;
-                        case OrganizerMenuOptions.Create_New_Event:
+                        case AdminMenuOptions.Create_New_Event:
                             selectedOption = new CreateNewEventOption();
                             break;
-                        case OrganizerMenuOptions.Register_New_Organizer:
+                        case AdminMenuOptions.Register_New_Organizer:
                             selectedOption = new RegisterNewOrganizerOption();
                             break;
-                        case OrganizerMenuOptions.Past_Feedback:
+                        case AdminMenuOptions.Past_Feedback:
                             selectedOption = new PastFeedbackOption();
                             break;
-                        case OrganizerMenuOptions.Edit_Details:
+                        case AdminMenuOptions.Edit_Details:
                             selectedOption = new EditDetailsOption();
                             break;
-                        case OrganizerMenuOptions.Log_out:
+                        case AdminMenuOptions.Log_out:
                             selectedOption = new LogoutOption();
                             break;
                     }
@@ -69,7 +69,7 @@ namespace EventManagement
             }
         }
 
-        public class ViewUpcomingEventsOption : IMenuOption
+        public class ViewUpcomingEventsOption : IMenu
         {
             public void Execute()
             {
@@ -80,7 +80,7 @@ namespace EventManagement
             }
         }
 
-        public class CreateNewEventOption : IMenuOption
+        public class CreateNewEventOption : IMenu
         {
             public void Execute()
             {
@@ -91,7 +91,7 @@ namespace EventManagement
             }
         }
 
-        public class RegisterNewOrganizerOption : IMenuOption
+        public class RegisterNewOrganizerOption : IMenu
         {
             public void Execute()
             {
@@ -102,7 +102,7 @@ namespace EventManagement
             }
         }
 
-        public class PastFeedbackOption : IMenuOption
+        public class PastFeedbackOption : IMenu
         {
             public void Execute()
             {
@@ -113,7 +113,7 @@ namespace EventManagement
             }
         }
 
-        public class EditDetailsOption : IMenuOption
+        public class EditDetailsOption : IMenu
         {
             public void Execute()
             {
@@ -124,7 +124,7 @@ namespace EventManagement
             }
         }
 
-        public class LogoutOption : IMenuOption
+        public class LogoutOption : IMenu
         {
             public void Execute()
             {
@@ -136,9 +136,10 @@ namespace EventManagement
 
         public static void BackToMainMenu()
         {
-            Console.WriteLine("Press any key to return to the organizer menu...");
+            Console.WriteLine("Press any key to return to the admin menu...");
             Console.ReadKey();
             Console.Clear();
         }
+
     }
 }

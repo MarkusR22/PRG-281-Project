@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace EventManagement
 {
-    internal class MainMenuParticipant
+    internal class Participant
     {
         public enum ParticipantMenuOptions
         {
@@ -32,7 +32,7 @@ namespace EventManagement
 
                 Console.Write("Select an option (1-6): ");
                 string input = Console.ReadLine().Trim();
-                IMenuOption selectedOption = null;
+                IMenu selectedOption = null;
 
                 if (Enum.TryParse(input, out ParticipantMenuOptions chosenOption) && Enum.IsDefined(typeof(ParticipantMenuOptions), chosenOption))
                 {
@@ -69,7 +69,7 @@ namespace EventManagement
             }
         }
 
-        public class ViewUpcomingEventsOption : IMenuOption
+        public class ViewUpcomingEventsOption : IMenu
         {
             public void Execute()
             {
@@ -80,7 +80,7 @@ namespace EventManagement
             }
         }
 
-        public class CreateNewEventOption : IMenuOption
+        public class CreateNewEventOption : IMenu
         {
             public void Execute()
             {
@@ -91,7 +91,7 @@ namespace EventManagement
             }
         }
 
-        public class RegisterNewOrganizerOption : IMenuOption
+        public class RegisterNewOrganizerOption : IMenu
         {
             public void Execute()
             {
@@ -102,7 +102,7 @@ namespace EventManagement
             }
         }
 
-        public class PastFeedbackOption : IMenuOption
+        public class PastFeedbackOption : IMenu
         {
             public void Execute()
             {
@@ -113,7 +113,7 @@ namespace EventManagement
             }
         }
 
-        public class EditDetailsOption : IMenuOption
+        public class EditDetailsOption : IMenu
         {
             public void Execute()
             {
@@ -124,7 +124,7 @@ namespace EventManagement
             }
         }
 
-        public class LogoutOption : IMenuOption
+        public class LogoutOption : IMenu
         {
             public void Execute()
             {

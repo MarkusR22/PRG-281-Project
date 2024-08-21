@@ -25,8 +25,8 @@ namespace EventManagement
             //hallo
             Console.ReadKey();
 
-            MainMenuAdmin menu = new MainMenuAdmin();
-            menu.DisplayMenu();
+            Admin admin = new Admin();
+            admin.DisplayMenu();
             Console.ReadLine();
 
         }
