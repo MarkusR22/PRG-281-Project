@@ -59,7 +59,9 @@ internal class Register_Login
 
                 if (rowsAffected > 0)
                 {
-                    Console.WriteLine("User registered successfully!");
+                    Console.WriteLine("User registered successfully! Press any key to return to login");
+                    Console.ReadKey();
+                    DisplayMenu();
                 }
                 else
                 {
