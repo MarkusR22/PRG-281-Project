@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -10,7 +11,7 @@ namespace EventManagement
 
     internal class Program
     {
-        
+
         static void Main(string[] args)
         {
             //Caydan Frank
@@ -23,12 +24,31 @@ namespace EventManagement
             //gooner alert2
             //Here is another change for you grandpa
             //hallo
-            Console.ReadKey();
 
-            Admin admin = new Admin();
-            admin.DisplayMenu();
-            Console.ReadLine();
+            //Admin admin = new Admin();
+            //admin.DisplayMenu();
+            //Console.ReadLine();
+
+           
+            Console.ReadKey();
+        }
+
+        public static void MainTHing()
+        { 
+
+            //EventManagementTempConnectionString
+            SqlConnection connection = new SqlConnection("Data Source=MACHINE;Initial Catalog=EventManagementTemp;Integrated Security=True;Connect Timeout=30;Encrypt=True;TrustServerCertificate=True;");
+
+
+            //SqlConnection connection = new SqlConnection("Data Source=MACHINE;Initial Catalog=EventManagementTemp;Integrated Security=True;Connect Timeout=30;Encrypt=True;TrustServerCertificate=True;");
+
+            //SqlConnection connection = new SqlConnection("Data Source=MACHINE;Initial Catalog=EventManagementTemp;Integrated Security=True;Connect Timeout=30;Encrypt=True;TrustServerCertificate=True;");
+
+            //SqlConnection connection = new SqlConnection("Data Source=MACHINE;Initial Catalog=EventManagementTemp;Integrated Security=True;Connect Timeout=30;Encrypt=True;TrustServerCertificate=True;");
 
         }
+
+        
     }
 }
+
