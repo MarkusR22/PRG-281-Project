@@ -10,13 +10,19 @@ namespace EventManagement
     {
         public enum ParticipantMenuOptions
         {
-            View_Upcoming_Events = 1,
-            Create_New_Event,
-            Register_New_Organizer,
-            Past_Feedback,
-            Edit_Details,
-            Log_out
+            Search_Display = 1,
+            View_Events,
+            Logout,
+            User_details,
+            
         }
+        public enum UserDetails
+        {
+            View =1,
+            Edit
+        }
+
+        
 
         public void DisplayMenu()
         {
@@ -38,24 +44,23 @@ namespace EventManagement
                 {
                     switch (chosenOption)
                     {
-                        case ParticipantMenuOptions.View_Upcoming_Events:
+                        case ParticipantMenuOptions.Search_Display:
 
                             break;
-                        case ParticipantMenuOptions.Create_New_Event:
+                        case ParticipantMenuOptions.View_Events:
 
                             break;
-                        case ParticipantMenuOptions.Register_New_Organizer:
+                        case ParticipantMenuOptions.Logout:
 
                             break;
-                        case ParticipantMenuOptions.Past_Feedback:
-
+                        case ParticipantMenuOptions.User_details:
+                            foreach (UserDetails option in Enum.GetValues(typeof(UserDetails)))
+                            {
+                                string optionName = option.ToString().Replace("_", " ");
+                                Console.WriteLine($"{(int)option}. {optionName}");
+                            }
                             break;
-                        case ParticipantMenuOptions.Edit_Details:
 
-                            break;
-                        case ParticipantMenuOptions.Log_out:
-
-                            break;
                     }
                 }
                 else
