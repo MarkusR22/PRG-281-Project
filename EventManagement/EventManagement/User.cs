@@ -13,9 +13,9 @@ namespace EventManagement
         protected string password { get; set; }
 
         public abstract void DisplayMenu();
-        public abstract void Login();
+        //public abstract void Login();
+        //public abstract void SignUp();
         public abstract void Logout();
-        public abstract void SignUp();
 
         public User(int id, string userName, string password)
         {

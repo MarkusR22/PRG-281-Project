@@ -6,9 +6,12 @@ using System.Threading.Tasks;
 
 namespace EventManagement
 {
-    internal class Organizer
+    internal class Organizer : User
     {
-        internal int Id;
+        public Organizer(int id, string userName, string password) : base(id, userName, password)
+        {
+
+        }
 
         public enum OrganizerMenuOptions
         {
@@ -20,7 +23,17 @@ namespace EventManagement
             Log_out
         }
 
-        public void DisplayMenu()
+        public void SetUserName(string userName)
+        {
+            base.userName = userName;
+        }
+
+        public void SetPassword(string password)
+        {
+            base.password = password;
+        }
+
+        public override void DisplayMenu()
         {
             while (true)
             {
@@ -70,7 +83,10 @@ namespace EventManagement
             }
         }
 
-     
+        public override void Logout()
+        {
+            Console.WriteLine("Admin logout successful!");
+        }
 
         public static void BackToMainMenu()
         {

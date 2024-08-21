@@ -28,7 +28,7 @@ namespace EventManagement
             //Admin admin = new Admin();
             //admin.DisplayMenu();
             //Console.ReadLine();
-
+            Register_Login.DisplayMenu();
            
             Console.ReadKey();
         }

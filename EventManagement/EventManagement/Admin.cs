@@ -25,6 +25,17 @@ namespace EventManagement
             Log_out
         }
 
+        public void SetUserName(string userName)
+        {
+            base.userName = userName;
+        }
+
+        public void SetPassword(string password)
+        {
+            base.password = password;
+        }
+
+
         public override void DisplayMenu()
         {
 
@@ -73,68 +84,7 @@ namespace EventManagement
             
         }
 
-        public override void SignUp()
-        {
-            Console.Write("Enter username: ");
-            string username = Console.ReadLine();
-            Console.Write("Enter password: ");
-            string password = Console.ReadLine();
-
-            // Check if username already exists
-            using (SqlConnection connection = new SqlConnection("Data Source=<database_server>;Initial Catalog=<database_name>;User ID=<username>;Password=<password>"))
-            {
-                connection.Open();
-                SqlCommand command = new SqlCommand("SELECT * FROM Admins WHERE Username = @username", connection);
-                command.Parameters.AddWithValue("@username", username);
-                SqlDataReader reader = command.ExecuteReader();
-
-                if (reader.HasRows)
-                {
-                    Console.WriteLine("Username already exists. Please choose a different username.");
-                    return;
-                }
-            }
-
-            // Add user to database
-            using (SqlConnection connection = new SqlConnection("Data Source=<database_server>;Initial Catalog=<database_name>;User ID=<username>;Password=<password>"))
-            {
-                connection.Open();
-                SqlCommand command = new SqlCommand("INSERT INTO Admins (Username, Password) VALUES (@username, @password)", connection);
-                command.Parameters.AddWithValue("@username", username);
-                command.Parameters.AddWithValue("@password", password);
-                command.ExecuteNonQuery();
-            }
-
-            Console.WriteLine("Admin sign up successful!");
-        }
-
-        public override void Login()
-        {
-            Console.Write("Enter username: ");
-            string username = Console.ReadLine();
-            Console.Write("Enter password: ");
-            string password = Console.ReadLine();
-
-            using (SqlConnection connection = new SqlConnection("Data Source=<database_server>;Initial Catalog=<database_name>;User ID=<username>;Password=<password>"))
-            {
-                connection.Open();
-                SqlCommand command = new SqlCommand("SELECT * FROM Admins WHERE Username = @username AND Password = @password", connection);
-                command.Parameters.AddWithValue("@username", username);
-                command.Parameters.AddWithValue("@password", password);
-                SqlDataReader reader = command.ExecuteReader();
-
-                if (reader.HasRows)
-                {
-                    Console.WriteLine("Admin login successful!");
-                    DisplayMenu();
-                }
-                else
-                {
-                    Console.WriteLine("Invalid username or password.");
-                }
-            }
-
-        }
+        
         public override void Logout()
         {
             Console.WriteLine("Admin logout successful!");

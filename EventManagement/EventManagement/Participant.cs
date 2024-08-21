@@ -6,8 +6,22 @@ using System.Threading.Tasks;
 
 namespace EventManagement
 {
-    internal class Participant
+    internal class Participant : User
     {
+        public Participant(int id, string userName, string password) : base(id, userName, password)
+        {
+
+        }
+
+        public void SetUserName(string userName)
+        {
+            base.userName = userName;
+        }
+
+        public void SetPassword(string password)
+        {
+            base.password = password;
+        }
         public enum ParticipantMenuOptions
         {
             Search_Display = 1,
@@ -22,9 +36,14 @@ namespace EventManagement
             Edit
         }
 
-        
+        public override void Logout()
+        {
+            Console.WriteLine("Admin logout successful!");
+        }
 
-        public void DisplayMenu()
+
+
+        public override void DisplayMenu()
         {
             while (true)
             {
