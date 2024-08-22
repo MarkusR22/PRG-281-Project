@@ -6,9 +6,13 @@ using System.Runtime.InteropServices;
 internal class Register_Login
 {
     public static User currentUser = null;
-    private SqlConnection connection = new SqlConnection("Data Source=MACHINE;Initial Catalog=EventManagementTemp;Integrated Security=True;Connect Timeout=30;Encrypt=True;TrustServerCertificate=True;");
+    private static string connectionString = "Data Source=MACHINE;Initial Catalog=EventManagementTemp;Integrated Security=True;Connect Timeout=30;Encrypt=True;TrustServerCertificate=True;";
+
     public static void DisplayMenu()
     {
+        currentUser = null;
+        currentUser = null;
+
         Console.Clear();
 
         Console.WriteLine("Event Management System");
@@ -31,7 +35,8 @@ internal class Register_Login
                     DisplayMenu();
                     break;
             }
-        } catch (Exception ex)
+        }
+        catch (Exception ex)
         {
             Console.WriteLine("Invalid option. Press any button to go back");
             Console.ReadKey();
@@ -50,7 +55,7 @@ internal class Register_Login
 
         try
         {
-            using (SqlConnection connection = new SqlConnection("Data Source=MACHINE;Initial Catalog=EventManagementTemp;Integrated Security=True;Connect Timeout=30;Encrypt=True;TrustServerCertificate=True;"))
+            using (SqlConnection connection = new SqlConnection(connectionString))
             {
                 connection.Open();
 
@@ -76,7 +81,7 @@ internal class Register_Login
         }
         catch (SqlException ex)
         {
-            Console.WriteLine("Error registering user: Username taken" );
+            Console.WriteLine("Error registering user: Username taken");
             Console.ReadKey();
             DisplayMenu();
         }
@@ -98,7 +103,7 @@ internal class Register_Login
 
         try
         {
-            using (SqlConnection connection = new SqlConnection("Data Source=MACHINE;Initial Catalog=EventManagementTemp;Integrated Security=True;Connect Timeout=30;Encrypt=True;TrustServerCertificate=True;"))
+            using (SqlConnection connection = new SqlConnection(connectionString))
             {
                 connection.Open();
 
@@ -182,7 +187,7 @@ internal class Register_Login
     {
         try
         {
-            using (SqlConnection connection = new SqlConnection("Data Source=MACHINE;Initial Catalog=EventManagementTemp;Integrated Security=True;Connect Timeout=30;Encrypt=True;TrustServerCertificate=True;"))
+            using (SqlConnection connection = new SqlConnection(connectionString))
             {
                 connection.Open();
 

@@ -3,6 +3,10 @@
   "WorkspaceRootPath": "C:\\Users\\Caydan\\Documents\\BC Work\\PRG281\\Project\\PRG-281-Project\\EventManagement\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{E08A4295-6904-4F0B-B841-AFEF824530FB}|EventManagement\\EventManagement.csproj|C:\\Users\\Caydan\\Documents\\BC Work\\PRG281\\Project\\PRG-281-Project\\EventManagement\\eventmanagement\\admin.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{E08A4295-6904-4F0B-B841-AFEF824530FB}|EventManagement\\EventManagement.csproj|solutionrelative:eventmanagement\\admin.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{E08A4295-6904-4F0B-B841-AFEF824530FB}|EventManagement\\EventManagement.csproj|c:\\users\\caydan\\documents\\bc work\\prg281\\project\\prg-281-project\\eventmanagement\\eventmanagement\\register_login.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{E08A4295-6904-4F0B-B841-AFEF824530FB}|EventManagement\\EventManagement.csproj|solutionrelative:eventmanagement\\register_login.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
@@ -13,10 +17,6 @@
     {
       "AbsoluteMoniker": "D:0:0:{E08A4295-6904-4F0B-B841-AFEF824530FB}|EventManagement\\EventManagement.csproj|C:\\Users\\Caydan\\Documents\\BC Work\\PRG281\\Project\\PRG-281-Project\\EventManagement\\eventmanagement\\participant.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{E08A4295-6904-4F0B-B841-AFEF824530FB}|EventManagement\\EventManagement.csproj|solutionrelative:eventmanagement\\participant.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{E08A4295-6904-4F0B-B841-AFEF824530FB}|EventManagement\\EventManagement.csproj|C:\\Users\\Caydan\\Documents\\BC Work\\PRG281\\Project\\PRG-281-Project\\EventManagement\\eventmanagement\\admin.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{E08A4295-6904-4F0B-B841-AFEF824530FB}|EventManagement\\EventManagement.csproj|solutionrelative:eventmanagement\\admin.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{E08A4295-6904-4F0B-B841-AFEF824530FB}|EventManagement\\EventManagement.csproj|C:\\Users\\Caydan\\Documents\\BC Work\\PRG281\\Project\\PRG-281-Project\\EventManagement\\eventmanagement\\organizer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -34,7 +34,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 5,
+          "SelectedChildIndex": 6,
           "Children": [
             {
               "$type": "Bookmark",
@@ -74,32 +74,33 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 1,
               "Title": "Register_Login.cs",
               "DocumentMoniker": "C:\\Users\\Caydan\\Documents\\BC Work\\PRG281\\Project\\PRG-281-Project\\EventManagement\\EventManagement\\Register_Login.cs",
               "RelativeDocumentMoniker": "EventManagement\\Register_Login.cs",
-              "ToolTip": "C:\\Users\\Caydan\\Documents\\BC Work\\PRG281\\Project\\PRG-281-Project\\EventManagement\\EventManagement\\Register_Login.cs*",
-              "RelativeToolTip": "EventManagement\\Register_Login.cs*",
-              "ViewState": "AgIAAAgAAAAAAAAAAAAAACcAAAAJAAAAAAAAAA==",
+              "ToolTip": "C:\\Users\\Caydan\\Documents\\BC Work\\PRG281\\Project\\PRG-281-Project\\EventManagement\\EventManagement\\Register_Login.cs",
+              "RelativeToolTip": "EventManagement\\Register_Login.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA4AAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-08-21T15:51:16.438Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 0,
               "Title": "Admin.cs",
               "DocumentMoniker": "C:\\Users\\Caydan\\Documents\\BC Work\\PRG281\\Project\\PRG-281-Project\\EventManagement\\EventManagement\\Admin.cs",
               "RelativeDocumentMoniker": "EventManagement\\Admin.cs",
-              "ToolTip": "C:\\Users\\Caydan\\Documents\\BC Work\\PRG281\\Project\\PRG-281-Project\\EventManagement\\EventManagement\\Admin.cs",
-              "RelativeToolTip": "EventManagement\\Admin.cs",
-              "ViewState": "AgIAAEQAAAAAAAAAAAAowFcAAAAIAAAAAAAAAA==",
+              "ToolTip": "C:\\Users\\Caydan\\Documents\\BC Work\\PRG281\\Project\\PRG-281-Project\\EventManagement\\EventManagement\\Admin.cs*",
+              "RelativeToolTip": "EventManagement\\Admin.cs*",
+              "ViewState": "AgIAACsAAAAAAAAAAAAUwFcAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-08-21T14:13:35.576Z"
+              "WhenOpened": "2024-08-21T14:13:35.576Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 3,
               "Title": "Participant.cs",
               "DocumentMoniker": "C:\\Users\\Caydan\\Documents\\BC Work\\PRG281\\Project\\PRG-281-Project\\EventManagement\\EventManagement\\Participant.cs",
               "RelativeDocumentMoniker": "EventManagement\\Participant.cs",
@@ -111,7 +112,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 2,
               "Title": "Program.cs",
               "DocumentMoniker": "C:\\Users\\Caydan\\Documents\\BC Work\\PRG281\\Project\\PRG-281-Project\\EventManagement\\EventManagement\\Program.cs",
               "RelativeDocumentMoniker": "EventManagement\\Program.cs",
@@ -119,8 +120,7 @@
               "RelativeToolTip": "EventManagement\\Program.cs",
               "ViewState": "AgIAABoAAAAAAAAAAAAYwCcAAADKAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-08-15T07:52:16.654Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-08-15T07:52:16.654Z"
             }
           ]
         }
