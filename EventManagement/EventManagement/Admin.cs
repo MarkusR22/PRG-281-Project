@@ -7,10 +7,13 @@ using System.Threading.Tasks;
 
 namespace EventManagement
 {
-
+   
     public class Admin : User
     {
+        //private static string connectionString = "Data Source=MACHINE;Initial Catalog=EventManagementTemp;Integrated Security=True;Connect Timeout=30;Encrypt=True;TrustServerCertificate=True;"; // Caydan
+        //private static string connectionString = "Data Source=TIMOTHY\\MSSQLSERVER09;Initial Catalog=EventManagementTemp;Integrated Security=True;Connect Timeout=30;Encrypt=True;TrustServerCertificate=True;"; //Joseph's DB connection
         private static string connectionString = "Data Source=DESKTOP-TDBJOM7;Initial Catalog=EventManagement;Integrated Security=True;Connect Timeout=30;Encrypt=True;TrustServerCertificate=True;"; //Markus' connection string
+
 
         public Admin(int id, string userName, string password) : base(id, userName, password)
         {
@@ -58,6 +61,7 @@ namespace EventManagement
                 switch (chosenOption)
                 {
                     case AdminMenuOptions.View_Upcoming_Events:
+                        View_Upcoming_Events();
 
                         break;
                     case AdminMenuOptions.Create_New_Event:
@@ -85,6 +89,13 @@ namespace EventManagement
                 Console.WriteLine("Invalid option, please try again.");
             }
 
+        }
+
+        public void View_Upcoming_Events()
+        {
+            EventManager eventManager = new EventManager(connectionString);
+
+            eventManager.DisplayUpcommingEvents();
         }
 
         public void CreateEvent()
@@ -119,8 +130,6 @@ namespace EventManagement
                     command.Parameters.AddWithValue("@organizerID", organizerID);
                     command.Parameters.AddWithValue("@status", eventStatus);
                     command.Parameters.AddWithValue("@ticket_price", ticketPrice);
-
-
 
                     int rowsAffected = (int)command.ExecuteNonQuery();
 
