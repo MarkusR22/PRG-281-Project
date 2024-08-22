@@ -19,3 +19,10 @@ C:\Users\Caydan\Documents\BC Work\PRG281\Project\PRG-281-Project\EventManagement
 C:\Users\Caydan\Documents\BC Work\PRG281\Project\PRG-281-Project\EventManagement\EventManagement\bin\Debug\EventManagement.exe.config
 C:\Users\Caydan\Documents\BC Work\PRG281\Project\PRG-281-Project\EventManagement\EventManagement\bin\Debug\EventManagement.exe
 C:\Users\Caydan\Documents\BC Work\PRG281\Project\PRG-281-Project\EventManagement\EventManagement\bin\Debug\EventManagement.pdb
+C:\Users\perei\Documents\Belgium School Work\2024\Programming 281\Project\PRG-281-Project\EventManagement\EventManagement\bin\Debug\EventManagement.exe.config
+C:\Users\perei\Documents\Belgium School Work\2024\Programming 281\Project\PRG-281-Project\EventManagement\EventManagement\bin\Debug\EventManagement.exe
+C:\Users\perei\Documents\Belgium School Work\2024\Programming 281\Project\PRG-281-Project\EventManagement\EventManagement\bin\Debug\EventManagement.pdb
+C:\Users\perei\Documents\Belgium School Work\2024\Programming 281\Project\PRG-281-Project\EventManagement\EventManagement\obj\Debug\EventManagement.csproj.AssemblyReference.cache
+C:\Users\perei\Documents\Belgium School Work\2024\Programming 281\Project\PRG-281-Project\EventManagement\EventManagement\obj\Debug\EventManagement.csproj.CoreCompileInputs.cache
+C:\Users\perei\Documents\Belgium School Work\2024\Programming 281\Project\PRG-281-Project\EventManagement\EventManagement\obj\Debug\EventManagement.exe
+C:\Users\perei\Documents\Belgium School Work\2024\Programming 281\Project\PRG-281-Project\EventManagement\EventManagement\obj\Debug\EventManagement.pdb
