@@ -1,9 +1,12 @@
 ﻿using EventManagement;
 using System.Data.SqlClient;
 using System;
+using System.Runtime.InteropServices;
 
 internal class Register_Login
 {
+    public static User currentUser = null;
+    private SqlConnection connection = new SqlConnection("Data Source=MACHINE;Initial Catalog=EventManagementTemp;Integrated Security=True;Connect Timeout=30;Encrypt=True;TrustServerCertificate=True;");
     public static void DisplayMenu()
     {
         Console.Clear();
@@ -202,7 +205,8 @@ internal class Register_Login
 
                     if (adminReader.Read())
                     {
-                        return new Admin(userId, userName, password);
+                        currentUser = new Admin(userId, userName, password);
+                        return currentUser;
                     }
 
                     adminReader.Close();
@@ -214,10 +218,11 @@ internal class Register_Login
 
                     if (organizerReader.Read())
                     {
-                        return new Organizer(userId, userName, password);
+                        currentUser = new Organizer(userId, userName, password);
+                        return currentUser;
                     }
-
-                    return new Participant(userId, userName, password);
+                    currentUser = new Participant(userId, userName, password);
+                    return currentUser;
                 }
 
                 return null; // or throw an exception if user is not found
@@ -238,23 +243,24 @@ internal class Register_Login
 
     static void DisplayMenuBasedOnUserType(User user)
     {
-        if (user is Admin)
-        {
-            Console.Clear();
-            Console.WriteLine("Admin menu:");
-            // Display admin menu options
-        }
-        else if (user is Organizer)
-        {
-            Console.Clear();
-            Console.WriteLine("Organizer menu:");
-            // Display organizer menu options
-        }
-        else
-        {
-            Console.Clear();
-            Console.WriteLine("Participant menu:");
-            // Display participant menu options
-        }
+        currentUser.DisplayMenu();
+        //if (user is Admin)
+        //{
+        //    Console.Clear();
+        //    Console.WriteLine("Admin menu:");
+        //    // Display admin menu options
+        //}
+        //else if (user is Organizer)
+        //{
+        //    Console.Clear();
+        //    Console.WriteLine("Organizer menu:");
+        //    // Display organizer menu options
+        //}
+        //else
+        //{
+        //    Console.Clear();
+        //    Console.WriteLine("Participant menu:");
+        //    // Display participant menu options
+        //}
     }
 }
