@@ -37,7 +37,7 @@ namespace EventManagement
         { 
 
             //EventManagementTempConnectionString
-            SqlConnection connection = new SqlConnection("Data Source=MACHINE;Initial Catalog=EventManagementTemp;Integrated Security=True;Connect Timeout=30;Encrypt=True;TrustServerCertificate=True;");
+            //SqlConnection connection = new SqlConnection("Data Source=MACHINE;Initial Catalog=EventManagementTemp;Integrated Security=True;Connect Timeout=30;Encrypt=True;TrustServerCertificate=True;");
 
 
             //SqlConnection connection = new SqlConnection("Data Source=MACHINE;Initial Catalog=EventManagementTemp;Integrated Security=True;Connect Timeout=30;Encrypt=True;TrustServerCertificate=True;");
@@ -45,10 +45,12 @@ namespace EventManagement
             //SqlConnection connection = new SqlConnection("Data Source=MACHINE;Initial Catalog=EventManagementTemp;Integrated Security=True;Connect Timeout=30;Encrypt=True;TrustServerCertificate=True;");
 
             //SqlConnection connection = new SqlConnection("Data Source=MACHINE;Initial Catalog=EventManagementTemp;Integrated Security=True;Connect Timeout=30;Encrypt=True;TrustServerCertificate=True;");
+
+            //SqlConnection connection = new SqlConnection("Data Source=EE-GAMINGPC;Initial Catalog=EventManagementTheuns;Integrated Security=True;Connect Timeout=30;Encrypt=True;TrustServerCertificate=True;");
 
         }
 
-        
+
     }
 }
 
