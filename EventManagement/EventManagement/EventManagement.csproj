@@ -49,6 +49,7 @@
       <DependentUpon>EventManagementTempDataSet1.xsd</DependentUpon>
     </Compile>
     <Compile Include="EventManager.cs" />
+    <Compile Include="ExceptionHandling.cs" />
     <Compile Include="IAdmin.cs" />
     <Compile Include="IMenu.cs" />
     <Compile Include="Admin.cs" />

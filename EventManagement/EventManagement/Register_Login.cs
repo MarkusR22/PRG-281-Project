@@ -7,8 +7,8 @@ internal class Register_Login
 {
     public static User currentUser = null;
     //private static string connectionString = "Data Source=MACHINE;Initial Catalog=EventManagementTemp;Integrated Security=True;Connect Timeout=30;Encrypt=True;TrustServerCertificate=True;"; // Caydan
-    //private static string connectionString = "Data Source=TIMOTHY\\MSSQLSERVER09;Initial Catalog=EventManagementTemp;Integrated Security=True;Connect Timeout=30;Encrypt=True;TrustServerCertificate=True;"; //Joseph's DB connection
-    private static string connectionString = "Data Source=DESKTOP-TDBJOM7;Initial Catalog=EventManagement;Integrated Security=True;Connect Timeout=30;Encrypt=True;TrustServerCertificate=True;"; //Markus' connection string
+    private static string connectionString = "Data Source=TIMOTHY\\MSSQLSERVER09;Initial Catalog=EventManagementTemp;Integrated Security=True;Connect Timeout=30;Encrypt=True;TrustServerCertificate=True;"; //Joseph's DB connection
+    //private static string connectionString = "Data Source=DESKTOP-TDBJOM7;Initial Catalog=EventManagement;Integrated Security=True;Connect Timeout=30;Encrypt=True;TrustServerCertificate=True;"; //Markus' connection string
 
     public static void DisplayMenu()
     {
@@ -21,9 +21,9 @@ internal class Register_Login
         Console.WriteLine("1. Register");
         Console.WriteLine("2. Login");
         Console.Write("Choose an option: ");
-        try
-        {
-            int option = Convert.ToInt32(Console.ReadLine());
+        //try
+        //{
+            int option = ExceptionHandling.IntHandling();
             switch (option)
             {
                 case 1:
@@ -37,14 +37,14 @@ internal class Register_Login
                     DisplayMenu();
                     break;
             }
-        }
-        catch (Exception ex)
-        {
-            Console.WriteLine("Invalid option. Press any button to go back");
-            Console.ReadKey();
-            DisplayMenu();
+        //}
+        //catch (Exception ex)
+        //{
+        //    Console.WriteLine("Invalid option. Press any button to go back");
+        //    Console.ReadKey();
+        //    DisplayMenu();
 
-        }
+        //}
     }
 
     static void RegisterUser()
