@@ -11,7 +11,7 @@ namespace EventManagement
     public class Admin : User
     {
         EventManager eventManager = new EventManager();
-       
+
 
         public Admin(int id, string userName, string password) : base(id, userName, password)
         {
@@ -22,8 +22,10 @@ namespace EventManagement
         {
             View_Upcoming_Events = 1,
             Create_New_Event,
+            Approve_Events,
             Register_New_Organizer,
-            Past_Feedback,
+            View_Past_Feedback,
+            View_All_Users,
             Edit_Details,
             Log_out
         }
@@ -39,7 +41,7 @@ namespace EventManagement
         }
 
 
-        public override void DisplayMenu()
+        public override async void DisplayMenu()
         {
             Console.Clear();
             Console.WriteLine($"Welcome Admin {userName}:");
@@ -70,12 +72,14 @@ namespace EventManagement
                         RegisterNewOrganizer();
 
                         break;
-                    case AdminMenuOptions.Past_Feedback:
+                    case AdminMenuOptions.View_Past_Feedback:
                         ViewFeedback();
 
                         break;
                     case AdminMenuOptions.Edit_Details:
                         Register_Login.currentUser.ManageProfile();
+                        await Task.Delay(500);
+                        DisplayMenu();
                         break;
                     case AdminMenuOptions.Log_out:
                         Logout();
@@ -237,7 +241,7 @@ namespace EventManagement
             }
         }
 
-        public void ViewFeedback()
+        public async void ViewFeedback()
         {
             try
             {
@@ -316,8 +320,11 @@ namespace EventManagement
             {
                 Console.WriteLine("An error occurred: " + ex.Message);
             }
-            Console.ReadKey();
-            DisplayMenu();
+            finally
+            {
+                Console.ReadKey();
+                DisplayMenu();
+            }
         }
 
 

@@ -44,11 +44,12 @@ namespace EventManagement
 
 
 
-        public override void DisplayMenu()
+        public override async void DisplayMenu()
         {
+            Console.Clear();
             while (true)
             {
-                Console.WriteLine("Participant Menu:");
+                Console.WriteLine($"Welcome {userName}:");
 
                 foreach (ParticipantMenuOptions option in Enum.GetValues(typeof(ParticipantMenuOptions)))
                 {
@@ -88,6 +89,8 @@ namespace EventManagement
                             break;
                         case ParticipantMenuOptions.Manage_Profile:
                             Register_Login.currentUser.ManageProfile();
+                            await Task.Delay(500);
+                            DisplayMenu();
                             break;
 
                         case ParticipantMenuOptions.Logout:
