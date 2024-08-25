@@ -83,6 +83,7 @@ namespace EventManagement
             {
                 Console.WriteLine("No changes were made to your profile.");
             }
+            
         }
 
         public User(int id, string userName, string password)

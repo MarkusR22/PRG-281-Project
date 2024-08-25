@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace EventManagement
@@ -64,6 +65,7 @@ namespace EventManagement
                 {
                     case AdminMenuOptions.View_Upcoming_Events:
                         eventManager.DisplayUpcommingEvents();
+                        BackToMainMenu();
 
                         break;
                     case AdminMenuOptions.Create_New_Event:
@@ -87,7 +89,7 @@ namespace EventManagement
 
                     case AdminMenuOptions.Edit_Details:
                         Register_Login.currentUser.ManageProfile();
-                        DisplayMenu();
+                        BackToMainMenu();
                         break;
                     case AdminMenuOptions.Log_out:
                         Logout();
@@ -599,12 +601,12 @@ namespace EventManagement
             eventManager.CreateEvent();
         }
 
-        public override async void Logout()
+        public override void Logout()
         {
             try
             {
                 Console.WriteLine("Admin logout successful!");
-                await Task.Delay(1000);
+                Thread.Sleep(1000);
                 Register_Login.DisplayMenu();
 
             }
