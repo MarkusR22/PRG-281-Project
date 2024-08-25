@@ -12,6 +12,8 @@ namespace EventManagement
     {
         EventManager eventManager = new EventManager();
 
+        public delegate void EventApprovedHandler(object sender, EventArgs e);
+        public static event EventApprovedHandler EventApproved;
 
         public Admin(int id, string userName, string password) : base(id, userName, password)
         {
@@ -68,6 +70,10 @@ namespace EventManagement
                         CreateEvent();
 
                         break;
+                    case AdminMenuOptions.Approve_Events:
+                        ApproveEvent();
+
+                        break;
                     case AdminMenuOptions.Register_New_Organizer:
                         RegisterNewOrganizer();
 
@@ -98,6 +104,22 @@ namespace EventManagement
         public void View_Upcoming_Events()
         {
             eventManager.DisplayUpcommingEvents();
+        }
+
+        public void ApproveEvent()
+        {
+
+
+
+
+
+            OnEventApproved(EventArgs.Empty);
+        }
+
+        protected static void OnEventApproved(EventArgs e)
+        {
+            NotifyService notify = new NotifyService();
+            EventApproved?.Invoke(null, e);
         }
 
         public void RegisterNewOrganizer()
