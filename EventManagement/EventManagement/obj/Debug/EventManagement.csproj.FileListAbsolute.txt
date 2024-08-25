@@ -26,3 +26,10 @@ C:\Users\perei\Documents\Belgium School Work\2024\Programming 281\Project\PRG-28
 C:\Users\perei\Documents\Belgium School Work\2024\Programming 281\Project\PRG-281-Project\EventManagement\EventManagement\obj\Debug\EventManagement.csproj.CoreCompileInputs.cache
 C:\Users\perei\Documents\Belgium School Work\2024\Programming 281\Project\PRG-281-Project\EventManagement\EventManagement\obj\Debug\EventManagement.exe
 C:\Users\perei\Documents\Belgium School Work\2024\Programming 281\Project\PRG-281-Project\EventManagement\EventManagement\obj\Debug\EventManagement.pdb
+C:\Users\chesa\OneDrive\Desktop\PRG281-Project\PRG-281-Project\EventManagement\EventManagement\bin\Debug\EventManagement.exe.config
+C:\Users\chesa\OneDrive\Desktop\PRG281-Project\PRG-281-Project\EventManagement\EventManagement\bin\Debug\EventManagement.exe
+C:\Users\chesa\OneDrive\Desktop\PRG281-Project\PRG-281-Project\EventManagement\EventManagement\bin\Debug\EventManagement.pdb
+C:\Users\chesa\OneDrive\Desktop\PRG281-Project\PRG-281-Project\EventManagement\EventManagement\obj\Debug\EventManagement.csproj.AssemblyReference.cache
+C:\Users\chesa\OneDrive\Desktop\PRG281-Project\PRG-281-Project\EventManagement\EventManagement\obj\Debug\EventManagement.csproj.CoreCompileInputs.cache
+C:\Users\chesa\OneDrive\Desktop\PRG281-Project\PRG-281-Project\EventManagement\EventManagement\obj\Debug\EventManagement.exe
+C:\Users\chesa\OneDrive\Desktop\PRG281-Project\PRG-281-Project\EventManagement\EventManagement\obj\Debug\EventManagement.pdb

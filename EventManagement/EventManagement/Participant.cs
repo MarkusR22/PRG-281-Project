@@ -26,7 +26,7 @@ namespace EventManagement
         }
         public enum ParticipantMenuOptions
         {
-            Search_Events = 1,
+            Display_All_Upcoming_Events = 1,
             View_Event_Details,
             Register_For_Event,
             View_Registered_Events,
@@ -36,17 +36,10 @@ namespace EventManagement
             Logout
         }
 
-
-
-        public enum UserDetails
-        {
-            View = 1,
-            Edit
-        }
-
         public override void Logout()
         {
             Console.WriteLine("User logout successful!");
+            Register_Login.DisplayMenu();
         }
 
 
@@ -70,7 +63,7 @@ namespace EventManagement
                 {
                     switch (chosenOption)
                     {
-                        case ParticipantMenuOptions.Search_Events:
+                        case ParticipantMenuOptions.Display_All_Upcoming_Events:
                             SearchEvents();
                             break;
 
