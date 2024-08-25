@@ -103,6 +103,38 @@ namespace EventManagement
             }
         }
 
+        public static DateTime DateHandling()
+        {
+            try
+            {
+                DateTime input = Convert.ToDateTime(Console.ReadLine());
+                return input;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("Something went wrong :( {0}", e.Message);
+                Console.WriteLine("Try again Enter 1.\nGo back to main menu 2.");
+                string input = Console.ReadLine();
+                switch (input)
+                {
+                    case "1":
+                        Console.WriteLine("Enter a value again");
+                        return DateHandling();
+                        break;
+                    case "2":
+                        Register_Login.DisplayMenu();
+                        break;
+                    default:
+                        Console.WriteLine("Something went wrong :( ");
+                        Console.WriteLine("Try again Enter 1.\nGo back to main menu 2.");
+                        return DateHandling();
+                        break;
+                }
+
+                return DateTime.Now ;
+            }
+        }
+
         public static bool BoolHandling()
         {
             try
