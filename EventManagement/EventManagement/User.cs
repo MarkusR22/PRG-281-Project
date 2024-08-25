@@ -11,7 +11,13 @@ namespace EventManagement
         protected int id { get; set; }
         protected string userName { get; set; }
         protected string password { get; set; }
+
         const string connectionString = "Data Source=DESKTOP-TDBJOM7;Initial Catalog=EventManagement;Integrated Security=True;Connect Timeout=30;Encrypt=True;TrustServerCertificate=True;"; //Markus' connection string
+
+        public string ConnectionString
+        {
+            get { return connectionString; }
+        }
 
         public abstract void DisplayMenu();
         //public abstract void Login();

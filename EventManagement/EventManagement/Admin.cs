@@ -7,9 +7,10 @@ using System.Threading.Tasks;
 
 namespace EventManagement
 {
-   
+
     public class Admin : User
     {
+        EventManager eventManager = new EventManager(connectionString);
         private static string connectionString = "Data Source=MACHINE;Initial Catalog=EventManagementTemp;Integrated Security=True;Connect Timeout=30;Encrypt=True;TrustServerCertificate=True;"; // Caydan
         //private static string connectionString = "Data Source=TIMOTHY\\MSSQLSERVER09;Initial Catalog=EventManagementTemp;Integrated Security=True;Connect Timeout=30;Encrypt=True;TrustServerCertificate=True;"; //Joseph's DB connection
         //private static string connectionString = "Data Source=DESKTOP-TDBJOM7;Initial Catalog=EventManagement;Integrated Security=True;Connect Timeout=30;Encrypt=True;TrustServerCertificate=True;"; //Markus' connection string
@@ -44,8 +45,8 @@ namespace EventManagement
 
         public override void DisplayMenu()
         {
-
-            Console.WriteLine("Admin Menu:");
+            Console.Clear();
+            Console.WriteLine($"Welcome Admin {userName}:");
 
             foreach (AdminMenuOptions option in Enum.GetValues(typeof(AdminMenuOptions)))
             {
@@ -70,13 +71,13 @@ namespace EventManagement
 
                         break;
                     case AdminMenuOptions.Register_New_Organizer:
+                        RegisterNewOrganizer();
 
                         break;
                     case AdminMenuOptions.Past_Feedback:
 
                         break;
                     case AdminMenuOptions.Edit_Details:
-
                         break;
                     case AdminMenuOptions.Log_out:
                         Logout();
@@ -94,10 +95,150 @@ namespace EventManagement
 
         public void View_Upcoming_Events()
         {
-            EventManager eventManager = new EventManager(connectionString);
-
             eventManager.DisplayUpcommingEvents();
         }
+
+        public void RegisterNewOrganizer()
+        {
+            Console.WriteLine("\n1. Create New User\n2. Select Existing User");
+            switch (int.Parse(Console.ReadLine()))
+            {
+                case 1:
+                    try
+                    {
+                        Console.Write("Enter username: ");
+                        string username = Console.ReadLine();
+                        Console.Write("Enter password: ");
+                        string password = Register_Login.ReadPasswordFromConsole();
+                        Console.WriteLine();
+                        using (SqlConnection connection = new SqlConnection(connectionString))
+                        {
+                            connection.Open();
+
+                            // Insert the new user into the User table and get the new UserID
+                            string insertUserQuery = @"
+                INSERT INTO dbo.[user](username, [Password]) 
+                VALUES (@username, @password); 
+                SELECT CAST(scope_identity() AS int);";
+
+                            SqlCommand command = new SqlCommand(insertUserQuery, connection);
+                            command.Parameters.AddWithValue("@username", username);
+                            command.Parameters.AddWithValue("@password", password);
+
+                            // Execute the command and retrieve the UserID of the newly inserted user
+                            int newUserID = (int)command.ExecuteScalar();
+
+                            if (newUserID > 0)
+                            {
+                                // Insert the UserID into the Organizer table
+                                SqlCommand organizerCommand = new SqlCommand("INSERT INTO Organizer (UserID) VALUES (@UserID)", connection);
+                                organizerCommand.Parameters.AddWithValue("@UserID", newUserID);
+
+                                int rowsAffected = organizerCommand.ExecuteNonQuery();
+
+                                if (rowsAffected > 0)
+                                {
+                                    Console.WriteLine("User registered and added to Organizer successfully!");
+                                }
+                                else
+                                {
+                                    Console.WriteLine("User registered, but failed to add to Organizer.");
+                                }
+                            }
+                            else
+                            {
+                                Console.WriteLine("Failed to register user. Press any key to go back...");
+                            }
+
+                            Console.ReadKey();
+                            DisplayMenu();
+                        }
+                    }
+                    catch (SqlException ex)
+                    {
+                        Console.WriteLine("Error registering user: " + ex.Message);
+                        Console.ReadKey();
+                        DisplayMenu();
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine("An error occurred: " + ex.Message);
+                        Console.ReadKey();
+                        DisplayMenu();
+                    }
+                    break;
+                case 2:
+                    try
+                    {
+                        using (SqlConnection connection = new SqlConnection(connectionString))
+                        {
+                            connection.Open();
+
+                            // Retrieve and display a list of existing users
+                            string selectUsersQuery = "SELECT userID, username  FROM dbo.[user] Order BY userID";
+                            SqlCommand selectCommand = new SqlCommand(selectUsersQuery, connection);
+
+                            using (SqlDataReader reader = selectCommand.ExecuteReader())
+                            {
+                                Console.WriteLine("Existing Users:");
+                                while (reader.Read())
+                                {
+                                    Console.WriteLine($"UserID: {reader["userID"]}, Username: {reader["username"]}");
+                                }
+                            }
+
+                            Console.Write("Enter the UserID of the user to add as an Organizer: ");
+                            int userID = int.Parse(Console.ReadLine());
+
+                            AddUserToOrganizer(connection, userID);
+                        }
+                    }
+                    catch (SqlException ex)
+                    {
+                        Console.WriteLine("Error selecting user: " + ex.Message);
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine("An error occurred: " + ex.Message);
+                    }
+
+                    Console.ReadKey();
+                    DisplayMenu();
+                    break;
+            }
+        }
+        private void AddUserToOrganizer(SqlConnection connection, int userID)
+        {
+            // Check if the UserID already exists in the Organizer table
+            string checkUserQuery = "SELECT COUNT(*) FROM organizer WHERE userID = @UserID";
+            SqlCommand checkCommand = new SqlCommand(checkUserQuery, connection);
+            checkCommand.Parameters.AddWithValue("@UserID", userID);
+
+            int userExists = (int)checkCommand.ExecuteScalar();
+
+            if (userExists > 0)
+            {
+                Console.WriteLine("This user is already an Organizer.");
+            }
+            else
+            {
+                // Insert the UserID into the Organizer table if it does not exist
+                SqlCommand organizerCommand = new SqlCommand("INSERT INTO organizer (UserID) VALUES (@UserID)", connection);
+                organizerCommand.Parameters.AddWithValue("@UserID", userID);
+
+                int rowsAffected = organizerCommand.ExecuteNonQuery();
+
+                if (rowsAffected > 0)
+                {
+                    Console.WriteLine("User added to Organizer successfully!");
+                }
+                else
+                {
+                    Console.WriteLine("Failed to add user to Organizer.");
+                }
+            }
+        }
+
 
         public void CreateEvent()
         {
@@ -162,10 +303,20 @@ namespace EventManagement
             }
         }
 
-        public override void Logout()
+        public override async void Logout()
         {
-            Console.WriteLine("Admin logout successful! Press any key to open Login Menu");
-            Register_Login.DisplayMenu();
+            try
+            {
+                Console.WriteLine("Admin logout successful!");
+                await Task.Delay(1000);
+                Register_Login.DisplayMenu();
+
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("There was an error logging out: " + ex);
+                BackToMainMenu();
+            }
         }
 
         public static void BackToMainMenu()

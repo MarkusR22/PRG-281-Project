@@ -6,16 +6,17 @@ using System.Runtime.InteropServices;
 internal class Register_Login
 {
 
-    public static User currentUser = null;
+    public static User currentUser;
+    
     private static string connectionString = "Data Source=MACHINE;Initial Catalog=EventManagementTemp;Integrated Security=True;Connect Timeout=30;Encrypt=True;TrustServerCertificate=True;"; // Caydan
     //private static string connectionString = "Data Source=TIMOTHY\\MSSQLSERVER09;Initial Catalog=EventManagementTemp;Integrated Security=True;Connect Timeout=30;Encrypt=True;TrustServerCertificate=True;"; //Joseph's DB connection
     //private static string connectionString = "Data Source=DESKTOP-TDBJOM7;Initial Catalog=EventManagement;Integrated Security=True;Connect Timeout=30;Encrypt=True;TrustServerCertificate=True;"; //Markus' connection string
     //private static string connectionString = "Data Source=EE-GAMINGPC;Initial Catalog=EventManagementTheuns;Integrated Security=True;Connect Timeout=30;Encrypt=True;TrustServerCertificate=True;"; //Theuns db string
 
 
+    //Login And Register Meu
     public static void DisplayMenu()
     {
-        currentUser = null;
         currentUser = null;
 
         Console.Clear();
@@ -72,7 +73,7 @@ internal class Register_Login
 
                 if (rowsAffected > 0)
                 {
-                    Console.WriteLine("User registered successfully! Press any key to return to login");
+                    Console.WriteLine("User registered successfully!");
                     Console.ReadKey();
                     DisplayMenu();
                 }
@@ -157,7 +158,7 @@ internal class Register_Login
         }
     }
 
-    static string ReadPasswordFromConsole()
+    public static string ReadPasswordFromConsole()
     {
         string password = "";
         ConsoleKeyInfo info;
@@ -254,23 +255,5 @@ internal class Register_Login
     static void DisplayMenuBasedOnUserType(User user)
     {
         currentUser.DisplayMenu();
-        //if (user is Admin)
-        //{
-        //    Console.Clear();
-        //    Console.WriteLine("Admin menu:");
-        //    // Display admin menu options
-        //}
-        //else if (user is Organizer)
-        //{
-        //    Console.Clear();
-        //    Console.WriteLine("Organizer menu:");
-        //    // Display organizer menu options
-        //}
-        //else
-        //{
-        //    Console.Clear();
-        //    Console.WriteLine("Participant menu:");
-        //    // Display participant menu options
-        //}
     }
 }
