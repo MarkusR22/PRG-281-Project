@@ -9,7 +9,7 @@ namespace EventManagement
 {
     internal class Participant : User
     {
-        
+
         public Participant(int id, string userName, string password) : base(id, userName, password)
         {
 
@@ -44,7 +44,7 @@ namespace EventManagement
 
 
 
-        public override async void DisplayMenu()
+        public override void DisplayMenu()
         {
             Console.Clear();
             while (true)
@@ -89,7 +89,6 @@ namespace EventManagement
                             break;
                         case ParticipantMenuOptions.Manage_Profile:
                             Register_Login.currentUser.ManageProfile();
-                            await Task.Delay(500);
                             DisplayMenu();
                             break;
 

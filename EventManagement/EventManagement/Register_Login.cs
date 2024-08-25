@@ -7,14 +7,14 @@ internal class Register_Login
 {
 
     public static User currentUser;
-    
+
 
     public static User CurrentUser
     {
         get { return currentUser; }
     }
 
-    
+
     //private static string connectionString = "Data Source=MACHINE;Initial Catalog=EventManagementTemp;Integrated Security=True;Connect Timeout=30;Encrypt=True;TrustServerCertificate=True;"; // Caydan
     //private static string connectionString = "Data Source=TIMOTHY\\MSSQLSERVER09;Initial Catalog=EventManagementTemp;Integrated Security=True;Connect Timeout=30;Encrypt=True;TrustServerCertificate=True;"; //Joseph's DB connection
     //private static string connectionString = "Data Source=DESKTOP-TDBJOM7;Initial Catalog=EventManagement;Integrated Security=True;Connect Timeout=30;Encrypt=True;TrustServerCertificate=True;"; //Markus' connection string
@@ -31,23 +31,27 @@ internal class Register_Login
         Console.WriteLine("Event Management System");
         Console.WriteLine("1. Register");
         Console.WriteLine("2. Login");
+        Console.WriteLine("3. Exit");
         Console.Write("Choose an option: ");
         //try
         //{
-            int option = ExceptionHandling.IntHandling();
-            switch (option)
-            {
-                case 1:
-                    RegisterUser();
-                    break;
-                case 2:
-                    LoginUser();
-                    break;
-                default:
-                    Console.WriteLine("Invalid option. Press any button to go back");
-                    DisplayMenu();
-                    break;
-            }
+        int option = ExceptionHandling.IntHandling();
+        switch (option)
+        {
+            case 1:
+                RegisterUser();
+                break;
+            case 2:
+                LoginUser();
+                break;
+            case 3:
+                Environment.Exit(0);
+                break;
+            default:
+                Console.WriteLine("Invalid option. Press any button to go back");
+                DisplayMenu();
+                break;
+        }
         //}
         //catch (Exception ex)
         //{

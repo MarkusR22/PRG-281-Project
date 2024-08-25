@@ -13,10 +13,10 @@ namespace EventManagement
         protected string userName { get; set; }
         protected string password { get; set; }
 
-        
 
 
-        
+
+
 
         public abstract void DisplayMenu();
         //public abstract void Login();
@@ -25,6 +25,7 @@ namespace EventManagement
 
         public void ManageProfile()
         {
+            Console.WriteLine($"Current Details:\nUsername: {userName}\nPassword: {password}\n------------------------");
             Console.Write("Enter new username (leave blank to keep current): ");
             string newUsername = Console.ReadLine().Trim();
 
@@ -90,7 +91,7 @@ namespace EventManagement
             this.userName = userName;
             this.password = password;
         }
-        
+
 
     }
 }
