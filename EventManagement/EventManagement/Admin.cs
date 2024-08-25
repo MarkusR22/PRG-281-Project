@@ -75,6 +75,7 @@ namespace EventManagement
 
                         break;
                     case AdminMenuOptions.Past_Feedback:
+                        ViewFeedback();
 
                         break;
                     case AdminMenuOptions.Edit_Details:
@@ -238,6 +239,131 @@ namespace EventManagement
                 }
             }
         }
+
+        public void ViewFeedback()
+        {
+            try
+            {
+                using (SqlConnection connection = new SqlConnection(connectionString))
+                {
+                    connection.Open();
+
+                    // Query to get event names, average rating, and latest three comments
+                    string feedbackQuery = @"
+                SELECT 
+                    e.eventID, 
+                    e.name, 
+                    CAST(AVG(CAST(f.rating AS DECIMAL(3,2))) AS FLOAT) AS averageRating,
+                    STRING_AGG(f.comment, '|') WITHIN GROUP (ORDER BY f.comment DESC) AS latestComments
+                FROM 
+                    feedback f
+                INNER JOIN 
+                    event e ON f.eventID = e.eventID
+                GROUP BY 
+                    e.eventID, e.name";
+
+                    SqlCommand command = new SqlCommand(feedbackQuery, connection);
+
+                    using (SqlDataReader reader = command.ExecuteReader())
+                    {
+                        List<int> eventIDs = new List<int>(); // List to keep track of event IDs
+
+                        Console.WriteLine("Event Feedback Summary:");
+                        int eventNumber = 1;
+
+                        while (reader.Read())
+                        {
+                            int eventID = (int)reader["eventID"];
+                            string eventName = reader["name"].ToString();
+                            // Safely retrieving the average rating
+                            double averageRating = reader["averageRating"] != DBNull.Value ? (double)reader["averageRating"] : 0;
+                            string[] comments = reader["latestComments"]?.ToString().Split('|') ?? new string[0];
+
+                            // Add event ID to list
+                            eventIDs.Add(eventID);
+
+                            Console.WriteLine($"\n{eventNumber}. Event: {eventName}");
+                            Console.WriteLine($"   Average Rating: {averageRating:F2}");
+                            Console.WriteLine("   Latest Comments:");
+
+                            for (int i = 0; i < Math.Min(comments.Length, 3); i++)
+                            {
+                                Console.WriteLine($"   - {comments[i]}");
+                            }
+
+                            eventNumber++;
+                        }
+                        reader.Close();
+
+                        // Prompt the admin to select an event based on its number
+                        Console.Write("\nSelect the event number to view all comments: ");
+                        int selectedEventNumber = int.Parse(Console.ReadLine());
+
+                        if (selectedEventNumber > 0 && selectedEventNumber <= eventIDs.Count)
+                        {
+                            int selectedEventID = eventIDs[selectedEventNumber - 1];
+                            ViewAllCommentsForEvent(connection, selectedEventID);
+                        }
+                        else
+                        {
+                            Console.WriteLine("Invalid selection.");
+                        }
+                    }
+                }
+            }
+            catch (SqlException ex)
+            {
+                Console.WriteLine("Error retrieving feedback: " + ex.Message);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("An error occurred: " + ex.Message);
+            }
+            Console.ReadKey();
+            DisplayMenu();
+        }
+
+
+        private void ViewAllCommentsForEvent(SqlConnection connection, int eventID)
+        {
+            try
+            {
+                // Query to get all comments for the selected event
+                string commentsQuery = @"
+            SELECT 
+                comment 
+            FROM 
+                feedback 
+            WHERE 
+                eventID = @eventID 
+            ORDER BY 
+                comment DESC";
+
+                SqlCommand command = new SqlCommand(commentsQuery, connection);
+                command.Parameters.AddWithValue("@eventID", eventID);
+
+                using (SqlDataReader reader = command.ExecuteReader())
+                {
+                    Console.WriteLine($"\nAll Comments for EventID: {eventID}");
+                    while (reader.Read())
+                    {
+                        string comment = reader["comment"].ToString();
+                        Console.WriteLine($"- {comment}");
+                    }
+                }
+            }
+            catch (SqlException ex)
+            {
+                Console.WriteLine("Error retrieving comments: " + ex.ToString());
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("An error occurred: " + ex.ToString());
+            }
+            Console.ReadKey();
+            DisplayMenu();
+        }
+
 
 
         public void CreateEvent()
