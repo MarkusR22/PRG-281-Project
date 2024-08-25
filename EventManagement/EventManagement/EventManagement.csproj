@@ -54,6 +54,7 @@
     <Compile Include="IMenu.cs" />
     <Compile Include="Admin.cs" />
     <Compile Include="IParticipant.cs" />
+    <Compile Include="NotifyService.cs" />
     <Compile Include="Organizer.cs" />
     <Compile Include="Participant.cs" />
     <Compile Include="Program.cs" />

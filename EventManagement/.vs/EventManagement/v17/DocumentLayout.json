@@ -3,7 +3,7 @@
   "WorkspaceRootPath": "C:\\Users\\perei\\Documents\\Belgium School Work\\2024\\Programming 281\\Project\\PRG-281-Project\\EventManagement\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{E08A4295-6904-4F0B-B841-AFEF824530FB}|EventManagement\\EventManagement.csproj|C:\\Users\\perei\\Documents\\Belgium School Work\\2024\\Programming 281\\Project\\PRG-281-Project\\EventManagement\\eventmanagement\\organizer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{E08A4295-6904-4F0B-B841-AFEF824530FB}|EventManagement\\EventManagement.csproj|c:\\users\\perei\\documents\\belgium school work\\2024\\programming 281\\project\\prg-281-project\\eventmanagement\\eventmanagement\\organizer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{E08A4295-6904-4F0B-B841-AFEF824530FB}|EventManagement\\EventManagement.csproj|solutionrelative:eventmanagement\\organizer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
@@ -11,28 +11,24 @@
       "RelativeMoniker": "D:0:0:{E08A4295-6904-4F0B-B841-AFEF824530FB}|EventManagement\\EventManagement.csproj|solutionrelative:eventmanagement\\user.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{E08A4295-6904-4F0B-B841-AFEF824530FB}|EventManagement\\EventManagement.csproj|C:\\Users\\perei\\Documents\\Belgium School Work\\2024\\Programming 281\\Project\\PRG-281-Project\\EventManagement\\eventmanagement\\admin.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{E08A4295-6904-4F0B-B841-AFEF824530FB}|EventManagement\\EventManagement.csproj|solutionrelative:eventmanagement\\admin.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{E08A4295-6904-4F0B-B841-AFEF824530FB}|EventManagement\\EventManagement.csproj|C:\\Users\\perei\\Documents\\Belgium School Work\\2024\\Programming 281\\Project\\PRG-281-Project\\EventManagement\\eventmanagement\\register_login.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{E08A4295-6904-4F0B-B841-AFEF824530FB}|EventManagement\\EventManagement.csproj|solutionrelative:eventmanagement\\register_login.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{E08A4295-6904-4F0B-B841-AFEF824530FB}|EventManagement\\EventManagement.csproj|C:\\Users\\perei\\Documents\\Belgium School Work\\2024\\Programming 281\\Project\\PRG-281-Project\\EventManagement\\eventmanagement\\eventmanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{E08A4295-6904-4F0B-B841-AFEF824530FB}|EventManagement\\EventManagement.csproj|solutionrelative:eventmanagement\\eventmanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{E08A4295-6904-4F0B-B841-AFEF824530FB}|EventManagement\\EventManagement.csproj|c:\\users\\perei\\documents\\belgium school work\\2024\\programming 281\\project\\prg-281-project\\eventmanagement\\eventmanagement\\participant.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{E08A4295-6904-4F0B-B841-AFEF824530FB}|EventManagement\\EventManagement.csproj|solutionrelative:eventmanagement\\participant.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{E08A4295-6904-4F0B-B841-AFEF824530FB}|EventManagement\\EventManagement.csproj|C:\\Users\\perei\\Documents\\Belgium School Work\\2024\\Programming 281\\Project\\PRG-281-Project\\EventManagement\\eventmanagement\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{E08A4295-6904-4F0B-B841-AFEF824530FB}|EventManagement\\EventManagement.csproj|solutionrelative:eventmanagement\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
+      "AbsoluteMoniker": "D:0:0:{E08A4295-6904-4F0B-B841-AFEF824530FB}|EventManagement\\EventManagement.csproj|C:\\Users\\perei\\Documents\\Belgium School Work\\2024\\Programming 281\\Project\\PRG-281-Project\\EventManagement\\eventmanagement\\participant.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{E08A4295-6904-4F0B-B841-AFEF824530FB}|EventManagement\\EventManagement.csproj|solutionrelative:eventmanagement\\participant.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{E08A4295-6904-4F0B-B841-AFEF824530FB}|EventManagement\\EventManagement.csproj|C:\\Users\\perei\\Documents\\Belgium School Work\\2024\\Programming 281\\Project\\PRG-281-Project\\EventManagement\\eventmanagement\\exceptionhandling.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{E08A4295-6904-4F0B-B841-AFEF824530FB}|EventManagement\\EventManagement.csproj|solutionrelative:eventmanagement\\exceptionhandling.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{E08A4295-6904-4F0B-B841-AFEF824530FB}|EventManagement\\EventManagement.csproj|C:\\Users\\perei\\Documents\\Belgium School Work\\2024\\Programming 281\\Project\\PRG-281-Project\\EventManagement\\eventmanagement\\eventmanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{E08A4295-6904-4F0B-B841-AFEF824530FB}|EventManagement\\EventManagement.csproj|solutionrelative:eventmanagement\\eventmanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -54,7 +50,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 7,
+              "DocumentIndex": 5,
               "Title": "ExceptionHandling.cs",
               "DocumentMoniker": "C:\\Users\\perei\\Documents\\Belgium School Work\\2024\\Programming 281\\Project\\PRG-281-Project\\EventManagement\\EventManagement\\ExceptionHandling.cs",
               "RelativeDocumentMoniker": "EventManagement\\ExceptionHandling.cs",
@@ -62,21 +58,19 @@
               "RelativeToolTip": "EventManagement\\ExceptionHandling.cs",
               "ViewState": "AgIAAGcAAAAAAAAAAAAuwIAAAAAYAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-08-25T16:21:20.756Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-08-25T16:21:20.756Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 6,
               "Title": "EventManager.cs",
               "DocumentMoniker": "C:\\Users\\perei\\Documents\\Belgium School Work\\2024\\Programming 281\\Project\\PRG-281-Project\\EventManagement\\EventManagement\\EventManager.cs",
               "RelativeDocumentMoniker": "EventManagement\\EventManager.cs",
               "ToolTip": "C:\\Users\\perei\\Documents\\Belgium School Work\\2024\\Programming 281\\Project\\PRG-281-Project\\EventManagement\\EventManagement\\EventManager.cs",
               "RelativeToolTip": "EventManagement\\EventManager.cs",
-              "ViewState": "AgIAADkAAAAAAAAAAAAuwGAAAAA5AAAAAAAAAA==",
+              "ViewState": "AgIAAAIAAAAAAAAAAAAuwFwAAAAPAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-08-25T16:21:20.781Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-08-25T16:21:20.781Z"
             },
             {
               "$type": "Document",
@@ -88,8 +82,7 @@
               "RelativeToolTip": "EventManagement\\User.cs",
               "ViewState": "AgIAAEMAAAAAAAAAAIAxwBkAAAAUAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-08-25T16:21:20.782Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-08-25T16:21:20.782Z"
             },
             {
               "$type": "Document",
@@ -99,14 +92,14 @@
               "RelativeDocumentMoniker": "EventManagement\\Organizer.cs",
               "ToolTip": "C:\\Users\\perei\\Documents\\Belgium School Work\\2024\\Programming 281\\Project\\PRG-281-Project\\EventManagement\\EventManagement\\Organizer.cs",
               "RelativeToolTip": "EventManagement\\Organizer.cs",
-              "ViewState": "AgIAADgAAAAAAAAAAAApwD8AAAAqAAAAAAAAAA==",
+              "ViewState": "AgIAAJkAAAAAAAAAAIAzwEwAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-08-25T16:21:20.783Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 2,
               "Title": "Register_Login.cs",
               "DocumentMoniker": "C:\\Users\\perei\\Documents\\Belgium School Work\\2024\\Programming 281\\Project\\PRG-281-Project\\EventManagement\\EventManagement\\Register_Login.cs",
               "RelativeDocumentMoniker": "EventManagement\\Register_Login.cs",
@@ -114,25 +107,23 @@
               "RelativeToolTip": "EventManagement\\Register_Login.cs",
               "ViewState": "AgIAAO0AAAAAAAAAAAAuwB4AAAA1AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-08-25T16:21:20.784Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-08-25T16:21:20.784Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 4,
               "Title": "Participant.cs",
               "DocumentMoniker": "C:\\Users\\perei\\Documents\\Belgium School Work\\2024\\Programming 281\\Project\\PRG-281-Project\\EventManagement\\EventManagement\\Participant.cs",
               "RelativeDocumentMoniker": "EventManagement\\Participant.cs",
               "ToolTip": "C:\\Users\\perei\\Documents\\Belgium School Work\\2024\\Programming 281\\Project\\PRG-281-Project\\EventManagement\\EventManagement\\Participant.cs",
               "RelativeToolTip": "EventManagement\\Participant.cs",
-              "ViewState": "AgIAACkBAAAAAAAAAAApwDMBAAC8AAAAAAAAAA==",
+              "ViewState": "AgIAACkBAAAAAAAAAAApwDMBAAA/AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-08-25T16:21:20.833Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-08-25T16:21:20.833Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 6,
+              "DocumentIndex": 3,
               "Title": "Program.cs",
               "DocumentMoniker": "C:\\Users\\perei\\Documents\\Belgium School Work\\2024\\Programming 281\\Project\\PRG-281-Project\\EventManagement\\EventManagement\\Program.cs",
               "RelativeDocumentMoniker": "EventManagement\\Program.cs",
@@ -140,42 +131,7 @@
               "RelativeToolTip": "EventManagement\\Program.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAABoAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-08-25T16:21:20.892Z",
-              "EditorCaption": ""
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "Orientation": 0,
-      "VerticalTabListWidth": 256,
-      "FloatingWindowState": {
-        "Id": "debb905a-a282-4817-a059-fa35c67e84f5",
-        "Display": 0,
-        "X": 269,
-        "Y": 52,
-        "Width": 1230,
-        "Height": 766,
-        "WindowState": 2
-      },
-      "DocumentGroups": [
-        {
-          "DockedWidth": 200,
-          "SelectedChildIndex": 0,
-          "Children": [
-            {
-              "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "Admin.cs",
-              "DocumentMoniker": "C:\\Users\\perei\\Documents\\Belgium School Work\\2024\\Programming 281\\Project\\PRG-281-Project\\EventManagement\\EventManagement\\Admin.cs",
-              "RelativeDocumentMoniker": "EventManagement\\Admin.cs",
-              "ToolTip": "C:\\Users\\perei\\Documents\\Belgium School Work\\2024\\Programming 281\\Project\\PRG-281-Project\\EventManagement\\EventManagement\\Admin.cs",
-              "RelativeToolTip": "EventManagement\\Admin.cs",
-              "ViewState": "AgIAAC8AAAAAAAAAAAAAAE8AAAAYAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-08-25T16:21:20.785Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-08-25T16:21:20.892Z"
             }
           ]
         }

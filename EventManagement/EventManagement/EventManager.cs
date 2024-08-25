@@ -13,7 +13,7 @@ namespace EventManagement
         //public const string connectionString = "Data Source=MACHINE;Initial Catalog=EventManagementTemp;Integrated Security=True;Connect Timeout=30;Encrypt=True;TrustServerCertificate=True;"; // Caydan
         public const string connectionString = "Data Source=TIMOTHY\\MSSQLSERVER09;Initial Catalog=EventManagementTemp;Integrated Security=True;Connect Timeout=30;Encrypt=True;TrustServerCertificate=True;"; //Joseph's DB connection
         //public const string connectionString = "Data Source=DESKTOP-TDBJOM7;Initial Catalog=EventManagement;Integrated Security=True;Connect Timeout=30;Encrypt=True;TrustServerCertificate=True;"; //Markus' connection string
-        //public const string connectionString = "Data Source=EE-GAMINGPC;Initial Catalog=EventManagementTheuns;Integrated Security=True;Connect Timeout=30;Encrypt=True;TrustServerCertificate=True;"; //Theuns db string
+        public const string connectionString = "Data Source=EE-GAMINGPC;Initial Catalog=EventManagementTheuns;Integrated Security=True;Connect Timeout=30;Encrypt=True;TrustServerCertificate=True;"; //Theuns db string
         public string ConnectionString
         {
             get { return connectionString; }
@@ -42,7 +42,7 @@ namespace EventManagement
 
             if (input.ToLower() == "back")
             {
-
+                currentUser.DisplayMenu();
                 return;
             }
 
@@ -90,25 +90,26 @@ namespace EventManagement
 
         public void CreateEvent()
         {
-
-            Console.Write("Enter name of event: ");
-            string eventName = Console.ReadLine();
-            Console.Write("Enter description of event: ");
-            string eventDescription = Console.ReadLine();
-            Console.Write("Enter date of event: ");
-            DateTime eventDate = DateTime.Parse(Console.ReadLine());
-            Console.Write("Enter location of event: ");
-            string eventLocation = Console.ReadLine();
-            Console.Write("Enter event organizer ID: ");
-            int organizerID = int.Parse(Console.ReadLine());
-            Console.Write("Enter status of event: ");
-            string eventStatus = Console.ReadLine();
-            Console.Write("Enter ticket price: ");
-            double ticketPrice = double.Parse(Console.ReadLine());
-            Console.WriteLine();
-
             try
             {
+
+                Console.Write("Enter name of event: ");
+                string eventName = Console.ReadLine();
+                Console.Write("Enter description of event: ");
+                string eventDescription = Console.ReadLine();
+                Console.Write("Enter date of event: ");
+                DateTime eventDate = DateTime.Parse(Console.ReadLine());
+                Console.Write("Enter location of event: ");
+                string eventLocation = Console.ReadLine();
+                Console.Write("Enter event organizer ID: ");
+                int organizerID = int.Parse(Console.ReadLine());
+                Console.Write("Enter status of event: ");
+                string eventStatus = Console.ReadLine();
+                Console.Write("Enter ticket price: ");
+                double ticketPrice = double.Parse(Console.ReadLine());
+                Console.WriteLine();
+
+
                 using (SqlConnection connection = new SqlConnection(connectionString))
                 {
                     connection.Open();
@@ -126,13 +127,13 @@ namespace EventManagement
 
                     if (rowsAffected > 0)
                     {
-                        Console.WriteLine("Event created successfully! Press any key to return to menu");
+                        Console.WriteLine("Event created successfully!J");
                         Console.ReadKey();
                         currentUser.DisplayMenu();
                     }
                     else
                     {
-                        Console.WriteLine("Failed to create event. Press any key to go back...");
+                        Console.WriteLine("Failed to create event.");
                         Console.ReadKey();
                         currentUser.DisplayMenu();
                     }
@@ -141,15 +142,18 @@ namespace EventManagement
             catch (SqlException ex)
             {
                 Console.WriteLine(ex.Message);
-                Console.ReadKey();
-                currentUser.DisplayMenu();
             }
             catch (Exception ex)
             {
                 Console.WriteLine("An error occurred: " + ex.Message);
+                
+            } finally
+            {
+                Console.WriteLine("Press any key to return to menu...");
                 Console.ReadKey();
                 currentUser.DisplayMenu();
             }
+            
         }
 
         public void DisplayEventDetails(Event ev)
