@@ -9,8 +9,15 @@ namespace EventManagement
 {
     internal class EventManager
     {
-        User currentUser = Register_Login.CurrentUser;
-        public string connectionString = "Data Source=DESKTOP-TDBJOM7;Initial Catalog=EventManagement;Integrated Security=True;Connect Timeout=30;Encrypt=True;TrustServerCertificate=True;"; //Markus' connection string;
+        static User currentUser = Register_Login.CurrentUser;
+        //public string connectionString = "Data Source=DESKTOP-TDBJOM7;Initial Catalog=EventManagement;Integrated Security=True;Connect Timeout=30;Encrypt=True;TrustServerCertificate=True;"; //Markus' connection string;
+
+        public const string connectionString = "Data Source=MACHINE;Initial Catalog=EventManagementTemp;Integrated Security=True;Connect Timeout=30;Encrypt=True;TrustServerCertificate=True;"; // Caydan
+
+        public string ConnectionString
+        {
+            get { return connectionString; }
+        }
 
         //public EventManager(string connectionString)
         //{

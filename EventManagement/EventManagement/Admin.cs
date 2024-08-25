@@ -108,7 +108,7 @@ namespace EventManagement
                         Console.Write("Enter password: ");
                         string password = Register_Login.ReadPasswordFromConsole();
                         Console.WriteLine();
-                        using (SqlConnection connection = new SqlConnection(eventManager.connectionString))
+                        using (SqlConnection connection = new SqlConnection(eventManager.ConnectionString))
                         {
                             connection.Open();
 
@@ -167,7 +167,7 @@ namespace EventManagement
                 case 2:
                     try
                     {
-                        using (SqlConnection connection = new SqlConnection(eventManager.connectionString))
+                        using (SqlConnection connection = new SqlConnection(eventManager.ConnectionString))
                         {
                             connection.Open();
 
@@ -240,7 +240,7 @@ namespace EventManagement
         {
             try
             {
-                using (SqlConnection connection = new SqlConnection(eventManager.connectionString))
+                using (SqlConnection connection = new SqlConnection(eventManager.ConnectionString))
                 {
                     connection.Open();
 
