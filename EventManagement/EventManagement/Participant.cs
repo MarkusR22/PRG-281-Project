@@ -364,7 +364,18 @@ namespace EventManagement
             Thread.Sleep(1000);
             Console.Clear();
 
+            // Check if there are any ended events the user is registered for
+            if (!HasRegisteredEndedEvents())
+            {
+                Console.WriteLine("You are not registered for any events that have ended.");
+                Console.WriteLine();
+                Console.Write("Press enter to go back.");
+                Console.ReadKey();
+                Console.Clear();
+                return;
+            }
 
+            // Display the user's registered events that have ended
             ViewUserRegisteredEndedEvents();
             Console.Write("Please select the correct number to add feedback to: ");
             int selectedIndex;
@@ -454,6 +465,32 @@ namespace EventManagement
                 Console.WriteLine("An error occurred while submitting feedback: " + ex.Message);
             }
         }
+
+        // Method to check if the user has any registered ended events
+        private bool HasRegisteredEndedEvents()
+        {
+            try
+            {
+                using (SqlConnection connection = new SqlConnection(EventManager.connectionString))
+                {
+                    connection.Open();
+
+                    SqlCommand command = new SqlCommand(
+                        "SELECT COUNT(*) FROM attendee_event a JOIN event e ON a.eventID = e.eventID WHERE a.userID = @userID AND e.status = 'ended'",
+                        connection);
+                    command.Parameters.AddWithValue("@userID", this.id);
+                    int count = (int)command.ExecuteScalar();
+
+                    return count > 0;
+                }
+            }
+            catch (SqlException ex)
+            {
+                Console.WriteLine("An error occurred while checking registered ended events: " + ex.Message);
+            }
+            return false;
+        }
+
 
         // Helper method to get the event ID by index from registered ended events
         // Helper method to get the event ID by index from registered ended events
