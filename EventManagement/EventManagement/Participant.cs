@@ -9,10 +9,7 @@ namespace EventManagement
 {
     internal class Participant : User
     {
-        //public const string connectionString = "Data Source=MACHINE;Initial Catalog=EventManagementTemp;Integrated Security=True;Connect Timeout=30;Encrypt=True;TrustServerCertificate=True;"; // Caydan
-        //public const string connectionString = "Data Source=TIMOTHY\MSSQLSERVER09;Initial Catalog=EventManagementTemp;Integrated Security=True;Connect Timeout=30;Encrypt=True;TrustServerCertificate=True;"; //Joseph's DB connection
-        //public const string connectionString = "Data Source=DESKTOP-TDBJOM7;Initial Catalog=EventManagement;Integrated Security=True;Connect Timeout=30;Encrypt=True;TrustServerCertificate=True;"; //Markus' connection string
-        //public const string connectionString = "Data Source=EE-GAMINGPC;Initial Catalog=EventManagementTheuns;Integrated Security=True;Connect Timeout=30;Encrypt=True;TrustServerCertificate=True;"; //Theuns db string
+        
         public Participant(int id, string userName, string password) : base(id, userName, password)
         {
 
@@ -136,7 +133,7 @@ namespace EventManagement
 
             try
             {
-                using (SqlConnection connection = new SqlConnection(connectionString))
+                using (SqlConnection connection = new SqlConnection(EventManager.connectionString))
                 {
                     connection.Open();
 
@@ -192,7 +189,7 @@ namespace EventManagement
         {
             try
             {
-                using (SqlConnection connection = new SqlConnection(connectionString))
+                using (SqlConnection connection = new SqlConnection(EventManager.connectionString))
                 {
                     connection.Open();
 
@@ -306,7 +303,7 @@ namespace EventManagement
         {
             try
             {
-                using (SqlConnection connection = new SqlConnection(connectionString))
+                using (SqlConnection connection = new SqlConnection(EventManager.connectionString))
                 {
                     connection.Open();
 
@@ -352,7 +349,7 @@ namespace EventManagement
 
             try
             {
-                using (SqlConnection connection = new SqlConnection(connectionString))
+                using (SqlConnection connection = new SqlConnection(EventManager.connectionString))
                 {
                     connection.Open();
 
@@ -421,7 +418,7 @@ namespace EventManagement
         {
             try
             {
-                using (SqlConnection connection = new SqlConnection(connectionString))
+                using (SqlConnection connection = new SqlConnection(EventManager.connectionString))
                 {
                     connection.Open();
 
@@ -456,7 +453,7 @@ namespace EventManagement
         {
             try
             {
-                using (SqlConnection connection = new SqlConnection(connectionString))
+                using (SqlConnection connection = new SqlConnection(EventManager.connectionString))
                 {
                     connection.Open();
 
@@ -515,7 +512,7 @@ namespace EventManagement
 
             try
             {
-                using (SqlConnection connection = new SqlConnection(connectionString))
+                using (SqlConnection connection = new SqlConnection(EventManager.connectionString))
                 {
                     connection.Open();
 
@@ -547,7 +544,7 @@ namespace EventManagement
 
             try
             {
-                using (SqlConnection connection = new SqlConnection(connectionString))
+                using (SqlConnection connection = new SqlConnection(EventManager.connectionString))
                 {
                     connection.Open();
 
@@ -594,7 +591,7 @@ namespace EventManagement
             {
                 try
                 {
-                    using (SqlConnection connection = new SqlConnection(connectionString))
+                    using (SqlConnection connection = new SqlConnection(EventManager.connectionString))
                     {
                         connection.Open();
 
@@ -648,7 +645,7 @@ namespace EventManagement
         {
             try
             {
-                using (SqlConnection connection = new SqlConnection(connectionString))
+                using (SqlConnection connection = new SqlConnection(EventManager.connectionString))
                 {
                     connection.Open();
 
