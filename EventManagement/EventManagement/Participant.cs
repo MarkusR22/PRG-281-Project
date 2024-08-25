@@ -4,6 +4,7 @@ using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Threading;
 
 namespace EventManagement
 {
@@ -38,7 +39,9 @@ namespace EventManagement
 
         public override void Logout()
         {
+            Console.Clear();
             Console.WriteLine("User logout successful!");
+            Thread.Sleep(1500);
             Register_Login.DisplayMenu();
         }
 
