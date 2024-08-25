@@ -350,79 +350,20 @@ namespace EventManagement
             }
             catch (SqlException ex)
             {
-                Console.WriteLine("Error retrieving comments: " + ex.ToString());
+                Console.WriteLine("Error retrieving comments: " + ex.Message);
             }
             catch (Exception ex)
             {
-                Console.WriteLine("An error occurred: " + ex.ToString());
+                Console.WriteLine("An error occurred: " + ex.Message);
             }
             Console.ReadKey();
             DisplayMenu();
         }
 
 
-
         public void CreateEvent()
         {
-            Console.Write("Enter name of event: ");
-            string eventName = Console.ReadLine();
-            Console.Write("Enter description of event: ");
-            string eventDescription = Console.ReadLine();
-            Console.Write("Enter date of event: ");
-            DateTime eventDate = DateTime.Parse(Console.ReadLine());
-            Console.Write("Enter location of event: ");
-            string eventLocation = Console.ReadLine();
-            Console.Write("Enter event organizer ID: ");
-            int organizerID = int.Parse(Console.ReadLine());
-            Console.Write("Enter status of event: ");
-            string eventStatus = Console.ReadLine();
-            Console.Write("Enter ticket price: ");
-            double ticketPrice = double.Parse(Console.ReadLine());
-            Console.WriteLine();
-
-            try
-            {
-                using (SqlConnection connection = new SqlConnection(eventManager.connectionString))
-                {
-                    connection.Open();
-
-                    SqlCommand command = new SqlCommand("INSERT INTO dbo.event(name, description, date, location, organizerID, status, ticket_price) VALUES (@name, @description, @date, @location, @organizerID, @status, @ticket_price)", connection);
-                    command.Parameters.AddWithValue("@name", eventName);
-                    command.Parameters.AddWithValue("@description", eventDescription);
-                    command.Parameters.AddWithValue("@date", eventDate);
-                    command.Parameters.AddWithValue("@location", eventLocation);
-                    command.Parameters.AddWithValue("@organizerID", organizerID);
-                    command.Parameters.AddWithValue("@status", eventStatus);
-                    command.Parameters.AddWithValue("@ticket_price", ticketPrice);
-
-                    int rowsAffected = (int)command.ExecuteNonQuery();
-
-                    if (rowsAffected > 0)
-                    {
-                        Console.WriteLine("Event created successfully! Press any key to return to menu");
-                        Console.ReadKey();
-                        DisplayMenu();
-                    }
-                    else
-                    {
-                        Console.WriteLine("Failed to create event. Press any key to go back...");
-                        Console.ReadKey();
-                        DisplayMenu();
-                    }
-                }
-            }
-            catch (SqlException ex)
-            {
-                Console.WriteLine(ex.Message);
-                Console.ReadKey();
-                DisplayMenu();
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine("An error occurred: " + ex.Message);
-                Console.ReadKey();
-                DisplayMenu();
-            }
+            eventManager.CreateEvent();
         }
 
         public override async void Logout()
