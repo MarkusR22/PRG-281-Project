@@ -14,6 +14,7 @@ namespace EventManagement
 
         const string connectionString = "Data Source=DESKTOP-TDBJOM7;Initial Catalog=EventManagement;Integrated Security=True;Connect Timeout=30;Encrypt=True;TrustServerCertificate=True;"; //Markus' connection string
 
+
         public string ConnectionString
         {
             get { return connectionString; }

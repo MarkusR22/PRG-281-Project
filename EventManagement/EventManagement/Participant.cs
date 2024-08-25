@@ -8,6 +8,12 @@ namespace EventManagement
 {
     internal class Participant : User
     {
+        EventManager eventManager = new EventManager();
+        //private static string connectionString = "Data Source=MACHINE;Initial Catalog=EventManagementTemp;Integrated Security=True;Connect Timeout=30;Encrypt=True;TrustServerCertificate=True;"; // Caydan
+        //private static string connectionString = "Data Source=TIMOTHY\\MSSQLSERVER09;Initial Catalog=EventManagementTemp;Integrated Security=True;Connect Timeout=30;Encrypt=True;TrustServerCertificate=True;"; //Joseph's DB connection
+        //private static string connectionString = "Data Source=DESKTOP-TDBJOM7;Initial Catalog=EventManagement;Integrated Security=True;Connect Timeout=30;Encrypt=True;TrustServerCertificate=True;"; //Markus' connection string
+        //private static string connectionString = "Data Source=EE-GAMINGPC;Initial Catalog=EventManagementTheuns;Integrated Security=True;Connect Timeout=30;Encrypt=True;TrustServerCertificate=True;"; //Theuns db string
+
         public Participant(int id, string userName, string password) : base(id, userName, password)
         {
 
@@ -55,7 +61,7 @@ namespace EventManagement
                     Console.WriteLine($"{(int)option}. {optionName}");
                 }
 
-                Console.Write("Select an option (1-6): ");
+                Console.Write("Select an option (1-4): ");
                 string input = Console.ReadLine().Trim();
                 
 
@@ -64,7 +70,7 @@ namespace EventManagement
                     switch (chosenOption)
                     {
                         case ParticipantMenuOptions.Search_Display:
-
+                            SearchDisplay(eventManager.GetEvents());
                             break;
                         case ParticipantMenuOptions.View_Events:
 
@@ -99,5 +105,44 @@ namespace EventManagement
             Console.ReadKey();
             Console.Clear();
         }
+
+        public void SearchDisplay(List<Event> events)
+        {
+            try
+            {
+                Console.WriteLine("Enter ID of event you want to search for:");
+                int id = int.Parse(Console.ReadLine());
+                bool found = false;
+                foreach (var item in events)
+                {
+                    if (item.EventId == id)
+                    {
+                        eventManager.DisplayEventDetails(item);
+                        found = true;
+                    }
+                }
+
+                if (!found)
+                {
+                    throw new Exception();
+                }
+            }
+            catch
+            {
+                Console.WriteLine("ID does not exist");
+                Console.WriteLine("Retry? [Y/N]");
+                string retry = Console.ReadLine();
+
+                if (retry.ToLower() == "y")
+                {
+                    SearchDisplay(events);
+                }
+                else if (retry.ToLower() == "n")
+                {
+                    DisplayMenu();
+                }
+            }
+        }
+
     }
 }

@@ -9,12 +9,12 @@ namespace EventManagement
 {
     internal class EventManager
     {
-        private string connectionString;
+        public string connectionString = "Data Source=DESKTOP-TDBJOM7;Initial Catalog=EventManagement;Integrated Security=True;Connect Timeout=30;Encrypt=True;TrustServerCertificate=True;"; //Markus' connection string;
 
-        public EventManager(string connectionString)
-        {
-            this.connectionString = connectionString;
-        }
+        //public EventManager(string connectionString)
+        //{
+        //    this.connectionString = connectionString;
+        //}
 
         public void DisplayUpcommingEvents()
         {
@@ -23,7 +23,10 @@ namespace EventManagement
             Console.WriteLine("Upcoming Events:");
             for (int i = 0; i < events.Count; i++)
             {
-                Console.WriteLine($"{i + 1}. {events[i].Name} - {events[i].Location} - {events[i].Date.ToShortDateString()}");
+                if (events[i].Status == "upcoming")
+                {
+                    Console.WriteLine($"{i + 1}. {events[i].Name} - {events[i].Location} - {events[i].Date.ToShortDateString()}");
+                }
             }
 
             Console.WriteLine("\nSelect an event (enter number) or type 'back' to go back:");
@@ -45,7 +48,7 @@ namespace EventManagement
             }
         }
 
-        private List<Event> GetEvents()
+        public List<Event> GetEvents()
         {
             List<Event> events = new List<Event>();
             using (SqlConnection connection = new SqlConnection(connectionString))
@@ -77,7 +80,7 @@ namespace EventManagement
             return events;
         }
 
-        private void DisplayEventDetails(Event ev)
+        public void DisplayEventDetails(Event ev)
         {
             Console.WriteLine($"\nEvent Details:");
             Console.WriteLine($"Name: {ev.Name}");
