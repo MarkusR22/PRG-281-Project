@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -8,12 +9,10 @@ namespace EventManagement
 {
     internal class Participant : User
     {
-        EventManager eventManager = new EventManager();
-        
-        //private static string connectionString = "Data Source=TIMOTHY\\MSSQLSERVER09;Initial Catalog=EventManagementTemp;Integrated Security=True;Connect Timeout=30;Encrypt=True;TrustServerCertificate=True;"; //Joseph's DB connection
-        //private static string connectionString = "Data Source=DESKTOP-TDBJOM7;Initial Catalog=EventManagement;Integrated Security=True;Connect Timeout=30;Encrypt=True;TrustServerCertificate=True;"; //Markus' connection string
-        //private static string connectionString = "Data Source=EE-GAMINGPC;Initial Catalog=EventManagementTheuns;Integrated Security=True;Connect Timeout=30;Encrypt=True;TrustServerCertificate=True;"; //Theuns db string
-
+        //public const string connectionString = "Data Source=MACHINE;Initial Catalog=EventManagementTemp;Integrated Security=True;Connect Timeout=30;Encrypt=True;TrustServerCertificate=True;"; // Caydan
+        //public const string connectionString = "Data Source=TIMOTHY\MSSQLSERVER09;Initial Catalog=EventManagementTemp;Integrated Security=True;Connect Timeout=30;Encrypt=True;TrustServerCertificate=True;"; //Joseph's DB connection
+        //public const string connectionString = "Data Source=DESKTOP-TDBJOM7;Initial Catalog=EventManagement;Integrated Security=True;Connect Timeout=30;Encrypt=True;TrustServerCertificate=True;"; //Markus' connection string
+        //public const string connectionString = "Data Source=EE-GAMINGPC;Initial Catalog=EventManagementTheuns;Integrated Security=True;Connect Timeout=30;Encrypt=True;TrustServerCertificate=True;"; //Theuns db string
         public Participant(int id, string userName, string password) : base(id, userName, password)
         {
 
@@ -30,21 +29,27 @@ namespace EventManagement
         }
         public enum ParticipantMenuOptions
         {
-            Search_Display = 1,
-            View_Events,
-            Logout,
-            User_details,
-            
+            Search_Events = 1,
+            View_Event_Details,
+            Register_For_Event,
+            View_Registered_Events,
+            Cancel_Registration,
+            Submit_Feedback,
+            Manage_Profile,
+            Logout
         }
+
+
+
         public enum UserDetails
         {
-            View =1,
+            View = 1,
             Edit
         }
 
         public override void Logout()
         {
-            Console.WriteLine("Admin logout successful!");
+            Console.WriteLine("User logout successful!");
         }
 
 
@@ -61,42 +66,60 @@ namespace EventManagement
                     Console.WriteLine($"{(int)option}. {optionName}");
                 }
 
-                Console.Write("Select an option (1-4): ");
+                Console.Write("Select an option (1-6): ");
                 string input = Console.ReadLine().Trim();
-                
 
                 if (Enum.TryParse(input, out ParticipantMenuOptions chosenOption) && Enum.IsDefined(typeof(ParticipantMenuOptions), chosenOption))
                 {
                     switch (chosenOption)
                     {
-                        case ParticipantMenuOptions.Search_Display:
-                            SearchDisplay(eventManager.GetEvents());
+                        case ParticipantMenuOptions.Search_Events:
+                            SearchEvents();
                             break;
-                        case ParticipantMenuOptions.View_Events:
 
+                        case ParticipantMenuOptions.View_Event_Details:
+                            ViewEventDetails();
                             break;
+
+                        case ParticipantMenuOptions.Register_For_Event:
+                            RegisterForEvent();
+                            break;
+
+                        case ParticipantMenuOptions.View_Registered_Events:
+                            ViewRegisteredEvents();
+                            break;
+
+                        case ParticipantMenuOptions.Cancel_Registration:
+                            CancelRegistration();
+                            break;
+
+                        case ParticipantMenuOptions.Submit_Feedback:
+                            SubmitFeedback();
+                            break;
+                        case ParticipantMenuOptions.Manage_Profile:
+                            ManageProfile();
+                            break;
+
                         case ParticipantMenuOptions.Logout:
+                            Logout();
+                            return;
 
+                        default:
+                            Console.Clear();
+                            Console.WriteLine("Invalid option, please try again.");
                             break;
-                        case ParticipantMenuOptions.User_details:
-                            foreach (UserDetails option in Enum.GetValues(typeof(UserDetails)))
-                            {
-                                string optionName = option.ToString().Replace("_", " ");
-                                Console.WriteLine($"{(int)option}. {optionName}");
-                            }
-                            break;
-
                     }
                 }
                 else
                 {
                     Console.Clear();
                     Console.WriteLine("Invalid option, please try again.");
-                    continue;
                 }
-
             }
         }
+
+
+
 
 
         public static void BackToMainMenu()
@@ -106,43 +129,563 @@ namespace EventManagement
             Console.Clear();
         }
 
-        public void SearchDisplay(List<Event> events)
+        //NEW METHODS FOR NEW MENU
+        public List<(int eventId, string eventName)> SearchEvents()
         {
+            List<(int eventId, string eventName)> events = new List<(int eventId, string eventName)>();
+
             try
             {
-                Console.WriteLine("Enter ID of event you want to search for:");
-                int id = int.Parse(Console.ReadLine());
-                bool found = false;
-                foreach (var item in events)
+                using (SqlConnection connection = new SqlConnection(connectionString))
                 {
-                    if (item.EventId == id)
+                    connection.Open();
+
+                    SqlCommand command = new SqlCommand("SELECT eventID, name FROM event WHERE status = 'upcoming'", connection);
+                    SqlDataReader reader = command.ExecuteReader();
+
+                    Console.WriteLine("Upcoming Events:");
+                    int index = 1;
+                    while (reader.Read())
                     {
-                        eventManager.DisplayEventDetails(item);
-                        found = true;
+                        int eventId = (int)reader["eventID"];
+                        string eventName = (string)reader["name"];
+                        events.Add((eventId, eventName));
+
+                        Console.WriteLine($"{index}. {eventName}");
+                        index++;
                     }
                 }
-
-                if (!found)
-                {
-                    throw new Exception();
-                }
             }
-            catch
+            catch (SqlException ex)
             {
-                Console.WriteLine("ID does not exist");
-                Console.WriteLine("Retry? [Y/N]");
-                string retry = Console.ReadLine();
+                Console.WriteLine("An error occurred while searching for events: " + ex.Message);
+            }
 
-                if (retry.ToLower() == "y")
-                {
-                    SearchDisplay(events);
-                }
-                else if (retry.ToLower() == "n")
-                {
-                    DisplayMenu();
-                }
+            return events;
+        }
+
+
+        public void RegisterForEvent()
+        {
+            List<(int eventId, string eventName)> events = SearchEvents();
+
+            if (events.Count == 0)
+            {
+                Console.WriteLine("No upcoming events available.");
+                return;
+            }
+
+            Console.Write("Enter the number corresponding to the event you want to register for: ");
+            int selectedIndex;
+            if (int.TryParse(Console.ReadLine(), out selectedIndex) && selectedIndex >= 1 && selectedIndex <= events.Count)
+            {
+                int eventId = events[selectedIndex - 1].eventId;
+                RegisterForSelectedEvent(eventId);
+            }
+            else
+            {
+                Console.WriteLine("Invalid selection. Please enter a number corresponding to the event.");
             }
         }
 
+        private void RegisterForSelectedEvent(int eventId)
+        {
+            try
+            {
+                using (SqlConnection connection = new SqlConnection(connectionString))
+                {
+                    connection.Open();
+
+                    // Check if the user is already registered for the event
+                    SqlCommand checkRegistrationCommand = new SqlCommand("SELECT COUNT(*) FROM attendee_event WHERE userID = @userID AND eventID = @eventID", connection);
+                    checkRegistrationCommand.Parameters.AddWithValue("@userID", this.id);
+                    checkRegistrationCommand.Parameters.AddWithValue("@eventID", eventId);
+
+                    int registrationCount = (int)checkRegistrationCommand.ExecuteScalar();
+
+                    if (registrationCount > 0)
+                    {
+                        Console.WriteLine("You are already registered for this event.");
+                        return; // Exit the method early
+                    }
+
+                    // Get event details
+                    SqlCommand getEventCommand = new SqlCommand("SELECT name, YEAR(date) FROM event WHERE eventID = @eventID", connection);
+                    getEventCommand.Parameters.AddWithValue("@eventID", eventId);
+                    SqlDataReader reader = getEventCommand.ExecuteReader();
+
+                    if (reader.Read())
+                    {
+                        string eventName = reader.GetString(0);
+                        int eventYear = reader.GetInt32(1);
+                        reader.Close();
+
+                        // Generate the entry code
+                        string entryCode = GenerateEntryCode(eventName, eventYear, connection, eventId);
+
+                        // Register for the event
+                        SqlCommand command = new SqlCommand("INSERT INTO attendee_event (userID, eventID, entry_code) VALUES (@userID, @eventID, @entryCode)", connection);
+                        command.Parameters.AddWithValue("@userID", this.id);
+                        command.Parameters.AddWithValue("@eventID", eventId);
+                        command.Parameters.AddWithValue("@entryCode", entryCode);
+
+                        int rowsAffected = command.ExecuteNonQuery();
+                        if (rowsAffected > 0)
+                        {
+                            Console.WriteLine("Successfully registered for the event!");
+                        }
+                        else
+                        {
+                            Console.WriteLine("Failed to register for the event.");
+                        }
+                    }
+                    else
+                    {
+                        Console.WriteLine("Event not found.");
+                    }
+                }
+            }
+            catch (SqlException ex)
+            {
+                Console.WriteLine("An error occurred while registering for the event: " + ex.Message);
+            }
+        }
+
+
+        private string GenerateEntryCode(string eventName, int eventYear, SqlConnection connection, int eventId)
+        {
+            // Extract the first letter of the first two words in the event name
+            string[] words = eventName.Split(' ');
+            string initials = (words.Length > 1) ? $"{words[0][0]}{words[1][0]}" : $"{words[0][0]}";
+
+            // Generate the base part of the code
+            string baseCode = $"{initials.ToUpper()}{eventYear}";
+
+            // Get the current maximum entry code for this event
+            SqlCommand getMaxCodeCommand = new SqlCommand(
+                "SELECT TOP 1 entry_code FROM attendee_event WHERE eventID = @eventID ORDER BY entry_code DESC", connection);
+            getMaxCodeCommand.Parameters.AddWithValue("@eventID", eventId);
+
+            string maxCode = (string)getMaxCodeCommand.ExecuteScalar();
+            int increment = 1;
+
+            if (maxCode != null)
+            {
+                // Extract the numeric part and increment it
+                string numericPart = maxCode.Substring(baseCode.Length);
+                if (int.TryParse(numericPart, out int lastNumber))
+                {
+                    increment = lastNumber + 1;
+                }
+            }
+
+            // Format the increment with leading zeros if necessary
+            string incrementPart = increment.ToString("D2"); // Ensure it has at least 2 digits
+
+            // Generate the final entry code
+            string entryCode = $"{baseCode}{incrementPart}";
+
+            // Check the length of the entry code to ensure it fits in the column
+            SqlCommand getColumnLengthCommand = new SqlCommand(
+                "SELECT CHARACTER_MAXIMUM_LENGTH FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = 'attendee_event' AND COLUMN_NAME = 'entry_code'", connection);
+            int maxLength = (int)getColumnLengthCommand.ExecuteScalar();
+
+            if (entryCode.Length > maxLength)
+            {
+                entryCode = entryCode.Substring(0, maxLength);
+            }
+
+            return entryCode;
+        }
+
+
+
+
+
+        public void ViewRegisteredEvents()
+        {
+            try
+            {
+                using (SqlConnection connection = new SqlConnection(connectionString))
+                {
+                    connection.Open();
+
+                    SqlCommand command = new SqlCommand("SELECT e.eventID, e.name, e.date, e.location FROM event e INNER JOIN attendee_event ae ON e.eventID = ae.eventID WHERE ae.userID = @userID", connection);
+                    command.Parameters.AddWithValue("@userID", this.id);
+
+                    SqlDataReader reader = command.ExecuteReader();
+
+                    Console.WriteLine("Registered Events:");
+                    while (reader.Read())
+                    {
+                        Console.WriteLine($"Event ID: {reader["eventID"]}, Name: {reader["name"]}, Date: {((DateTime)reader["date"]).ToString("yyyy-MM-dd")}, Location: {reader["location"]}");
+                    }
+                }
+            }
+            catch (SqlException ex)
+            {
+                Console.WriteLine("An error occurred while fetching registered events: " + ex.Message);
+            }
+        }
+
+        public void SubmitFeedback()
+        {
+            // Display ended events for which the user is registered
+            Console.WriteLine("Here are the ended events you can provide feedback for:");
+            ViewUserRegisteredEndedEvents();
+
+            Console.Write("Enter the number of the event you wish to submit feedback for: ");
+            int selectedIndex;
+            if (!int.TryParse(Console.ReadLine(), out selectedIndex))
+            {
+                Console.WriteLine("Invalid input. Please enter a number.");
+                return;
+            }
+
+            // Map selected index to event ID
+            int eventId = GetEventIdByIndex(selectedIndex);
+            if (eventId == -1)
+            {
+                Console.WriteLine("Invalid event selection. Please try again.");
+                return;
+            }
+
+            try
+            {
+                using (SqlConnection connection = new SqlConnection(connectionString))
+                {
+                    connection.Open();
+
+                    // Check if the user is registered for the event
+                    SqlCommand checkRegistrationCommand = new SqlCommand("SELECT COUNT(*) FROM attendee_event WHERE userID = @userID AND eventID = @eventID", connection);
+                    checkRegistrationCommand.Parameters.AddWithValue("@userID", this.id);
+                    checkRegistrationCommand.Parameters.AddWithValue("@eventID", eventId);
+
+                    int registrationCount = (int)checkRegistrationCommand.ExecuteScalar();
+
+                    if (registrationCount == 0)
+                    {
+                        Console.WriteLine("You are not registered for this event.");
+                        return;
+                    }
+
+                    // Check if the event has ended
+                    SqlCommand checkEventCommand = new SqlCommand("SELECT status FROM event WHERE eventID = @eventID", connection);
+                    checkEventCommand.Parameters.AddWithValue("@eventID", eventId);
+                    string eventStatus = (string)checkEventCommand.ExecuteScalar();
+
+                    if (eventStatus.ToLower() != "ended")
+                    {
+                        Console.WriteLine("You cannot submit feedback for an event that has not ended.");
+                        return;
+                    }
+
+                    // Collect feedback and rating from the user
+                    Console.Write("Enter your feedback: ");
+                    string feedbackComment = Console.ReadLine();
+
+                    Console.Write("Enter your rating (1 to 5): ");
+                    int rating;
+                    if (!int.TryParse(Console.ReadLine(), out rating) || rating < 1 || rating > 5)
+                    {
+                        Console.WriteLine("Invalid rating. Please enter a number between 1 and 5.");
+                        return;
+                    }
+
+                    // Insert feedback into the database
+                    SqlCommand insertFeedbackCommand = new SqlCommand("INSERT INTO feedback (eventID, comment, rating) VALUES (@eventID, @comment, @rating)", connection);
+                    insertFeedbackCommand.Parameters.AddWithValue("@eventID", eventId);
+                    insertFeedbackCommand.Parameters.AddWithValue("@comment", feedbackComment);
+                    insertFeedbackCommand.Parameters.AddWithValue("@rating", rating);
+
+                    int rowsAffected = insertFeedbackCommand.ExecuteNonQuery();
+                    if (rowsAffected > 0)
+                    {
+                        Console.WriteLine("Thank you for your feedback!");
+                    }
+                    else
+                    {
+                        Console.WriteLine("Failed to submit feedback. Please try again.");
+                    }
+                }
+            }
+            catch (SqlException ex)
+            {
+                Console.WriteLine("An error occurred while submitting feedback: " + ex.Message);
+            }
+        }
+
+        // Helper method to get the event ID by index from registered ended events
+        // Helper method to get the event ID by index from registered ended events
+        private int GetEventIdByIndex(int index)
+        {
+            try
+            {
+                using (SqlConnection connection = new SqlConnection(connectionString))
+                {
+                    connection.Open();
+
+                    // Update query to specify table alias for eventID
+                    SqlCommand command = new SqlCommand(
+                        "SELECT e.eventID FROM attendee_event a JOIN event e ON a.eventID = e.eventID WHERE a.userID = @userID AND e.status = 'ended'",
+                        connection);
+                    command.Parameters.AddWithValue("@userID", this.id);
+                    SqlDataReader reader = command.ExecuteReader();
+
+                    int currentIndex = 1;
+                    while (reader.Read())
+                    {
+                        if (currentIndex == index)
+                        {
+                            return reader.GetInt32(0); // Retrieve eventID from the first column
+                        }
+                        currentIndex++;
+                    }
+                }
+            }
+            catch (SqlException ex)
+            {
+                Console.WriteLine("An error occurred while retrieving event IDs: " + ex.Message);
+            }
+            return -1; // Return -1 if the index is invalid
+        }
+
+
+        // Method to display only ended events for which the user is registered
+        private void ViewUserRegisteredEndedEvents()
+        {
+            try
+            {
+                using (SqlConnection connection = new SqlConnection(connectionString))
+                {
+                    connection.Open();
+
+                    // Update query to specify table alias for columns
+                    SqlCommand command = new SqlCommand(
+                        "SELECT e.eventID, e.name, e.description, e.date, e.location, e.status, e.ticket_price " +
+                        "FROM event e JOIN attendee_event a ON e.eventID = a.eventID " +
+                        "WHERE a.userID = @userID AND e.status = 'ended'",
+                        connection);
+                    command.Parameters.AddWithValue("@userID", this.id);
+                    SqlDataReader reader = command.ExecuteReader();
+
+                    Console.WriteLine("Ended events you can provide feedback for:");
+                    int index = 1;
+                    while (reader.Read())
+                    {
+                        Console.WriteLine($"{index}. Event ID: {reader["eventID"]}");
+                        Console.WriteLine($"   Name: {reader["name"]}");
+                        Console.WriteLine($"   Description: {reader["description"]}");
+                        Console.WriteLine($"   Date: {((DateTime)reader["date"]).ToString("yyyy-MM-dd")}");
+                        Console.WriteLine($"   Location: {reader["location"]}");
+                        Console.WriteLine($"   Status: {reader["status"]}");
+                        Console.WriteLine($"   Ticket Price: {reader["ticket_price"]}");
+                        Console.WriteLine();
+                        index++;
+                    }
+                }
+            }
+            catch (SqlException ex)
+            {
+                Console.WriteLine("An error occurred while fetching events: " + ex.Message);
+            }
+        }
+
+
+        public void CancelRegistration()
+        {
+            // Display upcoming events the user is registered for
+            List<int> eventIds = DisplayRegisteredUpcomingEvents();
+
+            if (eventIds.Count == 0)
+            {
+                Console.WriteLine("You are not registered for any upcoming events.");
+                return;
+            }
+
+            Console.Write("Enter the number of the event you wish to cancel registration for: ");
+            int selectedIndex;
+            if (!int.TryParse(Console.ReadLine(), out selectedIndex) || selectedIndex < 1 || selectedIndex > eventIds.Count)
+            {
+                Console.WriteLine("Invalid input. Please enter a valid number.");
+                return;
+            }
+
+            int eventId = eventIds[selectedIndex - 1]; // Adjust index for zero-based list
+
+            try
+            {
+                using (SqlConnection connection = new SqlConnection(connectionString))
+                {
+                    connection.Open();
+
+                    SqlCommand command = new SqlCommand("DELETE FROM attendee_event WHERE userID = @userID AND eventID = @eventID", connection);
+                    command.Parameters.AddWithValue("@userID", this.id);
+                    command.Parameters.AddWithValue("@eventID", eventId);
+
+                    int rowsAffected = command.ExecuteNonQuery();
+                    if (rowsAffected > 0)
+                    {
+                        Console.WriteLine("You have successfully canceled your registration for the event.");
+                    }
+                    else
+                    {
+                        Console.WriteLine("Failed to cancel registration. Please make sure you are registered for this event.");
+                    }
+                }
+            }
+            catch (SqlException ex)
+            {
+                Console.WriteLine("An error occurred while canceling your registration: " + ex.Message);
+            }
+        }
+
+        // Helper method to display upcoming events the user is registered for and return their IDs
+        private List<int> DisplayRegisteredUpcomingEvents()
+        {
+            List<int> eventIds = new List<int>();
+
+            try
+            {
+                using (SqlConnection connection = new SqlConnection(connectionString))
+                {
+                    connection.Open();
+
+                    SqlCommand command = new SqlCommand(
+                        "SELECT e.eventID, e.name, e.date, e.location " +
+                        "FROM event e JOIN attendee_event a ON e.eventID = a.eventID " +
+                        "WHERE a.userID = @userID AND e.status = 'upcoming'",
+                        connection);
+                    command.Parameters.AddWithValue("@userID", this.id);
+
+                    SqlDataReader reader = command.ExecuteReader();
+
+                    int index = 1;
+                    while (reader.Read())
+                    {
+                        Console.WriteLine($"{index}. Event ID: {reader["eventID"]}");
+                        Console.WriteLine($"   Name: {reader["name"]}");
+                        Console.WriteLine($"   Date: {((DateTime)reader["date"]).ToString("yyyy-MM-dd")}");
+                        Console.WriteLine($"   Location: {reader["location"]}");
+                        Console.WriteLine();
+                        eventIds.Add((int)reader["eventID"]);
+                        index++;
+                    }
+                }
+            }
+            catch (SqlException ex)
+            {
+                Console.WriteLine("An error occurred while retrieving registered upcoming events: " + ex.Message);
+            }
+
+            return eventIds;
+        }
+
+
+        public void ManageProfile()
+        {
+            Console.Write("Enter new username (leave blank to keep current): ");
+            string newUsername = Console.ReadLine().Trim();
+
+            Console.Write("Enter new password (leave blank to keep current): ");
+            string newPassword = Console.ReadLine().Trim();
+
+            if (!string.IsNullOrEmpty(newUsername) || !string.IsNullOrEmpty(newPassword))
+            {
+                try
+                {
+                    using (SqlConnection connection = new SqlConnection(connectionString))
+                    {
+                        connection.Open();
+
+                        SqlCommand command = new SqlCommand("UPDATE [user] SET username = @username, password = @password WHERE userID = @userID", connection);
+                        command.Parameters.AddWithValue("@userID", this.id);
+
+                        if (!string.IsNullOrEmpty(newUsername))
+                        {
+                            command.Parameters.AddWithValue("@username", newUsername);
+                        }
+                        else
+                        {
+                            command.Parameters.AddWithValue("@username", this.userName); // Keep the current username
+                        }
+
+                        if (!string.IsNullOrEmpty(newPassword))
+                        {
+                            command.Parameters.AddWithValue("@password", newPassword);
+                        }
+                        else
+                        {
+                            command.Parameters.AddWithValue("@password", this.password); // Keep the current password
+                        }
+
+                        int rowsAffected = command.ExecuteNonQuery();
+                        if (rowsAffected > 0)
+                        {
+                            Console.WriteLine("Profile updated successfully!");
+                            if (!string.IsNullOrEmpty(newUsername)) this.userName = newUsername;
+                            if (!string.IsNullOrEmpty(newPassword)) this.password = newPassword;
+                        }
+                        else
+                        {
+                            Console.WriteLine("Failed to update profile. Please try again.");
+                        }
+                    }
+                }
+                catch (SqlException ex)
+                {
+                    Console.WriteLine("An error occurred while updating your profile: " + ex.Message);
+                }
+            }
+            else
+            {
+                Console.WriteLine("No changes were made to your profile.");
+            }
+        }
+
+
+        public void ViewEventDetails()
+        {
+            try
+            {
+                using (SqlConnection connection = new SqlConnection(connectionString))
+                {
+                    connection.Open();
+
+                    // Query to select all upcoming events
+                    SqlCommand command = new SqlCommand("SELECT * FROM event WHERE status = 'upcoming'", connection);
+                    SqlDataReader reader = command.ExecuteReader();
+
+                    // Check if there are any results
+                    bool hasEvents = false;
+
+                    // Loop through all rows in the result set
+                    while (reader.Read())
+                    {
+                        hasEvents = true;
+                        Console.WriteLine($"Event ID: {reader["eventID"]}");
+                        Console.WriteLine($"Name: {reader["name"]}");
+                        Console.WriteLine($"Description: {reader["description"]}");
+                        Console.WriteLine($"Date: {((DateTime)reader["date"]).ToString("yyyy-MM-dd")}");
+                        Console.WriteLine($"Location: {reader["location"]}");
+                        Console.WriteLine($"Status: {reader["status"]}");
+                        Console.WriteLine($"Ticket Price: {reader["ticket_price"]}");
+                        Console.WriteLine(); // Add a blank line between events
+                    }
+
+                    if (!hasEvents)
+                    {
+                        Console.WriteLine("No upcoming events found.");
+                    }
+                }
+            }
+            catch (SqlException ex)
+            {
+                Console.WriteLine("An error occurred while fetching event details: " + ex.Message);
+            }
+        }
+
+
+        //NEW METHODS FOR NEW MENU
     }
 }
