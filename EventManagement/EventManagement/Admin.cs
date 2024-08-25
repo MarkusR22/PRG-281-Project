@@ -75,6 +75,7 @@ namespace EventManagement
 
                         break;
                     case AdminMenuOptions.Edit_Details:
+                        Register_Login.currentUser.ManageProfile();
                         break;
                     case AdminMenuOptions.Log_out:
                         Logout();
