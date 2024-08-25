@@ -9,7 +9,7 @@ namespace EventManagement
 {
     internal class EventManager
     {
-        User curentUser = Register_Login.CurrentUser;
+        User currentUser = Register_Login.CurrentUser;
         public string connectionString = "Data Source=DESKTOP-TDBJOM7;Initial Catalog=EventManagement;Integrated Security=True;Connect Timeout=30;Encrypt=True;TrustServerCertificate=True;"; //Markus' connection string;
 
         //public EventManager(string connectionString)
@@ -145,7 +145,7 @@ namespace EventManagement
             }
         }
 
-        private void DisplayEventDetails(Event ev)
+        public void DisplayEventDetails(Event ev)
         {
             Console.WriteLine($"\nEvent Details:");
             Console.WriteLine($"Name: {ev.Name}");
