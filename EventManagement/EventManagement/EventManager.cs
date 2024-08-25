@@ -67,7 +67,7 @@ namespace EventManagement
                                 Location = reader.GetString(4),
                                 OrganizerId = reader.GetInt32(5),
                                 Status = reader.GetString(6),
-                                TicketPrice = reader.GetDecimal(7)
+                                TicketPrice = Math.Round(reader.GetDecimal(7), 2)
                             };
                             events.Add(ev);
                         }
