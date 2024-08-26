@@ -136,7 +136,7 @@ namespace EventManagement
 
             if (input.ToLower() == "back")
             {
-
+                BackToMainMenu();
                 return;
             }
 
@@ -237,34 +237,29 @@ namespace EventManagement
                     if (rowsAffected > 0)
                     {
                         Console.WriteLine("Event created successfully! Press any key to return to menu");
-                        Console.ReadKey();
-                        Register_Login.DisplayMenu();
                     }
                     else
                     {
                         Console.WriteLine("Failed to create event. Press any key to go back...");
-                        Console.ReadKey();
-                        Register_Login.DisplayMenu();
                     }
                 }
             }
             catch (SqlException ex)
             {
                 Console.WriteLine(ex.Message);
-                Console.ReadKey();
-                Register_Login.DisplayMenu();
             }
             catch (Exception ex)
             {
                 Console.WriteLine("An error occurred: " + ex.Message);
-                Console.ReadKey();
-                Register_Login.DisplayMenu();
+            } finally
+            {
+                BackToMainMenu();
             }
         }
 
 
 
-        public async void ViewFeedback()
+        public void ViewFeedback()
         {
             Console.Clear();
             try
@@ -348,8 +343,7 @@ namespace EventManagement
             }
             finally
             {
-                Console.ReadKey();
-                DisplayMenu();
+                BackToMainMenu();
             }
         }
 
@@ -395,8 +389,7 @@ namespace EventManagement
             Console.ReadKey();
             DisplayMenu();
         }
-
-
-
     }
+
+
 }

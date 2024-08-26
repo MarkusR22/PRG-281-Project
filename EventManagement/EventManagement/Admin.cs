@@ -115,6 +115,7 @@ namespace EventManagement
 
         public void ApproveEvent()
         {
+            Console.Clear();
             Console.WriteLine("---------------------------------");
             List<int> eventIds = new List<int>();
 
@@ -239,6 +240,7 @@ namespace EventManagement
 
         public void CancelEvent()
         {
+            Console.Clear();
             try
             {
 
@@ -310,9 +312,13 @@ namespace EventManagement
 
                     ;
                 }
-            } catch(Exception ex)
+            } catch (SqlException ex)
             {
-                Console.WriteLine("An Error Occured: "+ ex.Message);
+                Console.WriteLine("An Error Occured while cancelling event: " + ex.Message);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("An Error Occured: " + ex.Message);
             } finally
             {
                 BackToMainMenu();
@@ -328,6 +334,7 @@ namespace EventManagement
 
         public void DisplayAllUsers()
         {
+            Console.Clear();
             List<string> admins = new List<string>();
             List<string> organizers = new List<string>();
             List<string> regularUsers = new List<string>();
@@ -424,6 +431,7 @@ namespace EventManagement
 
         public void RegisterNewOrganizer()
         {
+            Console.Clear();
             Console.WriteLine("---------------------------------");
             Console.WriteLine("\n1. Create New User\n2. Select Existing User");
             switch (int.Parse(Console.ReadLine()))
@@ -565,6 +573,7 @@ namespace EventManagement
 
         public void ViewFeedback()
         {
+            Console.Clear();
             Console.WriteLine("---------------------------------");
             try
             {
@@ -652,6 +661,7 @@ namespace EventManagement
 
         private void ViewAllCommentsForEvent(SqlConnection connection, int eventID)
         {
+            Console.Clear();
 
             try
             {
@@ -694,6 +704,7 @@ namespace EventManagement
 
         public void CreateEvent()
         {
+            Console.Clear();
             Console.WriteLine("---------------------------------");
             eventManager.CreateEvent();
         }
@@ -702,8 +713,8 @@ namespace EventManagement
         {
             try
             {
-                Console.WriteLine("Admin logout successful!");
-                Thread.Sleep(1000);
+                Console.WriteLine("\nAdmin logout successful!");
+                Thread.Sleep(1500);
                 Register_Login.DisplayMenu();
 
             }
@@ -716,12 +727,10 @@ namespace EventManagement
 
         public void BackToMainMenu()
         {
-            Console.WriteLine("Press any key to return to the admin menu...");
+            Console.WriteLine("\nPress any key to return to the admin menu...");
             Console.ReadKey();
             Console.Clear();
             DisplayMenu();
-
-
         }
 
     }
