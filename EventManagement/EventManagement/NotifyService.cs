@@ -59,7 +59,15 @@ namespace EventManagement
         public void OnRegisteredForEvent(object sender, RegisteredForEventArgs e)
         {
             Console.ForegroundColor = ConsoleColor.Green;
-            Console.WriteLine("successfully registered for event!");
+            Console.Write("Registering for event");
+            Thread.Sleep(1000);
+            Console.Write(".");
+            Thread.Sleep(1000);
+            Console.Write(".");
+            Thread.Sleep(1000);
+            Console.Write(".");
+            Thread.Sleep(1000);
+            Console.WriteLine("\nsuccessfully registered for event!");
             Console.WriteLine($"Your entry code is: {e.entryCode}");
             Console.ResetColor();
         }
