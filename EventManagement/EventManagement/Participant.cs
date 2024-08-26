@@ -17,6 +17,8 @@ namespace EventManagement
         public delegate void UnregisteredForEventHander(object source, EventArgs e);
         public static event UnregisteredForEventHander UnregisteredForEvent;
 
+        NotifyService notify = new NotifyService();
+
         public Participant(int id, string userName, string password) : base(id, userName, password)
         {
 
@@ -315,7 +317,6 @@ namespace EventManagement
         //Invoking event OnRegisteredForEvent
         public void OnRegisteredForEvent(string entryCode)
         {
-            NotifyService notify = new NotifyService();
             RegisteredForEvent?.Invoke(this, new RegisteredForEventArgs() { entryCode = entryCode});
         }
 
@@ -675,7 +676,6 @@ namespace EventManagement
 
         public void OnUnregisteredForEvent()
         {
-            NotifyService notify = new NotifyService();
             UnregisteredForEvent?.Invoke(this, EventArgs.Empty);
         }
 

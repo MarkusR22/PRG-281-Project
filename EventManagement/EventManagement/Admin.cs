@@ -20,6 +20,8 @@ namespace EventManagement
         public delegate void EventCancelledHandler(object sender, EventArgs e);
         public static event EventCancelledHandler EventCancelled;
 
+        NotifyService notify = new NotifyService();
+        
         public Admin(int id, string userName, string password) : base(id, userName, password)
         {
 
@@ -119,6 +121,7 @@ namespace EventManagement
                         BackToMainMenu();
                         break;
                     case AdminMenuOptions.Log_out:
+                        notify = null;
                         Logout();
 
                         break;
@@ -266,9 +269,8 @@ namespace EventManagement
             }
         }
 
-        protected static void OnEventApproved(EventArgs e)
+        public void OnEventApproved(EventArgs e)
         {
-            NotifyService notify = new NotifyService();
             EventApproved?.Invoke(null, e);
         }
 
@@ -369,9 +371,8 @@ namespace EventManagement
             }
         }
 
-        protected static void OnEventCancelled(EventArgs e)
+        public void OnEventCancelled(EventArgs e)
         {
-            NotifyService notify = new NotifyService();
             EventCancelled?.Invoke(null, e);
         }
 
@@ -769,9 +770,12 @@ namespace EventManagement
         {
             try
             {
+                notify?.Unsubscribe();
+                notify = null;
                 Console.WriteLine("\nAdmin logout successful!");
                 Thread.Sleep(1500);
                 Register_Login.DisplayMenu();
+                
 
             }
             catch (Exception ex)
