@@ -84,7 +84,13 @@ namespace EventManagement
                         break;
                     case AdminMenuOptions.Create_New_Event:
                         Thread CreateEventThread = new Thread(CreateEvent);
+                        backToMainMenu = new Thread(BackToMainMenu);
+
                         CreateEventThread.Start();
+                        CreateEventThread.Join();
+
+                        backToMainMenu.Start();
+                        backToMainMenu.Join();
 
                         break;
                     case AdminMenuOptions.Approve_Events:
@@ -622,11 +628,11 @@ namespace EventManagement
                         List<int> eventIDs = new List<int>(); // List to keep track of event IDs
 
                         Console.WriteLine("Event Feedback Summary:");
-                        Console.WriteLine("---------------------------------");
                         int eventNumber = 1;
 
                         while (reader.Read())
                         {
+                            Console.WriteLine("====================");
                             int eventID = (int)reader["eventID"];
                             string eventName = reader["name"].ToString();
 
@@ -648,17 +654,23 @@ namespace EventManagement
                             }
 
                             eventNumber++;
+                            Console.WriteLine("====================");
                         }
+
                         reader.Close();
 
                         // Prompt the admin to select an event based on its number
-                        Console.Write("\nSelect the event number to view all comments: ");
+                        Console.Write("\nSelect the event number to view all comments:\n (0: Back) ");
                         int selectedEventNumber = int.Parse(Console.ReadLine());
 
                         if (selectedEventNumber > 0 && selectedEventNumber <= eventIDs.Count)
                         {
                             int selectedEventID = eventIDs[selectedEventNumber - 1];
                             ViewAllCommentsForEvent(connection, selectedEventID);
+                        }
+                        else if(selectedEventNumber ==0)
+                        {
+                            
                         }
                         else
                         {
@@ -729,7 +741,7 @@ namespace EventManagement
         public void CreateEvent()
         {
             Console.Clear();
-            Console.WriteLine("---------------------------------");
+            Console.WriteLine("Create An Event\n---------------------------------");
             eventManager.CreateEvent();
         }
 
@@ -753,8 +765,8 @@ namespace EventManagement
         //Helper method to element the repetiveness of returning to the menu
         public void BackToMainMenu()
         {
-            Console.WriteLine("\nPress Enter key to return to menu...");
-            Console.ReadLine();
+            Console.WriteLine("\nPress any key to return to menu...");
+            Console.ReadKey();
             Console.Clear();
             DisplayMenu();
         }
