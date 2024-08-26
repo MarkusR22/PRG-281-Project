@@ -13,6 +13,11 @@ namespace EventManagement
         protected string userName { get; set; }
         protected string password { get; set; }
 
+        public int ID
+        {
+            get { return id; }
+        }
+
 
 
 

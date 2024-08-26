@@ -209,10 +209,7 @@ namespace EventManagement
             DateTime eventDate = DateTime.Parse(Console.ReadLine());
             Console.Write("Enter location of event: ");
             string eventLocation = ExceptionHandling.StringHandling();
-            Console.Write("Enter event organizer ID: ");
-            int organizerID = ExceptionHandling.IntHandling();
-            //Console.Write("Enter status of event: ");
-            string eventStatus = "pending";//ExceptionHandling.StringHandling();
+            string eventStatus = "pending"; // Event status set to 'pending' by default
             Console.Write("Enter ticket price: ");
             double ticketPrice = ExceptionHandling.DoubleHandling();
             Console.WriteLine();
@@ -223,7 +220,25 @@ namespace EventManagement
                 {
                     connection.Open();
 
-                    SqlCommand command = new SqlCommand("INSERT INTO dbo.event(name, description, date, location, organizerID, status, ticket_price) VALUES (@name, @description, @date, @location, @organizerID, @status, @ticket_price)", connection);
+                    // Step 1: Retrieve the organizerID from the Organizer table based on the current user's ID
+                    string getOrganizerIdQuery = "SELECT organizerID FROM dbo.Organizer WHERE userID = @UserID";
+                    SqlCommand getOrganizerIdCommand = new SqlCommand(getOrganizerIdQuery, connection);
+                    getOrganizerIdCommand.Parameters.AddWithValue("@UserID", Register_Login.currentUser.ID);
+
+                    object organizerIdObj = getOrganizerIdCommand.ExecuteScalar();
+
+                    if (organizerIdObj == null)
+                    {
+                        Console.WriteLine("You are not registered as an organizer. Press any key to return to the menu.");
+                        Console.ReadKey();
+                        BackToMainMenu();
+                        return;
+                    }
+
+                    int organizerID = Convert.ToInt32(organizerIdObj);
+
+                    // Step 2: Insert the new event into the Event table
+                    SqlCommand command = new SqlCommand("INSERT INTO dbo.[event](name, description, date, location, organizerID, status, ticket_price) VALUES (@name, @description, @date, @location, @organizerID, @status, @ticket_price)", connection);
                     command.Parameters.AddWithValue("@name", eventName);
                     command.Parameters.AddWithValue("@description", eventDescription);
                     command.Parameters.AddWithValue("@date", eventDate);
@@ -232,11 +247,11 @@ namespace EventManagement
                     command.Parameters.AddWithValue("@status", eventStatus);
                     command.Parameters.AddWithValue("@ticket_price", ticketPrice);
 
-                    int rowsAffected = (int)command.ExecuteNonQuery();
+                    int rowsAffected = command.ExecuteNonQuery();
 
                     if (rowsAffected > 0)
                     {
-                        Console.WriteLine("Event created successfully! Press any key to return to menu");
+                        Console.WriteLine("Event created successfully! Press any key to return to the menu.");
                     }
                     else
                     {
@@ -246,16 +261,18 @@ namespace EventManagement
             }
             catch (SqlException ex)
             {
-                Console.WriteLine(ex.Message);
+                Console.WriteLine("SQL Error: " + ex.Message);
             }
             catch (Exception ex)
             {
                 Console.WriteLine("An error occurred: " + ex.Message);
-            } finally
+            }
+            finally
             {
                 BackToMainMenu();
             }
         }
+
 
 
 
