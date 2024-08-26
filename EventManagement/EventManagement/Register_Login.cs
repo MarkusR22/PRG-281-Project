@@ -66,9 +66,15 @@ internal class Register_Login
     static void RegisterUser()
     {
         Console.Write("Enter username: ");
-        string username = Console.ReadLine();
+        string username = ExceptionHandling.StringHandling();
         Console.Write("Enter password: ");
         string password = ReadPasswordFromConsole();
+        while(password.Length < 8)
+        {
+            Console.WriteLine("\nPassword must contain at least 8 characters");
+            Console.Write("Enter password: ");
+            password = ReadPasswordFromConsole();
+        }
         Console.WriteLine();
 
         try
@@ -140,7 +146,7 @@ internal class Register_Login
                     {
                         Console.WriteLine("Login successful!");
                         Thread.Sleep(1000);
-                        DisplayMenuBasedOnUserType(user);
+                        user.DisplayMenu();
                     }
                     else
                     {
@@ -264,9 +270,4 @@ internal class Register_Login
         }
     }
 
-
-    static void DisplayMenuBasedOnUserType(User user)
-    {
-        currentUser.DisplayMenu();
-    }
 }

@@ -11,6 +11,7 @@ namespace EventManagement
 
     public class Admin : User
     {
+        //Create an instance of the event manager to allow the admin to perform actions on Events
         EventManager eventManager = new EventManager();
 
         public delegate void EventApprovedHandler(object sender, EventArgs e);
@@ -48,6 +49,7 @@ namespace EventManagement
         }
 
 
+        //Main Menu For Admin
         public override void DisplayMenu()
         {
             Console.Clear();
@@ -68,11 +70,15 @@ namespace EventManagement
                 switch (chosenOption)
                 {
                     case AdminMenuOptions.View_Upcoming_Events:
-                        Thread displayingUpcomingEvents = new Thread(eventManager.DisplayUpcommingEvents);
-                        displayingUpcomingEvents.Start();
-                        Thread backToMainMenu = new Thread(BackToMainMenu);
-                        backToMainMenu.Join();
-                        backToMainMenu.Start();
+                        //Thread displayingUpcomingEvents = new Thread(eventManager.DisplayUpcommingEvents);
+                        //Thread backToMainMenu = new Thread(BackToMainMenu);
+
+                        //displayingUpcomingEvents.Start();
+
+                        //backToMainMenu.Join();
+                        //backToMainMenu.Start();
+                        eventManager.DisplayUpcommingEvents();
+                        BackToMainMenu();
                      
 
                         break;
@@ -118,6 +124,7 @@ namespace EventManagement
 
         }
 
+        //Display all events with status "pending" to allow the admin to approve the event
         public void ApproveEvent()
         {
             Console.Clear();
@@ -160,7 +167,7 @@ namespace EventManagement
                     }
                 }
 
-                // Ask the user to select an event by index
+                // Ask the user to select an event from list
                 Console.WriteLine("\nSelect an event by number:");
                 int selectedEventIndex = int.Parse(Console.ReadLine());
 
@@ -190,7 +197,7 @@ namespace EventManagement
 
                         int rowsAffected = approveCommand.ExecuteNonQuery();
 
-                        //Event triggers when new event is approved
+                        //Event triggers when new event is approved then inoforms organizer the event was approved
                         if (rowsAffected > 0)
                         {
                             Console.WriteLine("Event approved successfully.");
@@ -203,7 +210,7 @@ namespace EventManagement
                     }
                     else if (choice == 2)
                     {
-                        // Deny the event (remove from table)
+                        // Deny the event and removes from table, then informs the organizer of the event
                         string denyQuery = "DELETE FROM dbo.[event] WHERE eventID = @EventID";
                         SqlCommand denyCommand = new SqlCommand(denyQuery, connection);
                         denyCommand.Parameters.AddWithValue("@EventID", selectedEventId);
@@ -213,6 +220,7 @@ namespace EventManagement
                         if (rowsAffected > 0)
                         {
                             Console.WriteLine("Event denied and removed successfully.");
+                            OnEventCancelled(EventArgs.Empty);
                         }
                         else
                         {
@@ -245,6 +253,7 @@ namespace EventManagement
             EventApproved?.Invoke(null, e);
         }
 
+        //Display all events with status "upcoming" to allow the admin to cancel the event if neccesary
         public void CancelEvent()
         {
             Console.Clear();
@@ -252,7 +261,7 @@ namespace EventManagement
             {
 
                 {
-                    // Step 1: Retrieve the list of upcoming events
+                    //Retrieve the list of upcoming events
                     List<Event> events = eventManager.GetEvents();
                     List<Event> upcomingEvents = events.Where(e => e.Status == "upcoming").ToList();
 
@@ -262,7 +271,7 @@ namespace EventManagement
                         return;
                     }
 
-                    // Step 2: Display the list of upcoming events
+                    //Display the list of upcoming events
                     Console.WriteLine("Upcoming Events:");
                     Console.WriteLine("====================");
                     for (int i = 0; i < upcomingEvents.Count; i++)
@@ -272,20 +281,20 @@ namespace EventManagement
                     }
                     Console.WriteLine("====================");
 
-                    // Step 3: Allow the admin to select an event by index
+                    //Allow the admin to select an event on the list
                     Console.Write("\nEnter the number of the event you want to cancel: ");
                     int selectedIndex;
                     if (int.TryParse(Console.ReadLine(), out selectedIndex) && selectedIndex > 0 && selectedIndex <= upcomingEvents.Count)
                     {
                         Event selectedEvent = upcomingEvents[selectedIndex - 1];
 
-                        // Step 4: Confirm cancellation
+                        //Confirming the cancellation
                         Console.Write($"Are you sure you want to cancel the event '{selectedEvent.Name}'? (y/n): ");
                         string confirmation = Console.ReadLine();
 
                         if (confirmation.ToLower() == "y")
                         {
-                            // Step 5: Cancel the event by updating the status to 'cancelled'
+                            // Step 5: Cancel the event by updating the status to 'cancelled' in the database
                             using (SqlConnection connection = new SqlConnection(EventManager.connectionString))
                             {
                                 connection.Open();
@@ -342,7 +351,7 @@ namespace EventManagement
             EventCancelled?.Invoke(null, e);
         }
 
-
+        //Method to display all users by type
         public void DisplayAllUsers()
         {
             Console.Clear();
@@ -437,7 +446,7 @@ namespace EventManagement
             }
         }
 
-
+        //Allows an admin to register a new organizer. Select from an existing user or create a new account to become an organizer
         public void RegisterNewOrganizer()
         {
             Console.Clear();
@@ -548,6 +557,7 @@ namespace EventManagement
                     break;
             }
         }
+        //Helper method for adding a user to the organizer table
         private void AddUserToOrganizer(SqlConnection connection, int userID)
         {
             // Check if the UserID already exists in the Organizer table
@@ -580,6 +590,7 @@ namespace EventManagement
             }
         }
 
+        //View the feedback of all events including the most recent comments and the average rating
         public void ViewFeedback()
         {
             Console.Clear();
@@ -618,6 +629,7 @@ namespace EventManagement
                         {
                             int eventID = (int)reader["eventID"];
                             string eventName = reader["name"].ToString();
+
                             // Safely retrieving the average rating
                             double averageRating = reader["averageRating"] != DBNull.Value ? (double)reader["averageRating"] : 0;
                             string[] comments = reader["latestComments"]?.ToString().Split('|') ?? new string[0];
@@ -629,6 +641,7 @@ namespace EventManagement
                             Console.WriteLine($"   Average Rating: {averageRating:F2}");
                             Console.WriteLine("   Latest Comments:");
 
+                            //Displaying comments
                             for (int i = 0; i < Math.Min(comments.Length, 3); i++)
                             {
                                 Console.WriteLine($"   - {comments[i]}");
@@ -668,7 +681,8 @@ namespace EventManagement
             }
         }
 
-
+        //Helper Method for viewing the feedback.
+        //This method will get all the comments for a selected event
         private void ViewAllCommentsForEvent(SqlConnection connection, int eventID)
         {
             Console.Clear();
@@ -711,7 +725,7 @@ namespace EventManagement
             BackToMainMenu();
         }
 
-
+        //Calls the CreateEvent method from the event manager class using the event manager object
         public void CreateEvent()
         {
             Console.Clear();
@@ -719,6 +733,8 @@ namespace EventManagement
             eventManager.CreateEvent();
         }
 
+
+        //Calls the Register_Login class to log out the user
         public override void Logout()
         {
             try
@@ -734,7 +750,7 @@ namespace EventManagement
                 BackToMainMenu();
             }
         }
-
+        //Helper method to element the repetiveness of returning to the menu
         public void BackToMainMenu()
         {
             Console.WriteLine("\nPress Enter key to return to menu...");
