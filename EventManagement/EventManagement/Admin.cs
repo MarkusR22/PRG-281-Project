@@ -16,6 +16,9 @@ namespace EventManagement
         public delegate void EventApprovedHandler(object sender, EventArgs e);
         public static event EventApprovedHandler EventApproved;
 
+        public delegate void EventCancelledHandler(object sender, EventArgs e);
+        public static event EventCancelledHandler EventCancelled;
+
         public Admin(int id, string userName, string password) : base(id, userName, password)
         {
 
@@ -26,6 +29,7 @@ namespace EventManagement
             View_Upcoming_Events = 1,
             Create_New_Event,
             Approve_Events,
+            Cancel_Event,
             Register_New_Organizer,
             View_Past_Feedback,
             View_All_Users,
@@ -74,6 +78,10 @@ namespace EventManagement
                         break;
                     case AdminMenuOptions.Approve_Events:
                         ApproveEvent();
+
+                        break;
+                    case AdminMenuOptions.Cancel_Event:
+                        CancelEvent();
 
                         break;
                     case AdminMenuOptions.Register_New_Organizer:
@@ -227,6 +235,18 @@ namespace EventManagement
         {
             NotifyService notify = new NotifyService();
             EventApproved?.Invoke(null, e);
+        }
+
+        public void CancelEvent()
+        {
+
+            OnEventCancelled(EventArgs.Empty);
+        }
+
+        protected static void OnEventCancelled(EventArgs e)
+        {
+            NotifyService notify = new NotifyService();
+            EventCancelled?.Invoke(null, e);
         }
 
 
