@@ -296,7 +296,7 @@ namespace EventManagement
                     feedback f
                 INNER JOIN 
                     event e ON f.eventID = e.eventID
-                WHERE organizerID= (SELECT organizerID FROM organizer where userID=@userID)	
+                WHERE organizerID= (SELECT organizerID FROM organizer where userID=@userID)	AND e.status = 'ended'
                 GROUP BY 
                     e.eventID, e.name";
 
