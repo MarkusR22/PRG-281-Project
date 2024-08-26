@@ -219,6 +219,7 @@ namespace EventManagement
                 {
                     int eventId = availableEvents[selectedIndex - 1].eventId;
                     RegisterForSelectedEvent(eventId);
+                    
                 }
                 else
                 {
@@ -226,7 +227,7 @@ namespace EventManagement
                 }
             }
 
-            DisplayBack();
+            
         }
 
 
