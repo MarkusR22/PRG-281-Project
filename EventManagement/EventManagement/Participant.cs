@@ -48,8 +48,8 @@ namespace EventManagement
         public void DisplayBack()
         {
             Console.WriteLine();
-            Console.Write("Press enter to go back.");
-            Console.ReadLine();
+            Console.Write("Press any key to go back.");
+            Console.ReadKey();
             Console.Clear();
         }
 
@@ -198,6 +198,7 @@ namespace EventManagement
             else
             {
                 Console.WriteLine("Invalid selection. Please enter a number corresponding to the event.");
+                DisplayBack();
             }
         }
 
@@ -376,6 +377,7 @@ namespace EventManagement
             if (!int.TryParse(Console.ReadLine(), out selectedIndex))
             {
                 Console.WriteLine("Invalid input. Please enter a number.");
+                DisplayBack();
                 return;
             }
 
@@ -428,6 +430,7 @@ namespace EventManagement
                     if (!int.TryParse(Console.ReadLine(), out rating) || rating < 1 || rating > 5)
                     {
                         Console.WriteLine("Invalid rating. Please enter a number between 1 and 5.");
+                        DisplayBack();
                         return;
                     }
 
@@ -448,6 +451,7 @@ namespace EventManagement
                     else
                     {
                         Console.WriteLine("Failed to submit feedback. Please try again.");
+                        DisplayBack();
                     }
                 }
             }
@@ -584,6 +588,7 @@ namespace EventManagement
             if (!int.TryParse(Console.ReadLine(), out selectedIndex) || selectedIndex < 1 || selectedIndex > eventIds.Count)
             {
                 Console.WriteLine("Invalid input. Please enter a valid number.");
+                DisplayBack();
                 return;
             }
 
