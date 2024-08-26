@@ -13,7 +13,7 @@ namespace EventManagement
             try
             {
                 string input = Console.ReadLine();
-                if (input != "" || input != null)
+                if (input.Length > 0)
                 {
                     return input;
 
@@ -27,7 +27,7 @@ namespace EventManagement
             catch (Exception e)
             {
                 Console.WriteLine("Something went wrong :( {0}", e.Message);
-                Console.WriteLine("=====================\nTry again Enter 1.\nGo back to main menu 2.");
+                Console.WriteLine("=====================\n1. Try again\n2. Back to menu");
                 string input = Console.ReadLine();
                 switch (input)
                 {
@@ -46,7 +46,7 @@ namespace EventManagement
                         break;
                     default:
                         Console.WriteLine("Something went wrong :( ");
-                        Console.WriteLine("Try again Enter 1.\nGo back to main menu 2.");
+                        Console.WriteLine("=====================\n1. Try again\n2. Back to menu");
                         return StringHandling();
                 }
 
@@ -65,7 +65,7 @@ namespace EventManagement
             catch (Exception e)
             {
                 Console.WriteLine("Something went wrong :( {0}", e.Message);
-                Console.WriteLine("Try again Enter 1.\nGo back to main menu 2.");
+                Console.WriteLine("=====================\n1. Try again\n2. Back to menu");
                 string input = Console.ReadLine();
                 switch (input)
                 {
@@ -84,7 +84,7 @@ namespace EventManagement
                         break;
                     default:
                         Console.WriteLine("Something went wrong :( ");
-                        Console.WriteLine("Try again Enter 1.\nGo back to main menu 2.");
+                        Console.WriteLine("=====================\n1. Try again\n2. Back to menu");
                         return IntHandling();
 
                 }
@@ -103,7 +103,7 @@ namespace EventManagement
             catch (Exception e)
             {
                 Console.WriteLine("Something went wrong :( {0}", e.Message);
-                Console.WriteLine("Try again Enter 1.\nGo back to main menu 2.");
+                Console.WriteLine("=====================\n1. Try again\n2. Back to menu");
                 string input = Console.ReadLine();
                 switch (input)
                 {
@@ -122,7 +122,7 @@ namespace EventManagement
                         break;
                     default:
                         Console.WriteLine("Something went wrong :( ");
-                        Console.WriteLine("Try again Enter 1.\nGo back to main menu 2.");
+                        Console.WriteLine("=====================\n1. Try again\n2. Back to menu");
                         return DoubleHandling();
                 }
 
@@ -140,7 +140,7 @@ namespace EventManagement
             catch (Exception e)
             {
                 Console.WriteLine("Something went wrong :( {0}", e.Message);
-                Console.WriteLine("Try again Enter 1.\nGo back to main menu 2.");
+                Console.WriteLine("=====================\n1. Try again\n2. Back to menu");
                 string input = Console.ReadLine();
                 switch (input)
                 {
@@ -159,7 +159,7 @@ namespace EventManagement
                         break;
                     default:
                         Console.WriteLine("Something went wrong :( ");
-                        Console.WriteLine("Try again Enter 1.\nGo back to main menu 2.");
+                        Console.WriteLine("=====================\n1. Try again\n2. Back to menu");
                         return DateHandling();
                 }
 
@@ -190,7 +190,7 @@ namespace EventManagement
             catch (Exception e)
             {
                 Console.WriteLine("Something went wrong :( {0}", e.Message);
-                Console.WriteLine("Try again Enter 1.\nGo back to main menu 2.");
+                Console.WriteLine("=====================\n1. Try again\n2. Back to menu");
                 string input = Console.ReadLine();
                 switch (input)
                 {
@@ -209,7 +209,7 @@ namespace EventManagement
                         break;
                     default:
                         Console.WriteLine("Something went wrong :( ");
-                        Console.WriteLine("Try again Enter 1.\nGo back to main menu 2.");
+                        Console.WriteLine("=====================\n1. Try again\n2. Back to menu");
                         return BoolHandling();
                 }
                 return false;

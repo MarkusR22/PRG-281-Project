@@ -53,28 +53,31 @@ internal class Register_Login
                 DisplayMenu();
                 break;
         }
-        //}
-        //catch (Exception ex)
-        //{
-        //    Console.WriteLine("Invalid option. Press any button to go back");
-        //    Console.ReadKey();
-        //    DisplayMenu();
-
-        //}
     }
 
     static void RegisterUser()
     {
+        Console.WriteLine("==================================");
         Console.Write("Enter username: ");
         string username = ExceptionHandling.StringHandling();
         Console.Write("Enter password: ");
         string password = ReadPasswordFromConsole();
-        while(password.Length < 8)
+        while (password.Length < 8)
         {
             Console.WriteLine("\nPassword must contain at least 8 characters");
             Console.Write("Enter password: ");
             password = ReadPasswordFromConsole();
         }
+        Console.Write("Confirm Password: ");
+        string confirmPassword = ReadPasswordFromConsole();
+        while (!confirmPassword.Equals(password))
+        {
+            Console.WriteLine("Passwords Do Not Match. Try Again");
+            confirmPassword = ReadPasswordFromConsole();
+        }
+
+
+
         Console.WriteLine();
 
         try
@@ -91,9 +94,43 @@ internal class Register_Login
 
                 if (rowsAffected > 0)
                 {
+                    Console.WriteLine("==================================");
                     Console.WriteLine("User registered successfully!");
-                    Console.ReadKey();
-                    DisplayMenu();
+                    Console.WriteLine("Logging In...");
+                    Thread.Sleep(1000);
+
+                    try
+                    {
+
+                        SqlCommand logCommand = new SqlCommand("SELECT * FROM [user] WHERE username = @username AND [Password] = @password", connection);
+                        logCommand.Parameters.AddWithValue("@username", username);
+                        logCommand.Parameters.AddWithValue("@password", password);
+
+                        SqlDataReader reader = logCommand.ExecuteReader();
+                        if (reader.Read())
+                        {
+
+
+                            int userId = (int)reader["userID"];
+                            User user = GetUserType(userId);
+                            Thread.Sleep(1500);
+                            user.DisplayMenu();
+                        }
+                        else
+                        {
+                            Console.WriteLine("Error here");
+                        }
+
+                        reader.Close();
+
+
+                    }
+                    catch (SqlException ex)
+                    {
+                        Console.WriteLine("Error logging in new user: " + ex.Message);
+                        Console.ReadKey();
+                        DisplayMenu();
+                    }
                 }
                 else
                 {
@@ -105,13 +142,13 @@ internal class Register_Login
         }
         catch (SqlException ex)
         {
-            Console.WriteLine("Error registering user: Username taken");
+            Console.WriteLine("Error registering user: " + ex.Message);
             Console.ReadKey();
             DisplayMenu();
         }
         catch (Exception ex)
         {
-            Console.WriteLine("An error occurred: " + ex.Message);
+            Console.WriteLine("An registering user: " + ex.Message);
             Console.ReadKey();
             DisplayMenu();
         }
@@ -119,6 +156,7 @@ internal class Register_Login
 
     static void LoginUser()
     {
+        Console.WriteLine("==================================");
         Console.Write("Enter username: ");
         string username = Console.ReadLine();
         Console.Write("Enter password: ");
@@ -144,6 +182,7 @@ internal class Register_Login
 
                     if (user != null)
                     {
+                        Console.WriteLine("==================================");
                         Console.WriteLine("Login successful!");
                         Thread.Sleep(1000);
                         user.DisplayMenu();
@@ -171,7 +210,7 @@ internal class Register_Login
         }
         catch (Exception ex)
         {
-            Console.WriteLine("An error occurred: " + ex.Message);
+            Console.WriteLine("An logging in: " + ex.Message);
             Console.ReadKey();
             DisplayMenu();
         }
@@ -265,7 +304,7 @@ internal class Register_Login
         }
         catch (Exception ex)
         {
-            Console.WriteLine("An error occurred: " + ex.Message);
+            Console.WriteLine("An determining user type: " + ex.Message);
             return null;
         }
     }
