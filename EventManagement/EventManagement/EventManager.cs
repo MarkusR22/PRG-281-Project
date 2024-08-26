@@ -9,10 +9,10 @@ namespace EventManagement
 {
     public class EventManager
     {
-        static User currentUser = Register_Login.CurrentUser;
-        public const string connectionString = "Data Source=MACHINE;Initial Catalog=EventManagementTemp;Integrated Security=True;Connect Timeout=30;Encrypt=True;TrustServerCertificate=True;"; // Caydan
+        //static User currentUser = Register_Login.CurrentUser;
+        //public const string connectionString = "Data Source=MACHINE;Initial Catalog=EventManagementTemp;Integrated Security=True;Connect Timeout=30;Encrypt=True;TrustServerCertificate=True;"; // Caydan
         //public const string connectionString = "Data Source=TIMOTHY\\MSSQLSERVER09;Initial Catalog=EventManagementTemp;Integrated Security=True;Connect Timeout=30;Encrypt=True;TrustServerCertificate=True;"; //Joseph's DB connection
-        //public const string connectionString = "Data Source=DESKTOP-TDBJOM7;Initial Catalog=EventManagement;Integrated Security=True;Connect Timeout=30;Encrypt=True;TrustServerCertificate=True;"; //Markus' connection string
+        public const string connectionString = "Data Source=DESKTOP-TDBJOM7;Initial Catalog=EventManagement;Integrated Security=True;Connect Timeout=30;Encrypt=True;TrustServerCertificate=True;"; //Markus' connection string
         //public const string connectionString = "Data Source=EE-GAMINGPC;Initial Catalog=EventManagementTheuns;Integrated Security=True;Connect Timeout=30;Encrypt=True;TrustServerCertificate=True;"; //Theuns db string
         public string ConnectionString
         {
@@ -42,7 +42,7 @@ namespace EventManagement
 
             if (input.ToLower() == "back")
             {
-                currentUser.DisplayMenu();
+                Register_Login.CurrentUser.DisplayMenu();
                 return;
             }
 
@@ -129,13 +129,13 @@ namespace EventManagement
                     {
                         Console.WriteLine("Event created successfully!J");
                         Console.ReadKey();
-                        currentUser.DisplayMenu();
+                        Register_Login.CurrentUser.DisplayMenu();
                     }
                     else
                     {
                         Console.WriteLine("Failed to create event.");
                         Console.ReadKey();
-                        currentUser.DisplayMenu();
+                        Register_Login.CurrentUser.DisplayMenu();
                     }
                 }
             }
@@ -151,7 +151,7 @@ namespace EventManagement
             {
                 Console.WriteLine("Press any key to return to menu...");
                 Console.ReadKey();
-                currentUser.DisplayMenu();
+                Register_Login.CurrentUser.DisplayMenu();
             }
             
         }

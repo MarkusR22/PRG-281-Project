@@ -70,7 +70,11 @@ namespace EventManagement
                     case AdminMenuOptions.View_Upcoming_Events:
                         Thread displayingUpcomingEvents = new Thread(eventManager.DisplayUpcommingEvents);
                         displayingUpcomingEvents.Start();
-                        BackToMainMenu();
+                        displayingUpcomingEvents.Join();
+                        Thread backToMainMenu = new Thread(BackToMainMenu);
+                        Console.WriteLine("\nPress any key to return to the admin menu...");
+                        backToMainMenu.Start();
+                     
 
                         break;
                     case AdminMenuOptions.Create_New_Event:
@@ -729,7 +733,7 @@ namespace EventManagement
 
         public void BackToMainMenu()
         {
-            Console.WriteLine("\nPress any key to return to the admin menu...");
+            //Console.WriteLine("\nPress any key to return to the admin menu...");
             Console.ReadKey();
             Console.Clear();
             DisplayMenu();
