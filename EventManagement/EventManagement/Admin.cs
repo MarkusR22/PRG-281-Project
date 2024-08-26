@@ -70,6 +70,7 @@ namespace EventManagement
                 switch (chosenOption)
                 {
                     case AdminMenuOptions.View_Upcoming_Events:
+                        Console.Clear();
                         Thread displayingUpcomingEvents = new Thread(eventManager.DisplayUpcommingEvents);
                         Thread backToMainMenu = new Thread(BackToMainMenu);
 
@@ -83,6 +84,7 @@ namespace EventManagement
 
                         break;
                     case AdminMenuOptions.Create_New_Event:
+                        Console.Clear();
                         Thread CreateEventThread = new Thread(CreateEvent);
                         backToMainMenu = new Thread(BackToMainMenu);
 
@@ -142,7 +144,6 @@ namespace EventManagement
         public void ApproveEvent()
         {
             Console.Clear();
-            Console.WriteLine("Approve Events\n==================================");
             List<int> eventIds = new List<int>();
 
             try
@@ -158,7 +159,7 @@ namespace EventManagement
                     using (SqlDataReader reader = command.ExecuteReader())
                     {
                         int index = 1;
-                        Console.WriteLine("Pending Events:");
+                        Console.WriteLine("Currently Pending Events:");
                         Console.WriteLine("==================================");
 
                         while (reader.Read())

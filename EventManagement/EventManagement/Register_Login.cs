@@ -68,12 +68,23 @@ internal class Register_Login
             Console.Write("Enter password: ");
             password = ReadPasswordFromConsole();
         }
+
+        Console.WriteLine();
         Console.Write("Confirm Password: ");
         string confirmPassword = ReadPasswordFromConsole();
         while (!confirmPassword.Equals(password))
         {
-            Console.WriteLine("Passwords Do Not Match. Try Again");
+            Console.WriteLine();
+            Console.WriteLine("Passwords Do Not Match. Try Again:\n0: Cancel");
             confirmPassword = ReadPasswordFromConsole();
+            if(confirmPassword == "0")
+            {
+                Console.WriteLine("Cancelled Registration. Press any key to return to menu");
+                Console.ReadKey();
+                Console.Clear();
+                DisplayMenu();
+                return;
+            }
         }
 
 
@@ -148,7 +159,7 @@ internal class Register_Login
         }
         catch (Exception ex)
         {
-            Console.WriteLine("An registering user: " + ex.Message);
+            Console.WriteLine("An error registering user: " + ex.Message);
             Console.ReadKey();
             DisplayMenu();
         }
@@ -210,7 +221,7 @@ internal class Register_Login
         }
         catch (Exception ex)
         {
-            Console.WriteLine("An logging in: " + ex.Message);
+            Console.WriteLine("An error logging in: " + ex.Message);
             Console.ReadKey();
             DisplayMenu();
         }

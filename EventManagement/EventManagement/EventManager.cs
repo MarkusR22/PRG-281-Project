@@ -141,11 +141,11 @@ namespace EventManagement
             }
             catch (SqlException ex)
             {
-                Console.WriteLine(ex.Message);
+                Console.WriteLine("Error creating Event" + ex.Message);
             }
             catch (Exception ex)
             {
-                Console.WriteLine("An error occurred: " + ex.Message);
+                Console.WriteLine("An error occurred creating event: " + ex.Message);
                 
             }
             
