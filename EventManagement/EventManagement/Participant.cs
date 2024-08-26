@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Threading;
+using System.Net;
 
 namespace EventManagement
 {
@@ -221,6 +222,7 @@ namespace EventManagement
                 {
                     int eventId = availableEvents[selectedIndex - 1].eventId;
                     RegisterForSelectedEvent(eventId);
+
                 }
                 else if (userInput == "0")
                 {
@@ -391,7 +393,7 @@ namespace EventManagement
                     Console.WriteLine("====================");
                     while (reader.Read())
                     {
-                        Console.WriteLine($"Event ID: {reader["eventID"]}, Name: {reader["name"]}, Date: {((DateTime)reader["date"]).ToString("yyyy-MM-dd")}, Location: {reader["location"]}, Entry Code: {reader["entry_code"]}");
+                        Console.WriteLine($"Name: {reader["name"]}\nDate: {((DateTime)reader["date"]).ToString("yyyy-MM-dd")}\nLocation: {reader["location"]}\nEntry Code: {reader["entry_code"]}");
                     }
                     Console.WriteLine("====================");
                     DisplayBack();
