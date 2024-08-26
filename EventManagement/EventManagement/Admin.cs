@@ -183,7 +183,7 @@ namespace EventManagement
                 }
 
                 // Ask the user to select an event from list
-                Console.WriteLine("\nSelect an event by number:\n (0: Back)");
+                Console.WriteLine("\nSelect an event by number:\n(0: Back)");
                 int selectedEventIndex = int.Parse(Console.ReadLine());
 
                 if (selectedEventIndex < 0 || selectedEventIndex > eventIds.Count)
@@ -301,7 +301,7 @@ namespace EventManagement
                     Console.WriteLine("==================================");
 
                     //Allow the admin to select an event on the list
-                    Console.Write("\nEnter the number of the event you want to cancel:\n(0: Back) ");
+                    Console.WriteLine("\nEnter the number of the event you want to cancel:\n(0: Back) ");
                     int selectedIndex = int.Parse(Console.ReadLine());
                     if (selectedIndex > 0 && selectedIndex <= upcomingEvents.Count)
                     {
@@ -684,7 +684,7 @@ namespace EventManagement
                         reader.Close();
 
                         // Prompt the admin to select an event based on its number
-                        Console.Write("\nSelect the event number to view all comments:\n (0: Back) ");
+                        Console.WriteLine("\nSelect the event number to view all comments:\n (0: Back) ");
                         int selectedEventNumber = int.Parse(Console.ReadLine());
 
                         if (selectedEventNumber > 0 && selectedEventNumber <= eventIDs.Count)
