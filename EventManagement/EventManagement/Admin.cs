@@ -70,15 +70,15 @@ namespace EventManagement
                 switch (chosenOption)
                 {
                     case AdminMenuOptions.View_Upcoming_Events:
-                        //Thread displayingUpcomingEvents = new Thread(eventManager.DisplayUpcommingEvents);
-                        //Thread backToMainMenu = new Thread(BackToMainMenu);
+                        Thread displayingUpcomingEvents = new Thread(eventManager.DisplayUpcommingEvents);
+                        Thread backToMainMenu = new Thread(BackToMainMenu);
 
-                        //displayingUpcomingEvents.Start();
-
-                        //backToMainMenu.Join();
-                        //backToMainMenu.Start();
-                        eventManager.DisplayUpcommingEvents();
-                        BackToMainMenu();
+                        displayingUpcomingEvents.Start();
+                        displayingUpcomingEvents.Join();
+                        backToMainMenu.Start();
+                        backToMainMenu.Join();
+                        //eventManager.DisplayUpcommingEvents();
+                        //BackToMainMenu();
                      
 
                         break;
