@@ -10,6 +10,8 @@ namespace EventManagement
 {
     internal class Participant : User
     {
+        public delegate void RegisteredForEventHander(object source, RegisteredForEventArgs e);
+        public static event RegisteredForEventHander RegisteredForEvent;
 
         public Participant(int id, string userName, string password) : base(id, userName, password)
         {
@@ -275,8 +277,8 @@ namespace EventManagement
                         int rowsAffected = command.ExecuteNonQuery();
                         if (rowsAffected > 0)
                         {
-                            Console.WriteLine("Successfully registered for the event!");
-                            Console.WriteLine($"Your entry code is: {entryCode}"); // Display the entry code
+                            //Notifies subscriber for event
+                            OnRegisteredForEvent(entryCode);
                             DisplayBack();
                         }
                         else
@@ -297,7 +299,12 @@ namespace EventManagement
             }
         }
 
-
+        //Invoking event OnRegisteredForEvent
+        public void OnRegisteredForEvent(string entryCode)
+        {
+            NotifyService notify = new NotifyService();
+            RegisteredForEvent?.Invoke(this, new RegisteredForEventArgs() { entryCode = entryCode});
+        }
 
         private string GenerateEntryCode(string eventName, int eventYear, SqlConnection connection, int eventId)
         {
