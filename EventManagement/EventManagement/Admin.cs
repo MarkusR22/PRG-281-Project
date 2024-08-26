@@ -147,7 +147,7 @@ namespace EventManagement
                         if (eventIds.Count == 0)
                         {
                             Console.WriteLine("No pending events found.");
-                            return;
+                            
                         }
                     }
                 }
@@ -611,7 +611,7 @@ namespace EventManagement
                 Console.WriteLine("An error occurred: " + ex.Message);
             }
             Console.ReadKey();
-            DisplayMenu();
+            BackToMainMenu();
         }
 
 
@@ -637,11 +637,14 @@ namespace EventManagement
             }
         }
 
-        public static void BackToMainMenu()
+        public void BackToMainMenu()
         {
             Console.WriteLine("Press any key to return to the admin menu...");
             Console.ReadKey();
             Console.Clear();
+            DisplayMenu();
+
+
         }
 
     }

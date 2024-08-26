@@ -34,7 +34,7 @@ namespace EventManagement
             base.password = password;
         }
 
-        public override async void DisplayMenu()
+        public override void DisplayMenu()
         {
             Console.Clear();
             while (true)
@@ -75,7 +75,7 @@ namespace EventManagement
                             break;
                         case OrganizerMenuOptions.Edit_Details:
                             Register_Login.currentUser.ManageProfile();
-                            await Task.Delay(500);
+                            Thread.Sleep(500);
                             DisplayMenu();
                             break;
                         case OrganizerMenuOptions.Log_out:
@@ -94,11 +94,11 @@ namespace EventManagement
             }
         }
 
-        public override  void Logout()
+        public override void Logout()
         {
             try
             {
-                Console.WriteLine("Admin logout successful!");
+                Console.WriteLine("Organizer logout successful!");
                 Thread.Sleep(1000);
                 Register_Login.DisplayMenu();
 
