@@ -41,7 +41,7 @@ namespace EventManagement
         {
             try
             {
-                int input = Convert.ToInt32(Console.ReadLine());
+                int input = Convert.ToInt32(Console.ReadLine().Trim());
                 //Enter
                 return input;
             }
@@ -75,7 +75,7 @@ namespace EventManagement
         {
             try
             {
-                double input = Convert.ToDouble(Console.ReadLine());
+                double input = Convert.ToDouble(Console.ReadLine().Trim());
                 return input;
             }
             catch (Exception e)

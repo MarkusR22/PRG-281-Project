@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
@@ -36,7 +37,6 @@ namespace EventManagement
 
         public override void DisplayMenu()
         {
-            Console.Clear();
             while (true)
             {
                 Console.WriteLine("Organizer Menu:");
@@ -67,6 +67,12 @@ namespace EventManagement
                             Console.WriteLine("==============================================");
                             DisplayMenu();
                             break;
+                        //case OrganizerMenuOptions.Edit_Event:
+                        //    Console.WriteLine(OrganizerMenuOptions.Edit_Event);
+                        //    Console.WriteLine();
+                        //    Console.WriteLine("==============================================");
+                        //    DisplayMenu();
+                        //    break;
                         case OrganizerMenuOptions.Past_Feedback:
                             ViewFeedback();
                             Console.WriteLine();
@@ -195,6 +201,47 @@ namespace EventManagement
             Console.WriteLine($"Organizer ID: {ev.OrganizerId}"); // Don't think it is necessary to show this as it's already filtered
             Console.WriteLine($"Status: {ev.Status}");
             Console.WriteLine($"Ticket Price: {ev.TicketPrice}");
+
+            MenuEditEvent(ev);
+        }
+
+        public DateTime CheckDate()
+        {
+            DateTime eventDate = ExceptionHandling.DateHandling();
+            if (eventDate < DateTime.Now)
+            {
+                return eventDate;
+            }
+            else
+            {
+                Console.WriteLine("You cannot enter {0}", eventDate == DateTime.Now ? "todays date (must be later)" : "a date which has passed");
+                Console.WriteLine("1. Enter a later date\n2. Go back to menu");
+                int option = ExceptionHandling.IntHandling();
+                switch (option)
+                {
+                    case 1:
+                        return CheckDate();
+                        break;
+                    case 2:
+                        DisplayMenu();
+                        break;
+                    default:
+                        Console.WriteLine("You have entered an invalid option");
+                        Thread.Sleep(1000);
+                        Console.WriteLine("Sending you back to the menu");
+                        Thread.Sleep(1000);
+                        Console.Write(".");
+                        Thread.Sleep(1000);
+                        Console.Write(".");
+                        Thread.Sleep(1000);
+                        Console.Write(".");
+                        Thread.Sleep(1000);
+                        DisplayMenu();
+                        break;
+                }
+
+                return eventDate;
+            }
         }
 
 
@@ -206,7 +253,7 @@ namespace EventManagement
             Console.Write("Enter description of event: ");
             string eventDescription = ExceptionHandling.StringHandling();
             Console.Write("Enter date of event: ");
-            DateTime eventDate = DateTime.Parse(Console.ReadLine());
+            DateTime eventDate = CheckDate();
             Console.Write("Enter location of event: ");
             string eventLocation = ExceptionHandling.StringHandling();
             string eventStatus = "pending"; // Event status set to 'pending' by default
@@ -406,6 +453,266 @@ namespace EventManagement
             Console.ReadKey();
             DisplayMenu();
         }
+
+
+        private void MenuEditEvent(Event ev)
+        {
+            Console.WriteLine("");
+            Console.WriteLine("1. Edit the event");
+            Console.WriteLine("2. Go back to menu");
+            int input = ExceptionHandling.IntHandling();
+            switch (input)
+            {
+                case 1:
+                    if (ev.Status == "pending" || ev.Status == "upcoming" || ev.Status == "postponed")
+                    {
+                        EditEvent(ev);
+                    }
+                    else
+                    {
+                        Console.WriteLine("Sorry you cannot edit this event as it {0}", ev.Status == "cancelled" ? "has been cancelled." : "has ended.");
+                        Thread.Sleep(1000);
+                        Console.WriteLine("Sending you back to the menu");
+                        Thread.Sleep(1000);
+                        Console.Write(".");
+                        Thread.Sleep(1000);
+                        Console.Write(".");
+                        Thread.Sleep(1000);
+                        Console.Write(".");
+                        Thread.Sleep(1000);
+                        DisplayMenu();
+                    }
+
+                    break;
+                case 2:
+                    DisplayMenu();
+                    break;
+                default:
+                    Console.WriteLine("Something went wrong :(");
+                    Console.WriteLine("Please enter a valid menu option");
+                    MenuEditEvent(ev);
+                    break;
+            }
+
+        }
+
+
+
+
+        private void EditEvent(Event ev)
+        {
+            Console.WriteLine("What do you want to edit");
+            Console.WriteLine("1. Event Name\n2. Event Description\n3. Event Date\n4. Event location\n5. Event Ticket Price\n6. Go back to previous menu");
+            int option = ExceptionHandling.IntHandling();
+            switch (option)
+            {
+                case 1:
+                    Console.WriteLine("Previous name: {0}", ev.Name);
+                    Console.WriteLine("Enter the new Event Name.");
+                    string name = ExceptionHandling.StringHandling();
+
+                    try
+                    {
+                        using (SqlConnection connection = new SqlConnection(EventManager.connectionString))
+                        {
+                            connection.Open();
+
+                            SqlCommand command = new SqlCommand("UPDATE [event] SET name = @name WHERE eventID = @eventID", connection);
+                            command.Parameters.AddWithValue("@eventID", ev.EventId);
+                            command.Parameters.AddWithValue("@name", name);
+
+
+
+
+                            int rowsAffected = command.ExecuteNonQuery();
+                            if (rowsAffected > 0)
+                            {
+                                Console.WriteLine("Event updated successfully!");
+
+                            }
+                            else
+                            {
+                                Console.WriteLine("Failed to update event. Please try again.");
+                            }
+
+                        }
+                    }
+                    catch (SqlException ex)
+                    {
+                        Console.WriteLine("An error occurred while updating your event: " + ex.Message);
+                    }
+
+                    break;
+                case 2:
+                    Console.WriteLine("Previous description: {0}", ev.Description);
+                    Console.WriteLine("Enter the new Event Description.");
+                    string description = ExceptionHandling.StringHandling();
+
+                    try
+                    {
+                        using (SqlConnection connection = new SqlConnection(EventManager.connectionString))
+                        {
+                            connection.Open();
+
+                            SqlCommand command = new SqlCommand("UPDATE [event] SET description = @description WHERE eventID = @eventID", connection);
+                            command.Parameters.AddWithValue("@eventID", ev.EventId);
+                            command.Parameters.AddWithValue("@description", description);
+
+
+
+
+                            int rowsAffected = command.ExecuteNonQuery();
+                            if (rowsAffected > 0)
+                            {
+                                Console.WriteLine("Event updated successfully!");
+
+                            }
+                            else
+                            {
+                                Console.WriteLine("Failed to update event. Please try again.");
+                            }
+
+                        }
+                    }
+                    catch (SqlException ex)
+                    {
+                        Console.WriteLine("An error occurred while updating your event: " + ex.Message);
+                    }
+                    break;
+                case 3:
+                    Console.WriteLine("Previous event date: {0}", ev.Date);
+                    Console.WriteLine("Enter the new Event Date.");
+                    DateTime date = ExceptionHandling.DateHandling();
+
+                    try
+                    {
+                        using (SqlConnection connection = new SqlConnection(EventManager.connectionString))
+                        {
+                            connection.Open();
+
+                            SqlCommand command = new SqlCommand("UPDATE [event] SET date = @date WHERE eventID = @eventID", connection);
+                            command.Parameters.AddWithValue("@eventID", ev.EventId);
+                            command.Parameters.AddWithValue("@date", date);
+
+
+
+
+                            int rowsAffected = command.ExecuteNonQuery();
+                            if (rowsAffected > 0)
+                            {
+                                Console.WriteLine("Event updated successfully!");
+
+                            }
+                            else
+                            {
+                                Console.WriteLine("Failed to update event. Please try again.");
+                            }
+
+                        }
+                    }
+                    catch (SqlException ex)
+                    {
+                        Console.WriteLine("An error occurred while updating your event: " + ex.Message);
+                    }
+                    break;
+                case 4:
+                    Console.WriteLine("Previous location: {0}", ev.Location);
+                    Console.WriteLine("Enter the new Event Location.");
+                    string location = ExceptionHandling.StringHandling();
+
+                    try
+                    {
+                        using (SqlConnection connection = new SqlConnection(EventManager.connectionString))
+                        {
+                            connection.Open();
+
+                            SqlCommand command = new SqlCommand("UPDATE [event] SET location = @location WHERE eventID = @eventID", connection);
+                            command.Parameters.AddWithValue("@eventID", ev.EventId);
+                            command.Parameters.AddWithValue("@location", location);
+
+
+
+
+                            int rowsAffected = command.ExecuteNonQuery();
+                            if (rowsAffected > 0)
+                            {
+                                Console.WriteLine("Event updated successfully!");
+
+                            }
+                            else
+                            {
+                                Console.WriteLine("Failed to update event. Please try again.");
+                            }
+
+                        }
+                    }
+                    catch (SqlException ex)
+                    {
+                        Console.WriteLine("An error occurred while updating your event: " + ex.Message);
+                    }
+                    break;
+                case 5:
+                    Console.WriteLine("Previous ticket price: {0}", ev.TicketPrice);
+                    Console.WriteLine("Enter the new Event Ticket Price.");
+                    double ticketPrice = ExceptionHandling.DoubleHandling();
+
+                    try
+                    {
+                        using (SqlConnection connection = new SqlConnection(EventManager.connectionString))
+                        {
+                            connection.Open();
+
+                            SqlCommand command = new SqlCommand("UPDATE [event] SET ticket_price = @ticket_price WHERE eventID = @eventID", connection);
+                            command.Parameters.AddWithValue("@eventID", ev.EventId);
+                            command.Parameters.AddWithValue("@ticket_price", ticketPrice);
+
+
+
+
+                            int rowsAffected = command.ExecuteNonQuery();
+                            if (rowsAffected > 0)
+                            {
+                                Console.WriteLine("Event updated successfully!");
+
+                            }
+                            else
+                            {
+                                Console.WriteLine("Failed to update event. Please try again.");
+                            }
+
+                        }
+                    }
+                    catch (SqlException ex)
+                    {
+                        Console.WriteLine("An error occurred while updating your event: " + ex.Message);
+                    }
+                    break;
+                case 6:
+                    MenuEditEvent(ev);
+                    break;
+                default:
+                    Console.WriteLine("Something went wrong :(");
+                    Thread.Sleep(1000);
+                    Console.WriteLine("Sending you back to the previous menu");
+                    Thread.Sleep(1000);
+                    Console.Write(".");
+                    Thread.Sleep(1000);
+                    Console.Write(".");
+                    Thread.Sleep(1000);
+                    Console.Write(".");
+                    Thread.Sleep(1000);
+                    MenuEditEvent(ev);
+                    break;
+            }
+
+            MenuEditEvent(ev);
+
+
+        }
+
+
+
+
     }
 
 
