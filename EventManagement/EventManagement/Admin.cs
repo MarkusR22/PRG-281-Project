@@ -289,7 +289,7 @@ namespace EventManagement
                                     if (rowsAffected > 0)
                                     {
                                         Console.WriteLine("Event cancelled successfully.");
-                                        OnEventCancelled(EventArgs.Empty)
+                                        OnEventCancelled(EventArgs.Empty);
                                     }
                                     else
                                     {

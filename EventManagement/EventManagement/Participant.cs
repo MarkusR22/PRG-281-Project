@@ -45,7 +45,13 @@ namespace EventManagement
             Register_Login.DisplayMenu();
         }
 
-
+        public void DisplayBack()
+        {
+            Console.WriteLine();
+            Console.Write("Press enter to go back.");
+            Console.ReadLine();
+            Console.Clear();
+        }
 
         public override void DisplayMenu()
         {
@@ -157,10 +163,7 @@ namespace EventManagement
 
                     if (showExitMessage)
                     {
-                        Console.WriteLine();
-                        Console.Write("Press enter to go back.");
-                        Console.ReadLine();
-                        Console.Clear();
+                        DisplayBack();
                     }
                 }
             }
@@ -247,10 +250,7 @@ namespace EventManagement
                         if (rowsAffected > 0)
                         {
                             Console.WriteLine("Successfully registered for the event!");
-                            Console.WriteLine();
-                            Console.Write("Press enter to go back.");
-                            Console.ReadLine();
-                            Console.Clear();
+                            DisplayBack();
                         }
                         else
                         {
@@ -345,10 +345,7 @@ namespace EventManagement
                         Console.WriteLine($"Event ID: {reader["eventID"]}, Name: {reader["name"]}, Date: {((DateTime)reader["date"]).ToString("yyyy-MM-dd")}, Location: {reader["location"]}");
                     }
                     Console.WriteLine("====================");
-                    Console.WriteLine();
-                    Console.Write("Press enter to go back.");
-                    Console.ReadKey();
-                    Console.Clear();
+                    DisplayBack();
                 }
             }
             catch (SqlException ex)
@@ -368,10 +365,7 @@ namespace EventManagement
             if (!HasRegisteredEndedEvents())
             {
                 Console.WriteLine("You are not registered for any events that have ended.");
-                Console.WriteLine();
-                Console.Write("Press enter to go back.");
-                Console.ReadKey();
-                Console.Clear();
+                DisplayBack();
                 return;
             }
 
@@ -449,10 +443,7 @@ namespace EventManagement
                         Console.WriteLine("====================");
                         Console.WriteLine();
                         Console.WriteLine("Thank you for your feedback!");
-                        Console.WriteLine();
-                        Console.WriteLine("Press enter to go back.");
-                        Console.ReadLine();
-                        Console.Clear();
+                        DisplayBack();
                     }
                     else
                     {
@@ -492,7 +483,6 @@ namespace EventManagement
         }
 
 
-        // Helper method to get the event ID by index from registered ended events
         // Helper method to get the event ID by index from registered ended events
         private int GetEventIdByIndex(int index)
         {
@@ -613,10 +603,7 @@ namespace EventManagement
                     if (rowsAffected > 0)
                     {
                         Console.WriteLine("You have successfully canceled your registration for the event.");
-                        Console.WriteLine();
-                        Console.Write("Press enter to go back.");
-                        Console.ReadLine();
-                        Console.Clear();
+                        DisplayBack();
                     }
                     else
                     {
@@ -719,9 +706,7 @@ namespace EventManagement
                         Console.WriteLine();
                       
                     }
-                    Console.Write("Press enter to go back.");
-                    Console.ReadKey();
-                    Console.Clear();
+                    DisplayBack();
 
 
                     if (!hasEvents)
