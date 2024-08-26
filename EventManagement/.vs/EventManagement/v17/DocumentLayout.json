@@ -3,7 +3,15 @@
   "WorkspaceRootPath": "C:\\Users\\Caydan\\Documents\\BC Work\\PRG281\\Project\\PRG-281-Project\\EventManagement\\",
   "Documents": [
     {
+<<<<<<< Updated upstream
       "AbsoluteMoniker": "D:0:0:{E08A4295-6904-4F0B-B841-AFEF824530FB}|EventManagement\\EventManagement.csproj|C:\\Users\\Caydan\\Documents\\BC Work\\PRG281\\Project\\PRG-281-Project\\EventManagement\\eventmanagement\\eventmanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+=======
+      "AbsoluteMoniker": "D:0:0:{E08A4295-6904-4F0B-B841-AFEF824530FB}|EventManagement\\EventManagement.csproj|c:\\users\\chesa\\onedrive\\desktop\\prg281-project\\prg-281-project\\eventmanagement\\eventmanagement\\participant.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{E08A4295-6904-4F0B-B841-AFEF824530FB}|EventManagement\\EventManagement.csproj|solutionrelative:eventmanagement\\participant.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{E08A4295-6904-4F0B-B841-AFEF824530FB}|EventManagement\\EventManagement.csproj|C:\\Users\\chesa\\OneDrive\\Desktop\\PRG281-Project\\PRG-281-Project\\EventManagement\\eventmanagement\\eventmanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+>>>>>>> Stashed changes
       "RelativeMoniker": "D:0:0:{E08A4295-6904-4F0B-B841-AFEF824530FB}|EventManagement\\EventManagement.csproj|solutionrelative:eventmanagement\\eventmanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
@@ -62,7 +70,23 @@
               "RelativeToolTip": "EventManagement\\Admin.cs",
               "ViewState": "AgIAANIAAAAAAAAAAAAgwCkBAAAlAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+<<<<<<< Updated upstream
               "WhenOpened": "2024-08-26T09:02:34.403Z"
+=======
+              "WhenOpened": "2024-08-26T08:29:37.019Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "EventManager.cs",
+              "DocumentMoniker": "C:\\Users\\chesa\\OneDrive\\Desktop\\PRG281-Project\\PRG-281-Project\\EventManagement\\EventManagement\\EventManager.cs",
+              "RelativeDocumentMoniker": "EventManagement\\EventManager.cs",
+              "ToolTip": "C:\\Users\\chesa\\OneDrive\\Desktop\\PRG281-Project\\PRG-281-Project\\EventManagement\\EventManagement\\EventManager.cs",
+              "RelativeToolTip": "EventManagement\\EventManager.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA8AAAAIAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-08-26T08:29:37.063Z"
+>>>>>>> Stashed changes
             },
             {
               "$type": "Document",
@@ -85,7 +109,7 @@
               "RelativeDocumentMoniker": "EventManagement\\Participant.cs",
               "ToolTip": "C:\\Users\\Caydan\\Documents\\BC Work\\PRG281\\Project\\PRG-281-Project\\EventManagement\\EventManagement\\Participant.cs",
               "RelativeToolTip": "EventManagement\\Participant.cs",
-              "ViewState": "AgIAALsAAAAAAAAAAAAAwM0AAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAMQAAAAAAAAAAAAcwNcAAAAiAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-08-26T09:02:35.29Z",
               "EditorCaption": ""

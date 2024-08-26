@@ -170,22 +170,29 @@ namespace EventManagement
         public void RegisterForEvent()
         {
             Console.Clear();
-            List<(int eventId, string eventName)> allEvents = SearchEvents(false);
             List<(int eventId, string eventName)> availableEvents = new List<(int eventId, string eventName)>();
 
             using (SqlConnection connection = new SqlConnection(EventManager.connectionString))
             {
                 connection.Open();
 
+                // Retrieve all events
+                List<(int eventId, string eventName)> allEvents = SearchEvents(showExitMessage: false);
+
                 foreach (var evt in allEvents)
                 {
-                    SqlCommand checkRegistrationCommand = new SqlCommand("SELECT COUNT(*) FROM attendee_event WHERE userID = @userID AND eventID = @eventID", connection);
+                    // Check if the user is already registered for this event
+                    SqlCommand checkRegistrationCommand = new SqlCommand(
+                        "SELECT COUNT(*) FROM attendee_event WHERE userID = @userID AND eventID = @eventID",
+                        connection);
                     checkRegistrationCommand.Parameters.AddWithValue("@userID", this.id);
                     checkRegistrationCommand.Parameters.AddWithValue("@eventID", evt.eventId);
 
                     int registrationCount = (int)checkRegistrationCommand.ExecuteScalar();
+
                     if (registrationCount == 0)
                     {
+                        // If not registered, add to available events list
                         availableEvents.Add(evt);
                     }
                 }
@@ -194,29 +201,37 @@ namespace EventManagement
             if (availableEvents.Count == 0)
             {
                 Console.WriteLine("You have already registered for all upcoming events.");
-                DisplayBack();
-                return;
-            }
-
-            Console.WriteLine("Upcoming Events:");
-            for (int i = 0; i < availableEvents.Count; i++)
-            {
-                Console.WriteLine($"{i + 1}. {availableEvents[i].eventName}");
-            }
-
-            Console.Write("Enter the number corresponding to the event you want to register for: ");
-            int selectedIndex;
-            if (int.TryParse(Console.ReadLine(), out selectedIndex) && selectedIndex >= 1 && selectedIndex <= availableEvents.Count)
-            {
-                int eventId = availableEvents[selectedIndex - 1].eventId;
-                RegisterForSelectedEvent(eventId);
             }
             else
             {
-                Console.WriteLine("Invalid selection. Please enter a number corresponding to the event.");
-                DisplayBack();
+                // Display available events with the new heading
+                Console.WriteLine();
+                Console.WriteLine("Events that you can register for:");
+                Console.WriteLine("====================");
+                for (int i = 0; i < availableEvents.Count; i++)
+                {
+                    Console.WriteLine($"{i + 1}. {availableEvents[i].eventName}");
+                }
+                Console.WriteLine("====================");
+                Console.WriteLine();
+                Console.Write("Enter the number corresponding to the event you want to register for: ");
+                if (int.TryParse(Console.ReadLine(), out int selectedIndex) && selectedIndex >= 1 && selectedIndex <= availableEvents.Count)
+                {
+                    int eventId = availableEvents[selectedIndex - 1].eventId;
+                    RegisterForSelectedEvent(eventId);
+                }
+                else
+                {
+                    Console.WriteLine("Invalid selection. Please enter a number corresponding to the event.");
+                }
             }
+
+            DisplayBack();
         }
+
+
+
+
 
 
 
