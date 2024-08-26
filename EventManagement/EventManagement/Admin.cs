@@ -70,9 +70,8 @@ namespace EventManagement
                     case AdminMenuOptions.View_Upcoming_Events:
                         Thread displayingUpcomingEvents = new Thread(eventManager.DisplayUpcommingEvents);
                         displayingUpcomingEvents.Start();
-                        displayingUpcomingEvents.Join();
                         Thread backToMainMenu = new Thread(BackToMainMenu);
-                        Console.WriteLine("\nPress any key to return to the admin menu...");
+                        backToMainMenu.Join();
                         backToMainMenu.Start();
                      
 
@@ -122,7 +121,7 @@ namespace EventManagement
         public void ApproveEvent()
         {
             Console.Clear();
-            Console.WriteLine("---------------------------------");
+            Console.WriteLine("Approve Events\n---------------------------------");
             List<int> eventIds = new List<int>();
 
             try
@@ -139,6 +138,7 @@ namespace EventManagement
                     {
                         int index = 1;
                         Console.WriteLine("Pending Events:");
+                        Console.WriteLine("====================");
 
                         while (reader.Read())
                         {
@@ -150,6 +150,7 @@ namespace EventManagement
                             eventIds.Add(eventId);
                             index++;
                         }
+                        Console.WriteLine("====================");
 
                         if (eventIds.Count == 0)
                         {
@@ -263,11 +264,13 @@ namespace EventManagement
 
                     // Step 2: Display the list of upcoming events
                     Console.WriteLine("Upcoming Events:");
+                    Console.WriteLine("====================");
                     for (int i = 0; i < upcomingEvents.Count; i++)
                     {
                         Event ev = upcomingEvents[i];
                         Console.WriteLine($"{i + 1}. {ev.Name} - {ev.Date.ToShortDateString()} at {ev.Location}");
                     }
+                    Console.WriteLine("====================");
 
                     // Step 3: Allow the admin to select an event by index
                     Console.Write("\nEnter the number of the event you want to cancel: ");
@@ -318,14 +321,16 @@ namespace EventManagement
 
                     ;
                 }
-            } catch (SqlException ex)
+            }
+            catch (SqlException ex)
             {
                 Console.WriteLine("An Error Occured while cancelling event: " + ex.Message);
             }
             catch (Exception ex)
             {
                 Console.WriteLine("An Error Occured: " + ex.Message);
-            } finally
+            }
+            finally
             {
                 BackToMainMenu();
             }
@@ -344,8 +349,6 @@ namespace EventManagement
             List<string> admins = new List<string>();
             List<string> organizers = new List<string>();
             List<string> regularUsers = new List<string>();
-
-            Console.WriteLine("---------------------------------");
 
             try
             {
@@ -438,7 +441,7 @@ namespace EventManagement
         public void RegisterNewOrganizer()
         {
             Console.Clear();
-            Console.WriteLine("---------------------------------");
+            Console.WriteLine("Register New Organizer\n---------------------------------");
             Console.WriteLine("\n1. Create New User\n2. Select Existing User");
             switch (int.Parse(Console.ReadLine()))
             {
@@ -580,7 +583,7 @@ namespace EventManagement
         public void ViewFeedback()
         {
             Console.Clear();
-            Console.WriteLine("---------------------------------");
+
             try
             {
                 using (SqlConnection connection = new SqlConnection(eventManager.ConnectionString))
@@ -608,6 +611,7 @@ namespace EventManagement
                         List<int> eventIDs = new List<int>(); // List to keep track of event IDs
 
                         Console.WriteLine("Event Feedback Summary:");
+                        Console.WriteLine("---------------------------------");
                         int eventNumber = 1;
 
                         while (reader.Read())
@@ -733,8 +737,8 @@ namespace EventManagement
 
         public void BackToMainMenu()
         {
-            //Console.WriteLine("\nPress any key to return to the admin menu...");
-            Console.ReadKey();
+            Console.WriteLine("\nPress Enter key to return to menu...");
+            Console.ReadLine();
             Console.Clear();
             DisplayMenu();
         }

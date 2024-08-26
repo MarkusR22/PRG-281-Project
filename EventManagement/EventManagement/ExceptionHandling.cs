@@ -10,13 +10,24 @@ namespace EventManagement
     {
         public static string StringHandling()
         {
-            try { 
-            string input = Console.ReadLine();
-                return input;
+            try
+            {
+                string input = Console.ReadLine();
+                if (input != "")
+                {
+                    return input;
+
+                }
+                else
+                {
+                    throw new Exception("Value cannot be empty");
+                }
+
             }
-            catch (Exception e) {
-                Console.WriteLine("Something went wrong :( {0}",e.Message);
-                Console.WriteLine("Try again Enter 1.\nGo back to main menu 2.");
+            catch (Exception e)
+            {
+                Console.WriteLine("Something went wrong :( {0}", e.Message);
+                Console.WriteLine("=====================\nTry again Enter 1.\nGo back to main menu 2.");
                 string input = Console.ReadLine();
                 switch (input)
                 {
@@ -24,7 +35,8 @@ namespace EventManagement
                         Console.WriteLine("Enter a value again");
                         return StringHandling();
                         break;
-                    case "2": Register_Login.DisplayMenu();
+                    case "2":
+                        Register_Login.DisplayMenu();
                         break;
                     default:
                         Console.WriteLine("Something went wrong :( ");
@@ -32,7 +44,7 @@ namespace EventManagement
                         return StringHandling();
                         break;
                 }
-                
+
                 return null;
             }
         }
@@ -66,7 +78,7 @@ namespace EventManagement
 
                         break;
                 }
-                
+
                 return 1;
             }
         }
@@ -98,7 +110,7 @@ namespace EventManagement
                         return DoubleHandling();
                         break;
                 }
-                
+
                 return 0;
             }
         }
@@ -131,7 +143,7 @@ namespace EventManagement
                         break;
                 }
 
-                return DateTime.Now ;
+                return DateTime.Now;
             }
         }
 
@@ -144,13 +156,14 @@ namespace EventManagement
                 if (input.ToLower() == "y")
                 {
                     return true;
-                } else if (input.ToLower() == "n")
+                }
+                else if (input.ToLower() == "n")
                 {
                     return false;
                 }
                 else
                 {
-                    throw new Exception();                    
+                    throw new Exception();
                 }
 
             }
@@ -173,7 +186,7 @@ namespace EventManagement
                         Console.WriteLine("Try again Enter 1.\nGo back to main menu 2.");
                         return BoolHandling();
                         break;
-                }               
+                }
                 return false;
             }
         }

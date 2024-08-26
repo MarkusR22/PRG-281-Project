@@ -10,7 +10,7 @@ namespace EventManagement
     public class EventManager
     {
         //static User currentUser = Register_Login.CurrentUser;
-        //public const string connectionString = "Data Source=MACHINE;Initial Catalog=EventManagementTemp;Integrated Security=True;Connect Timeout=30;Encrypt=True;TrustServerCertificate=True;"; // Caydan
+        public const string connectionString = "Data Source=MACHINE;Initial Catalog=EventManagementTemp;Integrated Security=True;Connect Timeout=30;Encrypt=True;TrustServerCertificate=True;"; // Caydan
         //public const string connectionString = "Data Source=TIMOTHY\\MSSQLSERVER09;Initial Catalog=EventManagementTemp;Integrated Security=True;Connect Timeout=30;Encrypt=True;TrustServerCertificate=True;"; //Joseph's DB connection
         //public const string connectionString = "Data Source=DESKTOP-TDBJOM7;Initial Catalog=EventManagement;Integrated Security=True;Connect Timeout=30;Encrypt=True;TrustServerCertificate=True;"; //Markus' connection string
         public const string connectionString = "Data Source=EE-GAMINGPC;Initial Catalog=EventManagementTheuns;Integrated Security=True;Connect Timeout=30;Encrypt=True;TrustServerCertificate=True;"; //Theuns db string
@@ -94,19 +94,19 @@ namespace EventManagement
             {
 
                 Console.Write("Enter name of event: ");
-                string eventName = Console.ReadLine();
+                string eventName = ExceptionHandling.StringHandling();
                 Console.Write("Enter description of event: ");
-                string eventDescription = Console.ReadLine();
+                string eventDescription = ExceptionHandling.StringHandling();
                 Console.Write("Enter date of event: ");
                 DateTime eventDate = DateTime.Parse(Console.ReadLine());
                 Console.Write("Enter location of event: ");
-                string eventLocation = Console.ReadLine();
+                string eventLocation = ExceptionHandling.StringHandling();
                 Console.Write("Enter event organizer ID: ");
-                int organizerID = int.Parse(Console.ReadLine());
+                int organizerID = ExceptionHandling.IntHandling();
                 Console.Write("Enter status of event: ");
-                string eventStatus = Console.ReadLine();
+                string eventStatus = ExceptionHandling.StringHandling();
                 Console.Write("Enter ticket price: ");
-                double ticketPrice = double.Parse(Console.ReadLine());
+                double ticketPrice = ExceptionHandling.DoubleHandling();
                 Console.WriteLine();
 
 
