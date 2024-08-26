@@ -120,16 +120,6 @@ namespace EventManagement
         }
 
 
-
-
-
-        public static void BackToMainMenu()
-        {
-            Console.WriteLine("Press any key to return to the participant menu...");
-            Console.ReadKey();
-            Console.Clear();
-        }
-
         //NEW METHODS FOR NEW MENU
         public List<(int eventId, string eventName)> SearchEvents(bool showExitMessage = true)
         {
@@ -169,7 +159,7 @@ namespace EventManagement
             }
             catch (SqlException ex)
             {
-                Console.WriteLine("An error occurred while searching for events: " + ex.Message);
+                Console.WriteLine("An error occurred while dislpaying the events: " + ex.Message);
             }
 
             return events;
@@ -180,19 +170,45 @@ namespace EventManagement
         public void RegisterForEvent()
         {
             Console.Clear();
-            List<(int eventId, string eventName)> events = SearchEvents(false);
+            List<(int eventId, string eventName)> allEvents = SearchEvents(false);
+            List<(int eventId, string eventName)> availableEvents = new List<(int eventId, string eventName)>();
 
-            if (events.Count == 0)
+            using (SqlConnection connection = new SqlConnection(EventManager.connectionString))
             {
-                Console.WriteLine("No upcoming events available.");
+                connection.Open();
+
+                foreach (var evt in allEvents)
+                {
+                    SqlCommand checkRegistrationCommand = new SqlCommand("SELECT COUNT(*) FROM attendee_event WHERE userID = @userID AND eventID = @eventID", connection);
+                    checkRegistrationCommand.Parameters.AddWithValue("@userID", this.id);
+                    checkRegistrationCommand.Parameters.AddWithValue("@eventID", evt.eventId);
+
+                    int registrationCount = (int)checkRegistrationCommand.ExecuteScalar();
+                    if (registrationCount == 0)
+                    {
+                        availableEvents.Add(evt);
+                    }
+                }
+            }
+
+            if (availableEvents.Count == 0)
+            {
+                Console.WriteLine("You have already registered for all upcoming events.");
+                DisplayBack();
                 return;
+            }
+
+            Console.WriteLine("Upcoming Events:");
+            for (int i = 0; i < availableEvents.Count; i++)
+            {
+                Console.WriteLine($"{i + 1}. {availableEvents[i].eventName}");
             }
 
             Console.Write("Enter the number corresponding to the event you want to register for: ");
             int selectedIndex;
-            if (int.TryParse(Console.ReadLine(), out selectedIndex) && selectedIndex >= 1 && selectedIndex <= events.Count)
+            if (int.TryParse(Console.ReadLine(), out selectedIndex) && selectedIndex >= 1 && selectedIndex <= availableEvents.Count)
             {
-                int eventId = events[selectedIndex - 1].eventId;
+                int eventId = availableEvents[selectedIndex - 1].eventId;
                 RegisterForSelectedEvent(eventId);
             }
             else
@@ -201,6 +217,7 @@ namespace EventManagement
                 DisplayBack();
             }
         }
+
 
 
         private void RegisterForSelectedEvent(int eventId)
@@ -220,9 +237,8 @@ namespace EventManagement
 
                     if (registrationCount > 0)
                     {
-                        
                         Console.WriteLine("You are already registered for this event.");
-                        Console.Clear();
+                        DisplayBack();
                         return; // Exit the method early
                     }
 
@@ -233,11 +249,10 @@ namespace EventManagement
 
                     if (reader.Read())
                     {
-                        
                         string eventName = reader.GetString(0);
                         int eventYear = reader.GetInt32(1);
                         reader.Close();
-                        
+
                         // Generate the entry code
                         string entryCode = GenerateEntryCode(eventName, eventYear, connection, eventId);
 
@@ -251,6 +266,7 @@ namespace EventManagement
                         if (rowsAffected > 0)
                         {
                             Console.WriteLine("Successfully registered for the event!");
+                            Console.WriteLine($"Your entry code is: {entryCode}"); // Display the entry code
                             DisplayBack();
                         }
                         else
@@ -270,6 +286,7 @@ namespace EventManagement
                 Console.WriteLine("An error occurred while registering for the event: " + ex.Message);
             }
         }
+
 
 
         private string GenerateEntryCode(string eventName, int eventYear, SqlConnection connection, int eventId)
@@ -334,7 +351,10 @@ namespace EventManagement
                     Thread.Sleep(1000);
                     Console.Clear();
 
-                    SqlCommand command = new SqlCommand("SELECT e.eventID, e.name, e.date, e.location FROM event e INNER JOIN attendee_event ae ON e.eventID = ae.eventID WHERE ae.userID = @userID", connection);
+                    SqlCommand command = new SqlCommand(
+                        "SELECT e.eventID, e.name, e.date, e.location, ae.entry_code " +
+                        "FROM event e INNER JOIN attendee_event ae ON e.eventID = ae.eventID " +
+                        "WHERE ae.userID = @userID", connection);
                     command.Parameters.AddWithValue("@userID", this.id);
 
                     SqlDataReader reader = command.ExecuteReader();
@@ -343,7 +363,7 @@ namespace EventManagement
                     Console.WriteLine("====================");
                     while (reader.Read())
                     {
-                        Console.WriteLine($"Event ID: {reader["eventID"]}, Name: {reader["name"]}, Date: {((DateTime)reader["date"]).ToString("yyyy-MM-dd")}, Location: {reader["location"]}");
+                        Console.WriteLine($"Event ID: {reader["eventID"]}, Name: {reader["name"]}, Date: {((DateTime)reader["date"]).ToString("yyyy-MM-dd")}, Location: {reader["location"]}, Entry Code: {reader["entry_code"]}");
                     }
                     Console.WriteLine("====================");
                     DisplayBack();
@@ -354,6 +374,7 @@ namespace EventManagement
                 Console.WriteLine("An error occurred while fetching registered events: " + ex.Message);
             }
         }
+
 
         public void SubmitFeedback()
         {
