@@ -98,6 +98,7 @@ namespace EventManagement
         {
             try
             {
+                
                 Console.WriteLine("Organizer logout successful!");
                 Thread.Sleep(1000);
                 Register_Login.DisplayMenu();

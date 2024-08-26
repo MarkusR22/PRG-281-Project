@@ -14,7 +14,7 @@ namespace EventManagement
         {
             Admin.EventApproved += OnEventApproved;
             Admin.EventCancelled += OnEventCancelled;
-            Participant.RegisteredForEvent += OnRegisteredForEvent; 
+            Participant.RegisteredForEvent += OnRegisteredForEvent;
             Participant.UnregisteredForEvent += OnUnregisteredForEvent;
         }
 
@@ -88,5 +88,12 @@ namespace EventManagement
             Console.ResetColor();
         }
 
+        public void Unsubscribe()
+        {
+            Admin.EventApproved -= OnEventApproved;
+            Admin.EventCancelled -= OnEventCancelled;
+            Participant.RegisteredForEvent -= OnRegisteredForEvent;
+            Participant.UnregisteredForEvent -= OnUnregisteredForEvent;
+        }
     }
 }
