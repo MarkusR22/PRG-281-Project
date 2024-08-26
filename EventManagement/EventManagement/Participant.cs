@@ -213,20 +213,28 @@ namespace EventManagement
                 }
                 Console.WriteLine("====================");
                 Console.WriteLine();
+                Console.WriteLine("(0: Back)");
                 Console.Write("Enter the number corresponding to the event you want to register for: ");
-                if (int.TryParse(Console.ReadLine(), out int selectedIndex) && selectedIndex >= 1 && selectedIndex <= availableEvents.Count)
+                string userInput = Console.ReadLine();
+
+                if (int.TryParse(userInput, out int selectedIndex) && selectedIndex >= 1 && selectedIndex <= availableEvents.Count)
                 {
                     int eventId = availableEvents[selectedIndex - 1].eventId;
                     RegisterForSelectedEvent(eventId);
-                    
+                }
+                else if (userInput == "0")
+                {
+                    DisplayBack();
                 }
                 else
                 {
                     Console.WriteLine("Invalid selection. Please enter a number corresponding to the event.");
+                    DisplayBack();
                 }
+
             }
 
-            
+
         }
 
 
