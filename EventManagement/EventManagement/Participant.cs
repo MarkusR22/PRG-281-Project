@@ -13,6 +13,9 @@ namespace EventManagement
         public delegate void RegisteredForEventHander(object source, RegisteredForEventArgs e);
         public static event RegisteredForEventHander RegisteredForEvent;
 
+        public delegate void UnregisteredForEventHander(object source, EventArgs e);
+        public static event UnregisteredForEventHander UnregisteredForEvent;
+
         public Participant(int id, string userName, string password) : base(id, userName, password)
         {
 
@@ -645,7 +648,7 @@ namespace EventManagement
                     int rowsAffected = command.ExecuteNonQuery();
                     if (rowsAffected > 0)
                     {
-                        Console.WriteLine("You have successfully canceled your registration for the event.");
+                        OnUnregisteredForEvent();
                         DisplayBack();
                     }
                     else
@@ -658,6 +661,12 @@ namespace EventManagement
             {
                 Console.WriteLine("An error occurred while canceling your registration: " + ex.Message);
             }
+        }
+
+        public void OnUnregisteredForEvent()
+        {
+            NotifyService notify = new NotifyService();
+            UnregisteredForEvent?.Invoke(this, EventArgs.Empty);
         }
 
         // Helper method to display upcoming events the user is registered for and return their IDs

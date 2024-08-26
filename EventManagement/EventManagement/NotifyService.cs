@@ -15,6 +15,7 @@ namespace EventManagement
             Admin.EventApproved += OnEventApproved;
             Admin.EventCancelled += OnEventCancelled;
             Participant.RegisteredForEvent += OnRegisteredForEvent; 
+            Participant.UnregisteredForEvent += OnUnregisteredForEvent;
         }
 
         public void OnEventApproved(object sender, EventArgs e)
@@ -69,6 +70,21 @@ namespace EventManagement
             Thread.Sleep(1000);
             Console.WriteLine("\nsuccessfully registered for event!");
             Console.WriteLine($"Your entry code is: {e.entryCode}");
+            Console.ResetColor();
+        }
+
+        public void OnUnregisteredForEvent(object sender, EventArgs e)
+        {
+            Console.ForegroundColor= ConsoleColor.Red;
+            Console.Write("Cancelling registration for event");
+            Thread.Sleep(1000);
+            Console.Write(".");
+            Thread.Sleep(1000);
+            Console.Write(".");
+            Thread.Sleep(1000);
+            Console.Write(".");
+            Thread.Sleep(1000);
+            Console.WriteLine("\nYou have successfully canceled your registration for the event.");
             Console.ResetColor();
         }
 
