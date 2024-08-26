@@ -41,6 +41,7 @@ namespace EventManagement
             Console.WriteLine();
             Console.Write("Press any key to go back.");
             Console.ReadKey();
+            Thread.Sleep(500);
             Console.Clear();
         }
 
