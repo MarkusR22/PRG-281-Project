@@ -13,7 +13,7 @@ namespace EventManagement
             try
             {
                 string input = Console.ReadLine();
-                if (input != "")
+                if (input != "" || input != null)
                 {
                     return input;
 
@@ -34,15 +34,20 @@ namespace EventManagement
                     case "1":
                         Console.WriteLine("Enter a value again");
                         return StringHandling();
-                        break;
                     case "2":
-                        Register_Login.DisplayMenu();
+                        if (Register_Login.currentUser == null)
+                        {
+                            Register_Login.DisplayMenu();
+                        }
+                        else
+                        {
+                            Register_Login.currentUser.DisplayMenu();
+                        }
                         break;
                     default:
                         Console.WriteLine("Something went wrong :( ");
                         Console.WriteLine("Try again Enter 1.\nGo back to main menu 2.");
                         return StringHandling();
-                        break;
                 }
 
                 return null;
@@ -67,16 +72,21 @@ namespace EventManagement
                     case "1":
                         Console.WriteLine("Enter a value again");
                         return IntHandling();
-                        break;
                     case "2":
-                        Register_Login.DisplayMenu();
+                        if (Register_Login.currentUser == null)
+                        {
+                            Register_Login.DisplayMenu();
+                        }
+                        else
+                        {
+                            Register_Login.currentUser.DisplayMenu();
+                        }
                         break;
                     default:
                         Console.WriteLine("Something went wrong :( ");
                         Console.WriteLine("Try again Enter 1.\nGo back to main menu 2.");
                         return IntHandling();
 
-                        break;
                 }
 
                 return 1;
@@ -100,15 +110,20 @@ namespace EventManagement
                     case "1":
                         Console.WriteLine("Enter a value again");
                         return DoubleHandling();
-                        break;
                     case "2":
-                        Register_Login.DisplayMenu();
+                        if (Register_Login.currentUser == null)
+                        {
+                            Register_Login.DisplayMenu();
+                        }
+                        else
+                        {
+                            Register_Login.currentUser.DisplayMenu();
+                        }
                         break;
                     default:
                         Console.WriteLine("Something went wrong :( ");
                         Console.WriteLine("Try again Enter 1.\nGo back to main menu 2.");
                         return DoubleHandling();
-                        break;
                 }
 
                 return 0;
@@ -132,15 +147,20 @@ namespace EventManagement
                     case "1":
                         Console.WriteLine("Enter a value again");
                         return DateHandling();
-                        break;
                     case "2":
-                        Register_Login.DisplayMenu();
+                        if (Register_Login.currentUser == null)
+                        {
+                            Register_Login.DisplayMenu();
+                        }
+                        else
+                        {
+                            Register_Login.currentUser.DisplayMenu();
+                        }
                         break;
                     default:
                         Console.WriteLine("Something went wrong :( ");
                         Console.WriteLine("Try again Enter 1.\nGo back to main menu 2.");
                         return DateHandling();
-                        break;
                 }
 
                 return DateTime.Now;
@@ -177,15 +197,20 @@ namespace EventManagement
                     case "1":
                         Console.WriteLine("Enter yes (y) or no (n) y/n");
                         return BoolHandling();
-                        break;
                     case "2":
-                        Register_Login.DisplayMenu();
+                        if (Register_Login.currentUser == null)
+                        {
+                            Register_Login.DisplayMenu();
+                        }
+                        else
+                        {
+                            Register_Login.currentUser.DisplayMenu();
+                        }
                         break;
                     default:
                         Console.WriteLine("Something went wrong :( ");
                         Console.WriteLine("Try again Enter 1.\nGo back to main menu 2.");
                         return BoolHandling();
-                        break;
                 }
                 return false;
             }

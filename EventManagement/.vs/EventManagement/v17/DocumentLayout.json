@@ -3,11 +3,23 @@
   "WorkspaceRootPath": "C:\\Users\\user-pc\\Documents\\Belgium\\Second Year\\PRG 281\\PRG 281 Project\\PRG-281-Project2\\PRG-281-Project\\EventManagement\\",
   "Documents": [
     {
+<<<<<<< Updated upstream
       "AbsoluteMoniker": "D:0:0:{E08A4295-6904-4F0B-B841-AFEF824530FB}|EventManagement\\EventManagement.csproj|c:\\users\\user-pc\\documents\\belgium\\second year\\prg 281\\prg 281 project\\prg-281-project2\\prg-281-project\\eventmanagement\\eventmanagement\\notifyservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{E08A4295-6904-4F0B-B841-AFEF824530FB}|EventManagement\\EventManagement.csproj|solutionrelative:eventmanagement\\notifyservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{E08A4295-6904-4F0B-B841-AFEF824530FB}|EventManagement\\EventManagement.csproj|C:\\Users\\user-pc\\Documents\\Belgium\\Second Year\\PRG 281\\PRG 281 Project\\PRG-281-Project2\\PRG-281-Project\\EventManagement\\eventmanagement\\participant.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+=======
+      "AbsoluteMoniker": "D:0:0:{E08A4295-6904-4F0B-B841-AFEF824530FB}|EventManagement\\EventManagement.csproj|c:\\users\\caydan\\documents\\bc work\\prg281\\project\\prg-281-project\\eventmanagement\\eventmanagement\\exceptionhandling.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{E08A4295-6904-4F0B-B841-AFEF824530FB}|EventManagement\\EventManagement.csproj|solutionrelative:eventmanagement\\exceptionhandling.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{E08A4295-6904-4F0B-B841-AFEF824530FB}|EventManagement\\EventManagement.csproj|c:\\users\\caydan\\documents\\bc work\\prg281\\project\\prg-281-project\\eventmanagement\\eventmanagement\\eventmanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{E08A4295-6904-4F0B-B841-AFEF824530FB}|EventManagement\\EventManagement.csproj|solutionrelative:eventmanagement\\eventmanager.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{E08A4295-6904-4F0B-B841-AFEF824530FB}|EventManagement\\EventManagement.csproj|C:\\Users\\Caydan\\Documents\\BC Work\\PRG281\\Project\\PRG-281-Project\\EventManagement\\eventmanagement\\participant.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+>>>>>>> Stashed changes
       "RelativeMoniker": "D:0:0:{E08A4295-6904-4F0B-B841-AFEF824530FB}|EventManagement\\EventManagement.csproj|solutionrelative:eventmanagement\\participant.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
@@ -51,6 +63,7 @@
             {
               "$type": "Document",
               "DocumentIndex": 0,
+<<<<<<< Updated upstream
               "Title": "NotifyService.cs",
               "DocumentMoniker": "C:\\Users\\user-pc\\Documents\\Belgium\\Second Year\\PRG 281\\PRG 281 Project\\PRG-281-Project2\\PRG-281-Project\\EventManagement\\EventManagement\\NotifyService.cs",
               "RelativeDocumentMoniker": "EventManagement\\NotifyService.cs",
@@ -59,11 +72,22 @@
               "ViewState": "AgIAAEQAAAAAAAAAAAAIwFUAAAAfAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-08-26T15:30:06.037Z",
+=======
+              "Title": "ExceptionHandling.cs",
+              "DocumentMoniker": "C:\\Users\\Caydan\\Documents\\BC Work\\PRG281\\Project\\PRG-281-Project\\EventManagement\\EventManagement\\ExceptionHandling.cs",
+              "RelativeDocumentMoniker": "EventManagement\\ExceptionHandling.cs",
+              "ToolTip": "C:\\Users\\Caydan\\Documents\\BC Work\\PRG281\\Project\\PRG-281-Project\\EventManagement\\EventManagement\\ExceptionHandling.cs",
+              "RelativeToolTip": "EventManagement\\ExceptionHandling.cs",
+              "ViewState": "AgIAAAYAAAAAAAAAAAAAAAgAAAARAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-08-26T15:37:57.556Z",
+>>>>>>> Stashed changes
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 4,
+<<<<<<< Updated upstream
               "Title": "Organizer.cs",
               "DocumentMoniker": "C:\\Users\\user-pc\\Documents\\Belgium\\Second Year\\PRG 281\\PRG 281 Project\\PRG-281-Project2\\PRG-281-Project\\EventManagement\\EventManagement\\Organizer.cs",
               "RelativeDocumentMoniker": "EventManagement\\Organizer.cs",
@@ -77,6 +101,8 @@
             {
               "$type": "Document",
               "DocumentIndex": 5,
+=======
+>>>>>>> Stashed changes
               "Title": "Program.cs",
               "DocumentMoniker": "C:\\Users\\user-pc\\Documents\\Belgium\\Second Year\\PRG 281\\PRG 281 Project\\PRG-281-Project2\\PRG-281-Project\\EventManagement\\EventManagement\\Program.cs",
               "RelativeDocumentMoniker": "EventManagement\\Program.cs",
@@ -101,20 +127,40 @@
             },
             {
               "$type": "Document",
+<<<<<<< Updated upstream
               "DocumentIndex": 2,
+=======
+              "DocumentIndex": 3,
+              "Title": "Admin.cs",
+              "DocumentMoniker": "C:\\Users\\Caydan\\Documents\\BC Work\\PRG281\\Project\\PRG-281-Project\\EventManagement\\EventManagement\\Admin.cs",
+              "RelativeDocumentMoniker": "EventManagement\\Admin.cs",
+              "ToolTip": "C:\\Users\\Caydan\\Documents\\BC Work\\PRG281\\Project\\PRG-281-Project\\EventManagement\\EventManagement\\Admin.cs",
+              "RelativeToolTip": "EventManagement\\Admin.cs",
+              "ViewState": "AgIAAAsAAAAAAAAAAAA7wDsAAABIAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-08-26T15:32:02.882Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+>>>>>>> Stashed changes
               "Title": "EventManager.cs",
               "DocumentMoniker": "C:\\Users\\user-pc\\Documents\\Belgium\\Second Year\\PRG 281\\PRG 281 Project\\PRG-281-Project2\\PRG-281-Project\\EventManagement\\EventManagement\\EventManager.cs",
               "RelativeDocumentMoniker": "EventManagement\\EventManager.cs",
               "ToolTip": "C:\\Users\\user-pc\\Documents\\Belgium\\Second Year\\PRG 281\\PRG 281 Project\\PRG-281-Project2\\PRG-281-Project\\EventManagement\\EventManagement\\EventManager.cs",
               "RelativeToolTip": "EventManagement\\EventManager.cs",
+<<<<<<< Updated upstream
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAAA3AAAAAAAAAA==",
+=======
+              "ViewState": "AgIAAH0AAAAAAAAAAAAkwA4AAAAKAAAAAAAAAA==",
+>>>>>>> Stashed changes
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-08-26T15:29:59.86Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 2,
               "Title": "Participant.cs",
               "DocumentMoniker": "C:\\Users\\user-pc\\Documents\\Belgium\\Second Year\\PRG 281\\PRG 281 Project\\PRG-281-Project2\\PRG-281-Project\\EventManagement\\EventManagement\\Participant.cs",
               "RelativeDocumentMoniker": "EventManagement\\Participant.cs",
@@ -122,8 +168,12 @@
               "RelativeToolTip": "EventManagement\\Participant.cs",
               "ViewState": "AgIAAFwCAAAAAAAAAAASwIkCAAAVAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+<<<<<<< Updated upstream
               "WhenOpened": "2024-08-26T15:29:59.86Z",
               "EditorCaption": ""
+=======
+              "WhenOpened": "2024-08-26T15:32:02.958Z"
+>>>>>>> Stashed changes
             }
           ]
         }
