@@ -56,7 +56,7 @@ namespace EventManagement
                     switch (chosenOption)
                     {
                         case OrganizerMenuOptions.View_Upcoming_Events:
-                            DisplayUpcommingEvents();
+                            DisplayOrganizedEvents();
                             Console.WriteLine();
                             Console.WriteLine("==============================================");
                             DisplayMenu();
@@ -117,7 +117,7 @@ namespace EventManagement
             Console.Clear();
         }
 
-        public void DisplayUpcommingEvents()
+        public void DisplayOrganizedEvents()
         {
             Console.Clear();
             List<Event> events = GetEvents();
