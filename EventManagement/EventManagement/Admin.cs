@@ -147,7 +147,7 @@ namespace EventManagement
                         if (eventIds.Count == 0)
                         {
                             Console.WriteLine("No pending events found.");
-                            
+
                         }
                     }
                 }
@@ -239,8 +239,84 @@ namespace EventManagement
 
         public void CancelEvent()
         {
+            try
+            {
 
-            OnEventCancelled(EventArgs.Empty);
+                {
+                    // Step 1: Retrieve the list of upcoming events
+                    List<Event> events = eventManager.GetEvents();
+                    List<Event> upcomingEvents = events.Where(e => e.Status == "upcoming").ToList();
+
+                    if (upcomingEvents.Count == 0)
+                    {
+                        Console.WriteLine("No upcoming events to cancel.");
+                        return;
+                    }
+
+                    // Step 2: Display the list of upcoming events
+                    Console.WriteLine("Upcoming Events:");
+                    for (int i = 0; i < upcomingEvents.Count; i++)
+                    {
+                        Event ev = upcomingEvents[i];
+                        Console.WriteLine($"{i + 1}. {ev.Name} - {ev.Date.ToShortDateString()} at {ev.Location}");
+                    }
+
+                    // Step 3: Allow the admin to select an event by index
+                    Console.Write("\nEnter the number of the event you want to cancel: ");
+                    int selectedIndex;
+                    if (int.TryParse(Console.ReadLine(), out selectedIndex) && selectedIndex > 0 && selectedIndex <= upcomingEvents.Count)
+                    {
+                        Event selectedEvent = upcomingEvents[selectedIndex - 1];
+
+                        // Step 4: Confirm cancellation
+                        Console.Write($"Are you sure you want to cancel the event '{selectedEvent.Name}'? (y/n): ");
+                        string confirmation = Console.ReadLine();
+
+                        if (confirmation.ToLower() == "y")
+                        {
+                            // Step 5: Cancel the event by updating the status to 'cancelled'
+                            using (SqlConnection connection = new SqlConnection(EventManager.connectionString))
+                            {
+                                connection.Open();
+
+                                string cancelQuery = "UPDATE dbo.[event] SET status = 'cancelled' WHERE eventID = @EventID";
+                                using (SqlCommand command = new SqlCommand(cancelQuery, connection))
+                                {
+                                    command.Parameters.AddWithValue("@EventID", selectedEvent.EventId);
+
+                                    int rowsAffected = command.ExecuteNonQuery();
+
+                                    if (rowsAffected > 0)
+                                    {
+                                        Console.WriteLine("Event cancelled successfully.");
+                                        OnEventCancelled(EventArgs.Empty)
+                                    }
+                                    else
+                                    {
+                                        Console.WriteLine("Failed to cancel the event.");
+                                    }
+                                }
+                            }
+                        }
+                        else
+                        {
+                            Console.WriteLine("Event cancellation aborted.");
+                        }
+                    }
+                    else
+                    {
+                        Console.WriteLine("Invalid selection.");
+                    }
+
+                    ;
+                }
+            } catch(Exception ex)
+            {
+                Console.WriteLine("An Error Occured: "+ ex.Message);
+            } finally
+            {
+                BackToMainMenu();
+            }
         }
 
         protected static void OnEventCancelled(EventArgs e)
@@ -338,7 +414,8 @@ namespace EventManagement
             catch (Exception ex)
             {
                 Console.WriteLine("An unexpected error occurred: " + ex.Message);
-            } finally
+            }
+            finally
             {
                 BackToMainMenu();
             }
