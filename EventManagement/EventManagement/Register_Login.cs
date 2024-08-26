@@ -2,6 +2,7 @@
 using System.Data.SqlClient;
 using System;
 using System.Runtime.InteropServices;
+using System.Threading;
 
 internal class Register_Login
 {
@@ -138,6 +139,7 @@ internal class Register_Login
                     if (user != null)
                     {
                         Console.WriteLine("Login successful!");
+                        Thread.Sleep(1000);
                         DisplayMenuBasedOnUserType(user);
                     }
                     else

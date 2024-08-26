@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace EventManagement
@@ -18,7 +19,6 @@ namespace EventManagement
         {
             View_Upcoming_Events = 1,
             Create_New_Event,
-            Register_New_Organizer,
             Past_Feedback,
             Edit_Details,
             Log_out
@@ -36,6 +36,7 @@ namespace EventManagement
 
         public override async void DisplayMenu()
         {
+            Console.Clear();
             while (true)
             {
                 Console.WriteLine("Organizer Menu:");
@@ -46,7 +47,7 @@ namespace EventManagement
                     Console.WriteLine($"{(int)option}. {optionName}");
                 }
 
-                Console.Write("Select an option (1-6): ");
+                Console.Write("Select an option (1-5): ");
                 string input = Console.ReadLine().Trim();
 
 
@@ -66,15 +67,11 @@ namespace EventManagement
                             Console.WriteLine("==============================================");
                             DisplayMenu();
                             break;
-                        case OrganizerMenuOptions.Register_New_Organizer: // Don't do this
-
-                            break;
                         case OrganizerMenuOptions.Past_Feedback:
                             ViewFeedback();
                             Console.WriteLine();
                             Console.WriteLine("==============================================");
                             DisplayMenu();
-
                             break;
                         case OrganizerMenuOptions.Edit_Details:
                             Register_Login.currentUser.ManageProfile();
@@ -97,12 +94,12 @@ namespace EventManagement
             }
         }
 
-        public override async void Logout()
+        public override  void Logout()
         {
             try
             {
                 Console.WriteLine("Admin logout successful!");
-                await Task.Delay(1000);
+                Thread.Sleep(1000);
                 Register_Login.DisplayMenu();
 
             }
@@ -122,6 +119,7 @@ namespace EventManagement
 
         public void DisplayUpcommingEvents()
         {
+            Console.Clear();
             List<Event> events = GetEvents();
 
             Console.WriteLine("Upcoming Events which you are organising:");
@@ -188,6 +186,7 @@ namespace EventManagement
 
         public void DisplayEventDetails(Event ev)
         {
+            Console.Clear();
             Console.WriteLine($"\nEvent Details:");
             Console.WriteLine($"Name: {ev.Name}");
             Console.WriteLine($"Description: {ev.Description}");
@@ -201,7 +200,7 @@ namespace EventManagement
 
         public void CreateEvent()
         {
-
+            Console.Clear();
             Console.Write("Enter name of event: ");
             string eventName = ExceptionHandling.StringHandling();
             Console.Write("Enter description of event: ");
@@ -267,6 +266,7 @@ namespace EventManagement
 
         public async void ViewFeedback()
         {
+            Console.Clear();
             try
             {
                 using (SqlConnection connection = new SqlConnection(EventManager.connectionString))
@@ -357,6 +357,7 @@ namespace EventManagement
 
         private void ViewAllCommentsForEvent(SqlConnection connection, int eventID)
         {
+            Console.Clear();
             try
             {
                 // Query to get all comments for the selected event
