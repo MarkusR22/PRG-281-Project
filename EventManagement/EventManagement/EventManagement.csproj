@@ -64,6 +64,7 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
+    <Compile Include="RegisteredForEventArgs.cs" />
     <Compile Include="Register_Login.cs" />
     <Compile Include="User.cs" />
   </ItemGroup>

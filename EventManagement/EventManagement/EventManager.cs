@@ -94,19 +94,19 @@ namespace EventManagement
             {
 
                 Console.Write("Enter name of event: ");
-                string eventName = Console.ReadLine();
+                string eventName = ExceptionHandling.StringHandling();
                 Console.Write("Enter description of event: ");
-                string eventDescription = Console.ReadLine();
+                string eventDescription = ExceptionHandling.StringHandling();
                 Console.Write("Enter date of event: ");
                 DateTime eventDate = DateTime.Parse(Console.ReadLine());
                 Console.Write("Enter location of event: ");
-                string eventLocation = Console.ReadLine();
+                string eventLocation = ExceptionHandling.StringHandling();
                 Console.Write("Enter event organizer ID: ");
-                int organizerID = int.Parse(Console.ReadLine());
+                int organizerID = ExceptionHandling.IntHandling();
                 Console.Write("Enter status of event: ");
-                string eventStatus = Console.ReadLine();
+                string eventStatus = ExceptionHandling.StringHandling();
                 Console.Write("Enter ticket price: ");
-                double ticketPrice = double.Parse(Console.ReadLine());
+                double ticketPrice = ExceptionHandling.DoubleHandling();
                 Console.WriteLine();
 
 
@@ -141,17 +141,12 @@ namespace EventManagement
             }
             catch (SqlException ex)
             {
-                Console.WriteLine(ex.Message);
+                Console.WriteLine("Error creating Event" + ex.Message);
             }
             catch (Exception ex)
             {
-                Console.WriteLine("An error occurred: " + ex.Message);
+                Console.WriteLine("An error occurred creating event: " + ex.Message);
                 
-            } finally
-            {
-                Console.WriteLine("Press any key to return to menu...");
-                Console.ReadKey();
-                Register_Login.CurrentUser.DisplayMenu();
             }
             
         }

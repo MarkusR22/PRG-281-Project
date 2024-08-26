@@ -56,7 +56,7 @@ namespace EventManagement
                     switch (chosenOption)
                     {
                         case OrganizerMenuOptions.View_Upcoming_Events:
-                            DisplayUpcommingEvents();
+                            DisplayOrganizedEvents();
                             Console.WriteLine();
                             Console.WriteLine("==============================================");
                             DisplayMenu();
@@ -104,6 +104,7 @@ namespace EventManagement
         {
             try
             {
+                
                 Console.WriteLine("Organizer logout successful!");
                 Thread.Sleep(1000);
                 Register_Login.DisplayMenu();
@@ -123,7 +124,7 @@ namespace EventManagement
             Console.Clear();
         }
 
-        public void DisplayUpcommingEvents()
+        public void DisplayOrganizedEvents()
         {
             Console.Clear();
             List<Event> events = GetEvents();
@@ -343,7 +344,7 @@ namespace EventManagement
                     feedback f
                 INNER JOIN 
                     event e ON f.eventID = e.eventID
-                WHERE organizerID= (SELECT organizerID FROM organizer where userID=@userID)	
+                WHERE organizerID= (SELECT organizerID FROM organizer where userID=@userID)	AND e.status = 'ended'
                 GROUP BY 
                     e.eventID, e.name";
 

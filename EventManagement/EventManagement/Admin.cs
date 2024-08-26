@@ -11,6 +11,7 @@ namespace EventManagement
 
     public class Admin : User
     {
+        //Create an instance of the event manager to allow the admin to perform actions on Events
         EventManager eventManager = new EventManager();
 
         public delegate void EventApprovedHandler(object sender, EventArgs e);
@@ -19,6 +20,8 @@ namespace EventManagement
         public delegate void EventCancelledHandler(object sender, EventArgs e);
         public static event EventCancelledHandler EventCancelled;
 
+        NotifyService notify = new NotifyService();
+        
         public Admin(int id, string userName, string password) : base(id, userName, password)
         {
 
@@ -48,6 +51,7 @@ namespace EventManagement
         }
 
 
+        //Main Menu For Admin
         public override void DisplayMenu()
         {
             Console.Clear();
@@ -68,18 +72,29 @@ namespace EventManagement
                 switch (chosenOption)
                 {
                     case AdminMenuOptions.View_Upcoming_Events:
+                        Console.Clear();
                         Thread displayingUpcomingEvents = new Thread(eventManager.DisplayUpcommingEvents);
+                        Thread backToMainMenu = new Thread(BackToMainMenu);
+
                         displayingUpcomingEvents.Start();
                         displayingUpcomingEvents.Join();
-                        Thread backToMainMenu = new Thread(BackToMainMenu);
-                        Console.WriteLine("\nPress any key to return to the admin menu...");
                         backToMainMenu.Start();
+                        backToMainMenu.Join();
+                        //eventManager.DisplayUpcommingEvents();
+                        //BackToMainMenu();
                      
 
                         break;
                     case AdminMenuOptions.Create_New_Event:
+                        Console.Clear();
                         Thread CreateEventThread = new Thread(CreateEvent);
+                        backToMainMenu = new Thread(BackToMainMenu);
+
                         CreateEventThread.Start();
+                        CreateEventThread.Join();
+
+                        backToMainMenu.Start();
+                        backToMainMenu.Join();
 
                         break;
                     case AdminMenuOptions.Approve_Events:
@@ -106,6 +121,7 @@ namespace EventManagement
                         BackToMainMenu();
                         break;
                     case AdminMenuOptions.Log_out:
+                        notify = null;
                         Logout();
 
                         break;
@@ -119,10 +135,18 @@ namespace EventManagement
 
         }
 
+        //Calls the CreateEvent method from the event manager class using the event manager object
+        public void CreateEvent()
+        {
+            Console.Clear();
+            Console.WriteLine("Create An Event\n==================================");
+            eventManager.CreateEvent();
+        }
+
+        //Display all events with status "pending" to allow the admin to approve the event
         public void ApproveEvent()
         {
             Console.Clear();
-            Console.WriteLine("---------------------------------");
             List<int> eventIds = new List<int>();
 
             try
@@ -138,7 +162,8 @@ namespace EventManagement
                     using (SqlDataReader reader = command.ExecuteReader())
                     {
                         int index = 1;
-                        Console.WriteLine("Pending Events:");
+                        Console.WriteLine("Currently Pending Events:");
+                        Console.WriteLine("==================================");
 
                         while (reader.Read())
                         {
@@ -150,6 +175,7 @@ namespace EventManagement
                             eventIds.Add(eventId);
                             index++;
                         }
+                        Console.WriteLine("==================================");
 
                         if (eventIds.Count == 0)
                         {
@@ -159,13 +185,17 @@ namespace EventManagement
                     }
                 }
 
-                // Ask the user to select an event by index
-                Console.WriteLine("\nSelect an event by number:");
+                // Ask the user to select an event from list
+                Console.WriteLine("\nSelect an event by number:\n(0: Back)");
                 int selectedEventIndex = int.Parse(Console.ReadLine());
 
-                if (selectedEventIndex < 1 || selectedEventIndex > eventIds.Count)
+                if (selectedEventIndex < 0 || selectedEventIndex > eventIds.Count)
                 {
                     Console.WriteLine("Invalid selection.");
+                    return;
+                } else if(selectedEventIndex == 0)
+                {
+                    DisplayMenu();
                     return;
                 }
 
@@ -189,7 +219,7 @@ namespace EventManagement
 
                         int rowsAffected = approveCommand.ExecuteNonQuery();
 
-                        //Event triggers when new event is approved
+                        //Event triggers when new event is approved then inoforms organizer the event was approved
                         if (rowsAffected > 0)
                         {
                             Console.WriteLine("Event approved successfully.");
@@ -202,7 +232,7 @@ namespace EventManagement
                     }
                     else if (choice == 2)
                     {
-                        // Deny the event (remove from table)
+                        // Deny the event and removes from table, then informs the organizer of the event
                         string denyQuery = "DELETE FROM dbo.[event] WHERE eventID = @EventID";
                         SqlCommand denyCommand = new SqlCommand(denyQuery, connection);
                         denyCommand.Parameters.AddWithValue("@EventID", selectedEventId);
@@ -212,6 +242,7 @@ namespace EventManagement
                         if (rowsAffected > 0)
                         {
                             Console.WriteLine("Event denied and removed successfully.");
+                            OnEventCancelled(EventArgs.Empty);
                         }
                         else
                         {
@@ -238,12 +269,12 @@ namespace EventManagement
             }
         }
 
-        protected static void OnEventApproved(EventArgs e)
+        public void OnEventApproved(EventArgs e)
         {
-            NotifyService notify = new NotifyService();
             EventApproved?.Invoke(null, e);
         }
 
+        //Display all events with status "upcoming" to allow the admin to cancel the event if neccesary
         public void CancelEvent()
         {
             Console.Clear();
@@ -251,7 +282,7 @@ namespace EventManagement
             {
 
                 {
-                    // Step 1: Retrieve the list of upcoming events
+                    //Retrieve the list of upcoming events
                     List<Event> events = eventManager.GetEvents();
                     List<Event> upcomingEvents = events.Where(e => e.Status == "upcoming").ToList();
 
@@ -261,28 +292,30 @@ namespace EventManagement
                         return;
                     }
 
-                    // Step 2: Display the list of upcoming events
+                    //Display the list of upcoming events
                     Console.WriteLine("Upcoming Events:");
+                    Console.WriteLine("==================================");
                     for (int i = 0; i < upcomingEvents.Count; i++)
                     {
                         Event ev = upcomingEvents[i];
                         Console.WriteLine($"{i + 1}. {ev.Name} - {ev.Date.ToShortDateString()} at {ev.Location}");
                     }
+                    Console.WriteLine("==================================");
 
-                    // Step 3: Allow the admin to select an event by index
-                    Console.Write("\nEnter the number of the event you want to cancel: ");
-                    int selectedIndex;
-                    if (int.TryParse(Console.ReadLine(), out selectedIndex) && selectedIndex > 0 && selectedIndex <= upcomingEvents.Count)
+                    //Allow the admin to select an event on the list
+                    Console.WriteLine("\nEnter the number of the event you want to cancel:\n(0: Back) ");
+                    int selectedIndex = int.Parse(Console.ReadLine());
+                    if (selectedIndex > 0 && selectedIndex <= upcomingEvents.Count)
                     {
                         Event selectedEvent = upcomingEvents[selectedIndex - 1];
 
-                        // Step 4: Confirm cancellation
+                        //Confirming the cancellation
                         Console.Write($"Are you sure you want to cancel the event '{selectedEvent.Name}'? (y/n): ");
                         string confirmation = Console.ReadLine();
 
                         if (confirmation.ToLower() == "y")
                         {
-                            // Step 5: Cancel the event by updating the status to 'cancelled'
+                            // Step 5: Cancel the event by updating the status to 'cancelled' in the database
                             using (SqlConnection connection = new SqlConnection(EventManager.connectionString))
                             {
                                 connection.Open();
@@ -311,6 +344,11 @@ namespace EventManagement
                             Console.WriteLine("Event cancellation aborted.");
                         }
                     }
+                    else if(selectedIndex == 0)
+                    {
+                        DisplayMenu();
+                        return;
+                    }
                     else
                     {
                         Console.WriteLine("Invalid selection.");
@@ -318,115 +356,14 @@ namespace EventManagement
 
                     ;
                 }
-            } catch (SqlException ex)
+            }
+            catch (SqlException ex)
             {
                 Console.WriteLine("An Error Occured while cancelling event: " + ex.Message);
             }
             catch (Exception ex)
             {
                 Console.WriteLine("An Error Occured: " + ex.Message);
-            } finally
-            {
-                BackToMainMenu();
-            }
-        }
-
-        protected static void OnEventCancelled(EventArgs e)
-        {
-            NotifyService notify = new NotifyService();
-            EventCancelled?.Invoke(null, e);
-        }
-
-
-        public void DisplayAllUsers()
-        {
-            Console.Clear();
-            List<string> admins = new List<string>();
-            List<string> organizers = new List<string>();
-            List<string> regularUsers = new List<string>();
-
-            Console.WriteLine("---------------------------------");
-
-            try
-            {
-                using (SqlConnection connection = new SqlConnection(EventManager.connectionString))
-                {
-                    connection.Open();
-
-                    // Query to get all admins
-                    string adminQuery = @"
-                SELECT U.username 
-                FROM dbo.[user] U
-                INNER JOIN dbo.admin A ON U.userID = A.userID";
-
-                    SqlCommand adminCommand = new SqlCommand(adminQuery, connection);
-                    using (SqlDataReader reader = adminCommand.ExecuteReader())
-                    {
-                        while (reader.Read())
-                        {
-                            admins.Add(reader["username"].ToString());
-                        }
-                    }
-
-                    // Query to get all organizers
-                    string organizerQuery = @"
-                SELECT U.username 
-                FROM dbo.[user] U
-                INNER JOIN dbo.organizer O ON U.userID = O.userID";
-
-                    SqlCommand organizerCommand = new SqlCommand(organizerQuery, connection);
-                    using (SqlDataReader reader = organizerCommand.ExecuteReader())
-                    {
-                        while (reader.Read())
-                        {
-                            organizers.Add(reader["username"].ToString());
-                        }
-                    }
-
-                    // Query to get all users who are not in the admin or organizer tables
-                    string regularUserQuery = @"
-                SELECT U.username 
-                FROM dbo.[user] U
-                LEFT JOIN dbo.admin A ON U.userID = A.userID
-                LEFT JOIN dbo.organizer O ON U.userID = O.userID
-                WHERE A.userID IS NULL AND O.userID IS NULL";
-
-                    SqlCommand regularUserCommand = new SqlCommand(regularUserQuery, connection);
-                    using (SqlDataReader reader = regularUserCommand.ExecuteReader())
-                    {
-                        while (reader.Read())
-                        {
-                            regularUsers.Add(reader["username"].ToString());
-                        }
-                    }
-                }
-
-                // Displaying the results
-                Console.WriteLine("------- Admins -------");
-                foreach (var admin in admins)
-                {
-                    Console.WriteLine(admin);
-                }
-
-                Console.WriteLine("\n------- Organizers -------");
-                foreach (var organizer in organizers)
-                {
-                    Console.WriteLine(organizer);
-                }
-
-                Console.WriteLine("\n------- Regular Users -------");
-                foreach (var user in regularUsers)
-                {
-                    Console.WriteLine(user);
-                }
-            }
-            catch (SqlException ex)
-            {
-                Console.WriteLine("An error occurred while retrieving users: " + ex.Message);
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine("An unexpected error occurred: " + ex.Message);
             }
             finally
             {
@@ -434,12 +371,17 @@ namespace EventManagement
             }
         }
 
+        public void OnEventCancelled(EventArgs e)
+        {
+            EventCancelled?.Invoke(null, e);
+        }
 
+        //Allows an admin to register a new organizer. Select from an existing user or create a new account to become an organizer
         public void RegisterNewOrganizer()
         {
             Console.Clear();
-            Console.WriteLine("---------------------------------");
-            Console.WriteLine("\n1. Create New User\n2. Select Existing User");
+            Console.WriteLine("Register New Organizer\n==================================");
+            Console.WriteLine("\n1. Create New User\n2. Select Existing User\n3. Cancel");
             switch (int.Parse(Console.ReadLine()))
             {
                 case 1:
@@ -543,8 +485,111 @@ namespace EventManagement
 
                     BackToMainMenu();
                     break;
+                case 3:
+                    {
+                        DisplayMenu();
+                        break;
+                    }
             }
         }
+
+        //Method to display all users by type
+        public void DisplayAllUsers()
+        {
+            Console.Clear();
+            List<string> admins = new List<string>();
+            List<string> organizers = new List<string>();
+            List<string> regularUsers = new List<string>();
+
+            try
+            {
+                using (SqlConnection connection = new SqlConnection(EventManager.connectionString))
+                {
+                    connection.Open();
+
+                    // Query to get all admins
+                    string adminQuery = @"
+                SELECT U.username 
+                FROM dbo.[user] U
+                INNER JOIN dbo.admin A ON U.userID = A.userID";
+
+                    SqlCommand adminCommand = new SqlCommand(adminQuery, connection);
+                    using (SqlDataReader reader = adminCommand.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            admins.Add(reader["username"].ToString());
+                        }
+                    }
+
+                    // Query to get all organizers
+                    string organizerQuery = @"
+                SELECT U.username 
+                FROM dbo.[user] U
+                INNER JOIN dbo.organizer O ON U.userID = O.userID";
+
+                    SqlCommand organizerCommand = new SqlCommand(organizerQuery, connection);
+                    using (SqlDataReader reader = organizerCommand.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            organizers.Add(reader["username"].ToString());
+                        }
+                    }
+
+                    // Query to get all users who are not in the admin or organizer tables
+                    string regularUserQuery = @"
+                SELECT U.username 
+                FROM dbo.[user] U
+                LEFT JOIN dbo.admin A ON U.userID = A.userID
+                LEFT JOIN dbo.organizer O ON U.userID = O.userID
+                WHERE A.userID IS NULL AND O.userID IS NULL";
+
+                    SqlCommand regularUserCommand = new SqlCommand(regularUserQuery, connection);
+                    using (SqlDataReader reader = regularUserCommand.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            regularUsers.Add(reader["username"].ToString());
+                        }
+                    }
+                }
+
+                // Displaying the results
+                Console.WriteLine("------- Admins -------");
+                foreach (var admin in admins)
+                {
+                    Console.WriteLine(admin);
+                }
+
+                Console.WriteLine("\n------- Organizers -------");
+                foreach (var organizer in organizers)
+                {
+                    Console.WriteLine(organizer);
+                }
+
+                Console.WriteLine("\n------- Regular Users -------");
+                foreach (var user in regularUsers)
+                {
+                    Console.WriteLine(user);
+                }
+            }
+            catch (SqlException ex)
+            {
+                Console.WriteLine("An error occurred while retrieving users: " + ex.Message);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("An unexpected error occurred: " + ex.Message);
+            }
+            finally
+            {
+                BackToMainMenu();
+            }
+        }
+
+        
+        //Helper method for adding a user to the organizer table
         private void AddUserToOrganizer(SqlConnection connection, int userID)
         {
             // Check if the UserID already exists in the Organizer table
@@ -577,10 +622,11 @@ namespace EventManagement
             }
         }
 
+        //View the feedback of all events including the most recent comments and the average rating
         public void ViewFeedback()
         {
             Console.Clear();
-            Console.WriteLine("---------------------------------");
+
             try
             {
                 using (SqlConnection connection = new SqlConnection(eventManager.ConnectionString))
@@ -612,8 +658,10 @@ namespace EventManagement
 
                         while (reader.Read())
                         {
+                            Console.WriteLine("==================================");
                             int eventID = (int)reader["eventID"];
                             string eventName = reader["name"].ToString();
+
                             // Safely retrieving the average rating
                             double averageRating = reader["averageRating"] != DBNull.Value ? (double)reader["averageRating"] : 0;
                             string[] comments = reader["latestComments"]?.ToString().Split('|') ?? new string[0];
@@ -625,6 +673,7 @@ namespace EventManagement
                             Console.WriteLine($"   Average Rating: {averageRating:F2}");
                             Console.WriteLine("   Latest Comments:");
 
+                            //Displaying comments
                             for (int i = 0; i < Math.Min(comments.Length, 3); i++)
                             {
                                 Console.WriteLine($"   - {comments[i]}");
@@ -632,16 +681,21 @@ namespace EventManagement
 
                             eventNumber++;
                         }
+
                         reader.Close();
 
                         // Prompt the admin to select an event based on its number
-                        Console.Write("\nSelect the event number to view all comments: ");
+                        Console.WriteLine("\nSelect the event number to view all comments:\n (0: Back) ");
                         int selectedEventNumber = int.Parse(Console.ReadLine());
 
                         if (selectedEventNumber > 0 && selectedEventNumber <= eventIDs.Count)
                         {
                             int selectedEventID = eventIDs[selectedEventNumber - 1];
                             ViewAllCommentsForEvent(connection, selectedEventID);
+                        }
+                        else if(selectedEventNumber ==0)
+                        {
+                            
                         }
                         else
                         {
@@ -664,7 +718,8 @@ namespace EventManagement
             }
         }
 
-
+        //Helper Method for viewing the feedback.
+        //This method will get all the comments for a selected event
         private void ViewAllCommentsForEvent(SqlConnection connection, int eventID)
         {
             Console.Clear();
@@ -707,21 +762,20 @@ namespace EventManagement
             BackToMainMenu();
         }
 
+        
 
-        public void CreateEvent()
-        {
-            Console.Clear();
-            Console.WriteLine("---------------------------------");
-            eventManager.CreateEvent();
-        }
 
+        //Calls the Register_Login class to log out the user
         public override void Logout()
         {
             try
             {
+                notify?.Unsubscribe();
+                notify = null;
                 Console.WriteLine("\nAdmin logout successful!");
                 Thread.Sleep(1500);
                 Register_Login.DisplayMenu();
+                
 
             }
             catch (Exception ex)
@@ -730,10 +784,10 @@ namespace EventManagement
                 BackToMainMenu();
             }
         }
-
+        //Helper method to element the repetiveness of returning to the menu
         public void BackToMainMenu()
         {
-            //Console.WriteLine("\nPress any key to return to the admin menu...");
+            Console.WriteLine("\nPress any key to return to menu...");
             Console.ReadKey();
             Console.Clear();
             DisplayMenu();

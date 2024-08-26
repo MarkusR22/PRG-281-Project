@@ -5,26 +5,25 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Threading;
+using System.Net;
 
 namespace EventManagement
 {
     internal class Participant : User
     {
+        public delegate void RegisteredForEventHander(object source, RegisteredForEventArgs e);
+        public static event RegisteredForEventHander RegisteredForEvent;
+
+        public delegate void UnregisteredForEventHander(object source, EventArgs e);
+        public static event UnregisteredForEventHander UnregisteredForEvent;
+
+        NotifyService notify = new NotifyService();
 
         public Participant(int id, string userName, string password) : base(id, userName, password)
         {
 
         }
 
-        public void SetUserName(string userName)
-        {
-            base.userName = userName;
-        }
-
-        public void SetPassword(string password)
-        {
-            base.password = password;
-        }
         public enum ParticipantMenuOptions
         {
             Display_All_Upcoming_Events = 1,
@@ -48,8 +47,9 @@ namespace EventManagement
         public void DisplayBack()
         {
             Console.WriteLine();
-            Console.Write("Press enter to go back.");
-            Console.ReadLine();
+            Console.Write("Press any key to go back.");
+            Console.ReadKey();
+            Thread.Sleep(500);
             Console.Clear();
         }
 
@@ -120,16 +120,6 @@ namespace EventManagement
         }
 
 
-
-
-
-        public static void BackToMainMenu()
-        {
-            Console.WriteLine("Press any key to return to the participant menu...");
-            Console.ReadKey();
-            Console.Clear();
-        }
-
         //NEW METHODS FOR NEW MENU
         public List<(int eventId, string eventName)> SearchEvents(bool showExitMessage = true)
         {
@@ -169,7 +159,8 @@ namespace EventManagement
             }
             catch (SqlException ex)
             {
-                Console.WriteLine("An error occurred while searching for events: " + ex.Message);
+                Console.WriteLine("An error occurred while dislpaying the events: " + ex.Message);
+                DisplayBack();
             }
 
             return events;
@@ -180,26 +171,80 @@ namespace EventManagement
         public void RegisterForEvent()
         {
             Console.Clear();
-            List<(int eventId, string eventName)> events = SearchEvents(false);
+            List<(int eventId, string eventName)> availableEvents = new List<(int eventId, string eventName)>();
 
-            if (events.Count == 0)
+            using (SqlConnection connection = new SqlConnection(EventManager.connectionString))
             {
-                Console.WriteLine("No upcoming events available.");
-                return;
+                connection.Open();
+
+                // Retrieve all events
+                List<(int eventId, string eventName)> allEvents = SearchEvents(showExitMessage: false);
+
+                foreach (var evt in allEvents)
+                {
+                    // Check if the user is already registered for this event
+                    SqlCommand checkRegistrationCommand = new SqlCommand(
+                        "SELECT COUNT(*) FROM attendee_event WHERE userID = @userID AND eventID = @eventID",
+                        connection);
+                    checkRegistrationCommand.Parameters.AddWithValue("@userID", this.id);
+                    checkRegistrationCommand.Parameters.AddWithValue("@eventID", evt.eventId);
+
+                    int registrationCount = (int)checkRegistrationCommand.ExecuteScalar();
+
+                    if (registrationCount == 0)
+                    {
+                        // If not registered, add to available events list
+                        availableEvents.Add(evt);
+                    }
+                }
             }
 
-            Console.Write("Enter the number corresponding to the event you want to register for: ");
-            int selectedIndex;
-            if (int.TryParse(Console.ReadLine(), out selectedIndex) && selectedIndex >= 1 && selectedIndex <= events.Count)
+            if (availableEvents.Count == 0)
             {
-                int eventId = events[selectedIndex - 1].eventId;
-                RegisterForSelectedEvent(eventId);
+                Console.WriteLine("You have already registered for all upcoming events.");
+                DisplayBack();
             }
             else
             {
-                Console.WriteLine("Invalid selection. Please enter a number corresponding to the event.");
+                // Display available events with the new heading
+                Console.WriteLine();
+                Console.WriteLine("Events that you can register for:");
+                Console.WriteLine("====================");
+                for (int i = 0; i < availableEvents.Count; i++)
+                {
+                    Console.WriteLine($"{i + 1}. {availableEvents[i].eventName}");
+                }
+                Console.WriteLine("====================");
+                Console.WriteLine();
+                Console.WriteLine("(0: Back)");
+                Console.Write("Enter the number corresponding to the event you want to register for: ");
+                string userInput = Console.ReadLine();
+
+                if (int.TryParse(userInput, out int selectedIndex) && selectedIndex >= 1 && selectedIndex <= availableEvents.Count)
+                {
+                    int eventId = availableEvents[selectedIndex - 1].eventId;
+                    RegisterForSelectedEvent(eventId);
+
+                }
+                else if (userInput == "0")
+                {
+                    DisplayBack();
+                }
+                else
+                {
+                    Console.WriteLine("Invalid selection. Please enter a number corresponding to the event.");
+                    DisplayBack();
+                }
+
             }
+
+
         }
+
+
+
+
+
 
 
         private void RegisterForSelectedEvent(int eventId)
@@ -219,9 +264,8 @@ namespace EventManagement
 
                     if (registrationCount > 0)
                     {
-                        
                         Console.WriteLine("You are already registered for this event.");
-                        Console.Clear();
+                        DisplayBack();
                         return; // Exit the method early
                     }
 
@@ -232,11 +276,10 @@ namespace EventManagement
 
                     if (reader.Read())
                     {
-                        
                         string eventName = reader.GetString(0);
                         int eventYear = reader.GetInt32(1);
                         reader.Close();
-                        
+
                         // Generate the entry code
                         string entryCode = GenerateEntryCode(eventName, eventYear, connection, eventId);
 
@@ -249,7 +292,8 @@ namespace EventManagement
                         int rowsAffected = command.ExecuteNonQuery();
                         if (rowsAffected > 0)
                         {
-                            Console.WriteLine("Successfully registered for the event!");
+                            //Notifies subscriber for event
+                            OnRegisteredForEvent(entryCode);
                             DisplayBack();
                         }
                         else
@@ -270,6 +314,11 @@ namespace EventManagement
             }
         }
 
+        //Invoking event OnRegisteredForEvent
+        public void OnRegisteredForEvent(string entryCode)
+        {
+            RegisteredForEvent?.Invoke(this, new RegisteredForEventArgs() { entryCode = entryCode});
+        }
 
         private string GenerateEntryCode(string eventName, int eventYear, SqlConnection connection, int eventId)
         {
@@ -333,7 +382,10 @@ namespace EventManagement
                     Thread.Sleep(1000);
                     Console.Clear();
 
-                    SqlCommand command = new SqlCommand("SELECT e.eventID, e.name, e.date, e.location FROM event e INNER JOIN attendee_event ae ON e.eventID = ae.eventID WHERE ae.userID = @userID", connection);
+                    SqlCommand command = new SqlCommand(
+                        "SELECT e.eventID, e.name, e.date, e.location, ae.entry_code " +
+                        "FROM event e INNER JOIN attendee_event ae ON e.eventID = ae.eventID " +
+                        "WHERE ae.userID = @userID", connection);
                     command.Parameters.AddWithValue("@userID", this.id);
 
                     SqlDataReader reader = command.ExecuteReader();
@@ -342,7 +394,7 @@ namespace EventManagement
                     Console.WriteLine("====================");
                     while (reader.Read())
                     {
-                        Console.WriteLine($"Event ID: {reader["eventID"]}, Name: {reader["name"]}, Date: {((DateTime)reader["date"]).ToString("yyyy-MM-dd")}, Location: {reader["location"]}");
+                        Console.WriteLine($"Name: {reader["name"]}\nDate: {((DateTime)reader["date"]).ToString("yyyy-MM-dd")}\nLocation: {reader["location"]}\nEntry Code: {reader["entry_code"]}");
                     }
                     Console.WriteLine("====================");
                     DisplayBack();
@@ -353,6 +405,7 @@ namespace EventManagement
                 Console.WriteLine("An error occurred while fetching registered events: " + ex.Message);
             }
         }
+
 
         public void SubmitFeedback()
         {
@@ -376,6 +429,7 @@ namespace EventManagement
             if (!int.TryParse(Console.ReadLine(), out selectedIndex))
             {
                 Console.WriteLine("Invalid input. Please enter a number.");
+                DisplayBack();
                 return;
             }
 
@@ -428,6 +482,7 @@ namespace EventManagement
                     if (!int.TryParse(Console.ReadLine(), out rating) || rating < 1 || rating > 5)
                     {
                         Console.WriteLine("Invalid rating. Please enter a number between 1 and 5.");
+                        DisplayBack();
                         return;
                     }
 
@@ -448,6 +503,7 @@ namespace EventManagement
                     else
                     {
                         Console.WriteLine("Failed to submit feedback. Please try again.");
+                        DisplayBack();
                     }
                 }
             }
@@ -584,6 +640,7 @@ namespace EventManagement
             if (!int.TryParse(Console.ReadLine(), out selectedIndex) || selectedIndex < 1 || selectedIndex > eventIds.Count)
             {
                 Console.WriteLine("Invalid input. Please enter a valid number.");
+                DisplayBack();
                 return;
             }
 
@@ -602,7 +659,7 @@ namespace EventManagement
                     int rowsAffected = command.ExecuteNonQuery();
                     if (rowsAffected > 0)
                     {
-                        Console.WriteLine("You have successfully canceled your registration for the event.");
+                        OnUnregisteredForEvent();
                         DisplayBack();
                     }
                     else
@@ -615,6 +672,11 @@ namespace EventManagement
             {
                 Console.WriteLine("An error occurred while canceling your registration: " + ex.Message);
             }
+        }
+
+        public void OnUnregisteredForEvent()
+        {
+            UnregisteredForEvent?.Invoke(this, EventArgs.Empty);
         }
 
         // Helper method to display upcoming events the user is registered for and return their IDs
