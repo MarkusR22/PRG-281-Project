@@ -16,15 +16,6 @@ namespace EventManagement
 
         }
 
-        public void SetUserName(string userName)
-        {
-            base.userName = userName;
-        }
-
-        public void SetPassword(string password)
-        {
-            base.password = password;
-        }
         public enum ParticipantMenuOptions
         {
             Display_All_Upcoming_Events = 1,
@@ -160,6 +151,7 @@ namespace EventManagement
             catch (SqlException ex)
             {
                 Console.WriteLine("An error occurred while dislpaying the events: " + ex.Message);
+                DisplayBack();
             }
 
             return events;
@@ -201,6 +193,7 @@ namespace EventManagement
             if (availableEvents.Count == 0)
             {
                 Console.WriteLine("You have already registered for all upcoming events.");
+                DisplayBack();
             }
             else
             {
