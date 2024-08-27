@@ -25,6 +25,7 @@ namespace EventManagement
             Log_out
         }
 
+        //Displaying menu for organizer
         public override void DisplayMenu()
         {
 
@@ -111,6 +112,7 @@ namespace EventManagement
             Console.Clear();
         }
 
+        //Display all events associated with the logged in organizer
         public void DisplayOrganizedEvents()
         {
             Console.Clear();
@@ -119,12 +121,14 @@ namespace EventManagement
             Console.WriteLine("Upcoming Events which you are organising:");
             for (int i = 0; i < events.Count; i++)
             {
+                //Only displaying events that have not ended
                 if (events[i].Status == "upcoming" || events[i].Status == "pending" || events[i].Status == "postponed")
                 {
                     Console.WriteLine($"{i + 1}. {events[i].Name} - {events[i].Location} - {events[i].Date.ToShortDateString()} - {events[i].Status}");
                 }
             }
 
+            //Getting event that the organizer selected
             Console.WriteLine("\nSelect an event (enter number) or type 'back' to go back:");
             string input = ExceptionHandling.StringHandling();
 
@@ -144,6 +148,7 @@ namespace EventManagement
             }
         }
 
+        //Getting a List that contains all the events for the organizer
         public List<Event> GetEvents()
         {
             List<Event> events = new List<Event>();
@@ -178,6 +183,7 @@ namespace EventManagement
             return events;
         }
 
+        //Displaying all the details of a specific even
         public void DisplayEventDetails(Event ev)
         {
             Console.Clear();
@@ -193,6 +199,7 @@ namespace EventManagement
             MenuEditEvent(ev);
         }
 
+        //Validating user input to enter an appropriate date
         public DateTime CheckDate()
         {
             DateTime eventDate = ExceptionHandling.DateHandling();
@@ -233,7 +240,7 @@ namespace EventManagement
             }
         }
 
-
+        //Creating an event
         public void CreateEvent()
         {
             Console.Clear();
@@ -311,7 +318,7 @@ namespace EventManagement
 
 
 
-
+        //Viewing feedback for past event that the organizer created
         public void ViewFeedback()
         {
             Console.Clear();
@@ -401,7 +408,7 @@ namespace EventManagement
         }
 
 
-
+        //Viewing all comments for a past event 
         private void ViewAllCommentsForEvent(SqlConnection connection, int eventID)
         {
             Console.Clear();
@@ -443,7 +450,7 @@ namespace EventManagement
             DisplayMenu();
         }
 
-
+        //Menu that displays when an organizer selects the Edit Event option
         private void MenuEditEvent(Event ev)
         {
             Console.WriteLine("");
@@ -453,6 +460,7 @@ namespace EventManagement
             switch (input)
             {
                 case 1:
+                    //Making sure organizer cannot edit an event that has already passed
                     if (ev.Status == "pending" || ev.Status == "upcoming" || ev.Status == "postponed")
                     {
                         EditEvent(ev);
@@ -487,15 +495,17 @@ namespace EventManagement
 
 
 
-
+        //Editing the details of a specific event
         private void EditEvent(Event ev)
         {
+            //Getting the field that needs to be updated
             Console.WriteLine("What do you want to edit");
             Console.WriteLine("1. Event Name\n2. Event Description\n3. Event Date\n4. Event location\n5. Event Ticket Price\n6. Go back to previous menu");
             int option = ExceptionHandling.IntHandling();
             switch (option)
             {
                 case 1:
+                    //Updating the name of the event
                     Console.WriteLine("Previous name: {0}", ev.Name);
                     Console.WriteLine("Enter the new Event Name.");
                     string name = ExceptionHandling.StringHandling();
@@ -533,6 +543,7 @@ namespace EventManagement
 
                     break;
                 case 2:
+                    //Updating the description of the event
                     Console.WriteLine("Previous description: {0}", ev.Description);
                     Console.WriteLine("Enter the new Event Description.");
                     string description = ExceptionHandling.StringHandling();
@@ -569,6 +580,7 @@ namespace EventManagement
                     }
                     break;
                 case 3:
+                    //Updating the date of the event
                     Console.WriteLine("Previous event date: {0}", ev.Date);
                     Console.WriteLine("Enter the new Event Date.");
                     DateTime date = CheckDate();
@@ -605,6 +617,7 @@ namespace EventManagement
                     }
                     break;
                 case 4:
+                    //Updating the location of the event
                     Console.WriteLine("Previous location: {0}", ev.Location);
                     Console.WriteLine("Enter the new Event Location.");
                     string location = ExceptionHandling.StringHandling();
@@ -641,6 +654,7 @@ namespace EventManagement
                     }
                     break;
                 case 5:
+                    //Updating the ticket price of an event
                     Console.WriteLine("Previous ticket price: {0}", ev.TicketPrice);
                     Console.WriteLine("Enter the new Event Ticket Price.");
                     double ticketPrice = ExceptionHandling.DoubleHandling();
@@ -677,9 +691,11 @@ namespace EventManagement
                     }
                     break;
                 case 6:
+                    //Sending organizer back to previous menu
                     MenuEditEvent(ev);
                     break;
                 default:
+                    //Displaying error and sending organizer back to previous menu if invalid option is selected
                     Console.WriteLine("Something went wrong :(");
                     Thread.Sleep(1000);
                     Console.WriteLine("Sending you back to the previous menu");
