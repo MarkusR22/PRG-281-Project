@@ -13,8 +13,11 @@ namespace EventManagement
     {
         //Create an instance of the event manager to allow the admin to perform actions on Events
         EventManager eventManager = new EventManager();
+
+        //Boolean used in the Dispose method
         private bool disposed = false;
 
+        //Event and delegate declarations
         public delegate void EventApprovedHandler(object sender, EventArgs e);
         public event EventApprovedHandler EventApproved;
 
@@ -49,12 +52,14 @@ namespace EventManagement
             Console.Clear();
             Console.WriteLine($"Welcome Admin {userName}:");
 
+            //Displaying enum in console
             foreach (AdminMenuOptions option in Enum.GetValues(typeof(AdminMenuOptions)))
             {
                 string optionName = option.ToString().Replace("_", " ");
                 Console.WriteLine($"{(int)option}. {optionName}");
             }
 
+            //Getting what menu option user selected
             Console.Write("Select an option (1-9): ");
             string input = ExceptionHandling.StringHandling();
 
@@ -226,6 +231,7 @@ namespace EventManagement
                         if (rowsAffected > 0)
                         {
                             Console.WriteLine("Event approved successfully.");
+                            //Calling the subscribed method from the NotifyService class
                             OnEventApproved(EventArgs.Empty);
                         }
                         else
@@ -272,6 +278,7 @@ namespace EventManagement
             }
         }
 
+        //Invoking the EventApproved event
         public void OnEventApproved(EventArgs e)
         {
             EventApproved?.Invoke(null, e);
@@ -336,6 +343,7 @@ namespace EventManagement
                                     if (rowsAffected > 0)
                                     {
                                         Console.WriteLine("Event cancelled successfully.");
+                                        //Calling the subscribed method from the NotfiyService class
                                         OnEventCancelled(EventArgs.Empty);
                                     }
                                     else
@@ -377,6 +385,7 @@ namespace EventManagement
             }
         }
 
+        //Invoking the EventCancelled event
         public void OnEventCancelled(EventArgs e)
         {
             EventCancelled?.Invoke(null, e);
@@ -808,7 +817,7 @@ namespace EventManagement
             }
         }
 
-        // Implement IDisposable interface
+        // Implementing IDisposable interface
         public void Dispose()
         {
             Dispose(true);
@@ -821,7 +830,8 @@ namespace EventManagement
             {
                 if (disposing)
                 {
-                    
+                    //Clearing up managed resources
+
                     if (eventManager != null)
                     {
                         eventManager = null;
@@ -833,6 +843,7 @@ namespace EventManagement
             }
         }
 
+        //Finalizer for Admin class
         ~Admin()
         {
             Dispose(false);

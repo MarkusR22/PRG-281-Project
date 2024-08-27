@@ -11,7 +11,7 @@ namespace EventManagement
     public class NotifyService
     {
 
-       
+       //Notifying the organizer that his event was approved
         public void OnEventApproved(object sender, EventArgs e)
         {
             Console.ForegroundColor = ConsoleColor.Green;
@@ -27,6 +27,7 @@ namespace EventManagement
             Console.ResetColor();
         }
 
+        //Notifying the organizer and attending participants that the event was cancelled
         public void OnEventCancelled(object sender, EventArgs e)
         {
             Console.ForegroundColor = ConsoleColor.Red;
@@ -51,6 +52,7 @@ namespace EventManagement
             Console.ResetColor();
         }
 
+        //Notifying participant that they succesfully registered for event
         public void OnRegisteredForEvent(object sender, RegisteredForEventArgs e)
         {
             Console.ForegroundColor = ConsoleColor.Green;
@@ -67,6 +69,7 @@ namespace EventManagement
             Console.ResetColor();
         }
 
+        //Notifying participant that they succesfully deregistered for event
         public void OnDeregisteredForEvent(object sender, EventArgs e)
         {
             Console.ForegroundColor= ConsoleColor.Red;
