@@ -39,6 +39,7 @@ namespace EventManagement
         {
             Console.Clear();
             List<Event> events = GetEvents();
+            List<Event> upcomingEvents = new List<Event>();
             int count = 0;
 
             Console.WriteLine("Upcoming Events:");
@@ -48,6 +49,7 @@ namespace EventManagement
                 {
                     Console.WriteLine($"{count + 1}. {events[i].Name} - {events[i].Location} - {events[i].Date.ToShortDateString()}");
                     Console.WriteLine("=======================================");
+                    upcomingEvents.Add(events[i]);
                     count++;
                 }
             }
@@ -61,9 +63,9 @@ namespace EventManagement
                 return;
             }
 
-            if (int.TryParse(input, out int choice) && choice > 0 && choice <= events.Count)
+            if (int.TryParse(input, out int choice) && choice > 0 && choice <= upcomingEvents.Count)
             {
-                DisplayEventDetails(events[choice - 1]);
+                DisplayEventDetails(upcomingEvents[choice - 1]);
             }
             else
             {

@@ -728,6 +728,8 @@ namespace EventManagement
 
             // Display the user's registered events that have ended
             ViewUserRegisteredEndedEvents();
+
+
             Console.Write("Please select the correct number to add feedback to: ");
             if (!int.TryParse(Console.ReadLine(), out int selectedIndex))
             {
@@ -904,11 +906,11 @@ namespace EventManagement
                         while (reader.Read())
                         {
                             Console.WriteLine("====================");
-                            Console.WriteLine($"   Name: {reader["name"]}");
-                            Console.WriteLine($"   Description: {reader["description"]}");
-                            Console.WriteLine($"   Date: {(DateTime)reader["date"]:yyyy-MM-dd}");
-                            Console.WriteLine($"   Location: {reader["location"]}");
-                            Console.WriteLine($"   Ticket Price: R{reader["ticket_price"]}");
+                            Console.WriteLine($"{index}.   Name: {reader["name"]}");
+                            Console.WriteLine($"    Description: {reader["description"]}");
+                            Console.WriteLine($"    Date: {(DateTime)reader["date"]:yyyy-MM-dd}");
+                            Console.WriteLine($"    Location: {reader["location"]}");
+                            Console.WriteLine($"    Ticket Price: R{reader["ticket_price"]}");
                             Console.WriteLine("====================");
                             Console.WriteLine();
                             index++;
@@ -920,10 +922,7 @@ namespace EventManagement
             {
                 Console.WriteLine("An error occurred while fetching events: " + ex.Message);
             }
-            finally
-            {
-                DisplayBack();
-            }
+            
         }
         //<---------------------------------------------------5-------------------------------------------------------->
         //ALL MENU METHODS
