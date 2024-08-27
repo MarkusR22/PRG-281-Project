@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 namespace EventManagement
 {
 
-    public class Admin : User, IEventManager
+    public class Admin : User, IEventManager, IAdmin
     {
         //Create an instance of the event manager to allow the admin to perform actions on Events
         EventManager eventManager = new EventManager();

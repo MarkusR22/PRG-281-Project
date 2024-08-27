@@ -8,14 +8,10 @@ namespace EventManagement
 {
     public interface IAdmin
     {
-        void ViewUpcomingEvents();
-        void CreateNewEvents();
-        void RegisterOrganizer();
-        void PastFeedback();
-        void EditAdminDetails();
-        void EditEventDetails();
-        void ViewParticipants();
-        void RemoveParticipant();
-
+        
+        void RegisterNewOrganizer();
+        void ViewFeedback();
+        void DisplayAllUsers();
+     
     }
 }
