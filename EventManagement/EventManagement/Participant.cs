@@ -241,12 +241,6 @@ namespace EventManagement
 
         }
 
-
-
-
-
-
-
         private void RegisterForSelectedEvent(int eventId)
         {
             try
@@ -365,10 +359,6 @@ namespace EventManagement
 
             return entryCode;
         }
-
-
-
-
 
         public void ViewRegisteredEvents()
         {
