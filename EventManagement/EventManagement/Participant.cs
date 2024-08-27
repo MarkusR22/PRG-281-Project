@@ -15,8 +15,8 @@ namespace EventManagement
         public delegate void RegisteredForEventHander(object source, RegisteredForEventArgs e);
         public event RegisteredForEventHander RegisteredForEvent;
 
-        public delegate void UnregisteredForEventHander(object source, EventArgs e);
-        public event UnregisteredForEventHander DeregisteredForEvent;
+        public delegate void DeregisteredForEventHander(object source, EventArgs e);
+        public event DeregisteredForEventHander DeregisteredForEvent;
         //EVENTS
 
         //CONSTRUCTOR
