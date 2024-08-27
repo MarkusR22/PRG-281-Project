@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace EventManagement
 {
-    internal class Organizer : User, IEventManager, IOrganizer
+    internal class Organizer : User, IManager, IOrganizer
     {
         public Organizer(int id, string userName, string password) : base(id, userName, password)
         {

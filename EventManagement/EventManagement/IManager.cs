@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace EventManagement
 {
-    public interface IEventManager
+    public interface IManager
     {
         void CreateEvent();
         void ViewFeedback();
