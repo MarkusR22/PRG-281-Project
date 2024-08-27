@@ -11,6 +11,7 @@ namespace EventManagement
     public class NotifyService
     {
 
+       
         public void OnEventApproved(object sender, EventArgs e)
         {
             Console.ForegroundColor = ConsoleColor.Green;
@@ -66,7 +67,7 @@ namespace EventManagement
             Console.ResetColor();
         }
 
-        public void OnUnregisteredForEvent(object sender, EventArgs e)
+        public void OnDeregisteredForEvent(object sender, EventArgs e)
         {
             Console.ForegroundColor= ConsoleColor.Red;
             Console.Write("Cancelling registration for event");

@@ -15,7 +15,7 @@ namespace EventManagement
         public event RegisteredForEventHander RegisteredForEvent;
 
         public delegate void UnregisteredForEventHander(object source, EventArgs e);
-        public event UnregisteredForEventHander UnregisteredForEvent;
+        public event UnregisteredForEventHander DeregisteredForEvent;
 
         public Participant(int id, string userName, string password) : base(id, userName, password)
         {
@@ -87,9 +87,9 @@ namespace EventManagement
                             break;
 
                         case ParticipantMenuOptions.Cancel_Registration:
-                            UnregisteredForEvent += notify.OnUnregisteredForEvent;
+                            DeregisteredForEvent += notify.OnDeregisteredForEvent;
                             CancelRegistration();
-                            UnregisteredForEvent -= notify.OnUnregisteredForEvent;
+                            DeregisteredForEvent -= notify.OnDeregisteredForEvent;
                             break;
 
                         case ParticipantMenuOptions.Submit_Feedback:
@@ -645,7 +645,7 @@ namespace EventManagement
                     int rowsAffected = command.ExecuteNonQuery();
                     if (rowsAffected > 0)
                     {
-                        OnUnregisteredForEvent();
+                        OnDeregisteredForEvent();
                         DisplayBack();
                     }
                     else
@@ -660,9 +660,9 @@ namespace EventManagement
             }
         }
 
-        public void OnUnregisteredForEvent()
+        public void OnDeregisteredForEvent()
         {
-            UnregisteredForEvent?.Invoke(this, EventArgs.Empty);
+            DeregisteredForEvent?.Invoke(this, EventArgs.Empty);
         }
 
         // Helper method to display upcoming events the user is registered for and return their IDs

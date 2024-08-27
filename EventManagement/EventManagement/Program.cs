@@ -18,10 +18,10 @@ namespace EventManagement
            
             Console.ReadKey();
 
-            Admin admin = null;
-            NotifyService notify = new NotifyService();
-            admin.EventApproved += notify.OnEventApproved;
-            admin.EventCancelled += notify.OnEventCancelled;
+            //Admin admin = null;
+            //NotifyService notify = new NotifyService();
+            //admin.EventApproved += notify.OnEventApproved;
+            //admin.EventCancelled += notify.OnEventCancelled;
         }
 
 

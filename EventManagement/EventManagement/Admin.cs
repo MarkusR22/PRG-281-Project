@@ -9,10 +9,11 @@ using System.Threading.Tasks;
 namespace EventManagement
 {
 
-    public class Admin : User, IEventManager, IAdmin
+    public class Admin : User, IEventManager, IAdmin, IDisposable
     {
         //Create an instance of the event manager to allow the admin to perform actions on Events
         EventManager eventManager = new EventManager();
+        private bool disposed = false;
 
         public delegate void EventApprovedHandler(object sender, EventArgs e);
         public event EventApprovedHandler EventApproved;
@@ -116,7 +117,7 @@ namespace EventManagement
                         BackToMainMenu();
                         break;
                     case AdminMenuOptions.Log_out:
-                        notify = null;
+                       // notify = null;
                         Logout();
 
                         break;
@@ -801,7 +802,42 @@ namespace EventManagement
                 Console.WriteLine("There was an error logging out: " + ex);
                 BackToMainMenu();
             }
+            finally
+            {
+                Dispose();
+            }
         }
+
+        // Implement IDisposable interface
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        protected virtual void Dispose(bool disposing)
+        {
+            if (!disposed)
+            {
+                if (disposing)
+                {
+                    
+                    if (eventManager != null)
+                    {
+                        eventManager = null;
+                    }
+
+                }
+
+                disposed = true;
+            }
+        }
+
+        ~Admin()
+        {
+            Dispose(false);
+        }
+
         //Helper method to element the repetiveness of returning to the menu
         public void BackToMainMenu()
         {
