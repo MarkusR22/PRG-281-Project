@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 namespace EventManagement
 {
 
-    public class Admin : User, IEventManager, IAdmin, IDisposable
+    public class Admin : User, IEventManager, IAdmin
     {
         //Create an instance of the event manager to allow the admin to perform actions on Events
         EventManager eventManager = new EventManager();
@@ -43,12 +43,26 @@ namespace EventManagement
             Log_out
         }
 
+        public void SubscribeToEvent()
+        {
+            if (EventCancelled == null)
+            {
+                NotifyService notify = new NotifyService();
+                EventCancelled += notify.OnEventCancelled;
+            }
+            if (EventApproved == null)
+            {
+                NotifyService notify = new NotifyService();
+                EventApproved += notify.OnEventApproved;
+            }
+            
+        }
 
         //Main Menu For Admin
         public override void DisplayMenu()
         {
-            NotifyService notify = new NotifyService();
-
+            
+            SubscribeToEvent();
             Console.Clear();
             Console.WriteLine($"Welcome Admin {userName}:");
 
@@ -93,17 +107,17 @@ namespace EventManagement
                         backToMainMenu.Start();
                         backToMainMenu.Join();
 
+
                         break;
                     case AdminMenuOptions.Approve_Events:
-                        EventApproved += notify.OnEventApproved;
                         ApproveEvent();
-                        EventApproved -= notify.OnEventApproved;
 
                         break;
                     case AdminMenuOptions.Cancel_Event:
-                        EventCancelled += notify.OnEventCancelled;
+                        Console.WriteLine("Subscribing to event");
                         CancelEvent();
-                        EventCancelled -= notify.OnEventCancelled;
+                        Console.WriteLine("Unsubscribing to event");
+                        
 
                         break;
                     case AdminMenuOptions.Register_New_Organizer:
@@ -122,7 +136,6 @@ namespace EventManagement
                         BackToMainMenu();
                         break;
                     case AdminMenuOptions.Log_out:
-                       // notify = null;
                         Logout();
 
                         break;
@@ -811,43 +824,43 @@ namespace EventManagement
                 Console.WriteLine("There was an error logging out: " + ex);
                 BackToMainMenu();
             }
-            finally
-            {
-                Dispose();
-            }
+            //finally
+            //{
+            //    Dispose();
+            //}
         }
 
         // Implementing IDisposable interface
-        public void Dispose()
-        {
-            Dispose(true);
-            GC.SuppressFinalize(this);
-        }
+        //public void Dispose()
+        //{
+        //    Dispose(true);
+        //    GC.SuppressFinalize(this);
+        //}
 
-        protected virtual void Dispose(bool disposing)
-        {
-            if (!disposed)
-            {
-                if (disposing)
-                {
-                    //Clearing up managed resources
+        //protected virtual void Dispose(bool disposing)
+        //{
+        //    if (!disposed)
+        //    {
+        //        if (disposing)
+        //        {
+        //            //Clearing up managed resources
 
-                    if (eventManager != null)
-                    {
-                        eventManager = null;
-                    }
+        //            if (eventManager != null)
+        //            {
+        //                eventManager = null;
+        //            }
 
-                }
+        //        }
 
-                disposed = true;
-            }
-        }
+        //        disposed = true;
+        //    }
+        //}
 
-        //Finalizer for Admin class
-        ~Admin()
-        {
-            Dispose(false);
-        }
+        ////Finalizer for Admin class
+        //~Admin()
+        //{
+        //    Dispose(false);
+        //}
 
         //Helper method to element the repetiveness of returning to the menu
         public void BackToMainMenu()
