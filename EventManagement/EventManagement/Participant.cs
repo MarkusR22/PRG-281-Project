@@ -17,6 +17,8 @@ namespace EventManagement
 
         public delegate void DeregisteredForEventHander(object source, EventArgs e);
         public event DeregisteredForEventHander DeregisteredForEvent;
+
+        EventManager eventManager = new EventManager();
         //EVENTS
 
         //CONSTRUCTOR
@@ -40,6 +42,21 @@ namespace EventManagement
         }
         //PARTICIPANT USER MENU
 
+        public void SubscribeToEvent()
+        {
+            if (RegisteredForEvent == null)
+            {
+                NotifyService notify = new NotifyService();
+                RegisteredForEvent += notify.OnRegisteredForEvent;
+            }
+            if (DeregisteredForEvent == null)
+            {
+                NotifyService notify = new NotifyService();
+                DeregisteredForEvent += notify.OnDeregisteredForEvent;
+            }
+
+        }
+
         //LOGOUT OVERRIDE FROM USER CLASS
         public override void Logout()
         {
@@ -55,10 +72,10 @@ namespace EventManagement
         public void DisplayBack()
         {
             Console.WriteLine();
-            Console.Write("Press any key to go back.");
+            Console.Write("\nPress any key to go back.");
             Console.ReadKey();
             Thread.Sleep(500);
-            Console.Clear();
+            DisplayMenu();
         }
 
 
@@ -66,6 +83,7 @@ namespace EventManagement
         public override void DisplayMenu()
         {
             Console.Clear();
+            SubscribeToEvent();
 
             //Instantiates object for event class
             NotifyService notify = new NotifyService();
@@ -97,14 +115,11 @@ namespace EventManagement
                         //Runs methods to display all upcoming events and details about these events.
                         case ParticipantMenuOptions.Display_All_Upcoming_Events:
                             DisplayAllUpcoming();
-                            //ViewEventDetails();
                             break;
 
                         //This option allows a participant to register for any upcoming event.
                         case ParticipantMenuOptions.Register_For_Event:
-                            RegisteredForEvent += notify.OnRegisteredForEvent;
                             RegisterForEvent();
-                            RegisteredForEvent -= notify.OnRegisteredForEvent;
                             break;
 
                         //Views all the registered events a participant has registered for.
@@ -114,9 +129,7 @@ namespace EventManagement
 
                         //Removes a registered event from participant's account.
                         case ParticipantMenuOptions.Cancel_Registration:
-                            DeregisteredForEvent += notify.OnDeregisteredForEvent;
                             CancelRegistration();
-                            DeregisteredForEvent -= notify.OnDeregisteredForEvent;
                             break;
 
                         //Allows a participant to give feedback on past events they registered for
@@ -158,103 +171,124 @@ namespace EventManagement
         //<---------------------------------------------------1-------------------------------------------------------->
         //This is a method called DisplayAllUpcoming that returns a List of (int eventId, string eventName)
         //It returns a list because this list is going to be called at other methods that want to display all upcoming events.
-        public List<(int eventId, string eventName)> DisplayAllUpcoming()
+        public void DisplayAllUpcoming()
         {
-            Console.Clear();
-            List<(int eventId, string eventName)> events = new List<(int eventId, string eventName)>();
-
             try
             {
-                Console.WriteLine("Displaying Upcoming Events...");
-                Thread.Sleep(1000);
-                Console.Clear();
 
-                using (SqlConnection connection = new SqlConnection(EventManager.connectionString))
+                Console.Clear();
+                List<Event> events = eventManager.GetEvents();
+                List<Event> upcomingEvents = new List<Event>();
+                int count = 0;
+
+                Console.WriteLine("Upcoming Events:");
+                Console.WriteLine("=======================================");
+                for (int i = 0; i < events.Count; i++)
                 {
-                    connection.Open();
-                    SqlCommand command = new SqlCommand("SELECT eventID, name FROM event WHERE status = 'upcoming'", connection);
-                    SqlDataReader reader = command.ExecuteReader();
-
-                    Console.WriteLine("Upcoming Events:");
-                    Console.WriteLine("====================");
-                    int index = 1;
-
-                    while (reader.Read())
+                    if (events[i].Status == "upcoming")
                     {
-                        int eventId = (int)reader["eventID"];
-                        string eventName = (string)reader["name"];
-
-                        events.Add((eventId, eventName));
-                        Console.WriteLine($"{index}. {eventName}");
-                        index++;
+                        upcomingEvents.Add(events[i]);
+                        Console.WriteLine($"{count + 1}. {events[i].Name} - {events[i].Location} - {events[i].Date.ToShortDateString()}");
+                        count++;
                     }
-                    Console.WriteLine("====================");
                 }
-            }
-            catch (SqlException ex)
-            {
-                Console.WriteLine("An error occurred while displaying the events: " + ex.Message);
-            }
-            finally
-            {
-                Console.WriteLine("Press any key to return to the main menu...");
-                Console.ReadKey(true); // Waits for a key press
-                Console.Clear();
-            }
+                Console.WriteLine("=======================================");
 
-            return events;
+                Console.WriteLine("\nSelect an event (enter number) or type 'back' to go back:");
+                string input = ExceptionHandling.StringHandling();
+
+                if (input.ToLower() == "back")
+                {
+                    DisplayMenu();
+                }
+
+                if (int.TryParse(input, out int choice) && choice > 0 && choice <= upcomingEvents.Count)
+                {
+                    DisplayEventDetailsP(upcomingEvents[choice - 1]);
+
+                    Console.WriteLine("\nPress any key to go back");
+                    Console.ReadKey();
+                    DisplayAllUpcoming();
+                }
+                else
+                {
+                    Console.WriteLine("Invalid selection.");
+                    Thread.Sleep(1000);
+                    DisplayAllUpcoming();
+                }
+            } catch (Exception ex) { Console.WriteLine(ex.Message); }
+           
         }
 
+        public void DisplayEventDetailsP(Event ev)
+        {
+            Console.WriteLine($"\nEvent Details:");
+            Console.WriteLine($"Name: {ev.Name}");
+            Console.WriteLine($"Description: {ev.Description}");
+            Console.WriteLine($"Date: {ev.Date.ToShortDateString()}");
+            Console.WriteLine($"Location: {ev.Location}");
+            Console.WriteLine($"Ticket Price: R{ev.TicketPrice}");
+        }
 
-        public void ViewEventDetails()
+        public List<(int eventId, string eventName)> GetAllUpcoming()
         {
             Console.Clear();
 
+            //Initialize an object for the return list.
+            List<(int eventId, string eventName)> events = new List<(int eventId, string eventName)>();
             try
             {
+                //Loading screen
+
+                //Database usage
+                //A using block is defined to end all database tasks after they have finished running, for resource and security reasons
+                //In the using statement an object is instantiated to connect to the database.
                 using (SqlConnection connection = new SqlConnection(EventManager.connectionString))
                 {
+                    //This is a requirement to communicate with the database it prepares the object "connection" to execute SQL commands.
                     connection.Open();
 
-                    SqlCommand command = new SqlCommand("SELECT * FROM event WHERE status = 'upcoming'", connection);
+                    //With the connection now open we can declare SQL statements for our object
+                    //The command object allows the use of SQL via the SqlCommand class that takes two parameters
+                    //The first is the SQL itself and the 2nd is the connection to the database above.
+                    SqlCommand command = new SqlCommand("SELECT eventID, name FROM event WHERE status = 'upcoming'", connection);
+
+                    //This line of code executes the SQL statement above via the method ExecuteReader(); 
+                    //It sends this command to the database server and executes giving us back the relevant data.
                     SqlDataReader reader = command.ExecuteReader();
-
-                    bool hasEvents = false;
-
-                    Console.WriteLine("All Upcoming Event Details:");
-                    Console.WriteLine();
-
-                    while (reader.Read())
+                    using (reader)
                     {
-                        hasEvents = true;
-                        Console.WriteLine("====================");
-                        Console.WriteLine($"Name: {reader["name"]}");
-                        Console.WriteLine($"Description: {reader["description"]}");
-                        Console.WriteLine($"Date: {(DateTime)reader["date"]:yyyy-MM-dd}");
-                        Console.WriteLine($"Location: {reader["location"]}");
-                        Console.WriteLine($"Ticket Price: R{Math.Round((decimal)reader["ticket_price"], 2)}");
-                        Console.WriteLine("====================");
-                        Console.WriteLine();
+
+
+
+                        int index = 1;
+
+                        //reader.Read() goes through each row in our database that was filtered by the reader execution of the SQL query command
+                        //it continues looping each row and returns a boolean till it finds the end and returns a false if no more rows are found.
+                        while (reader.Read())
+                        {
+                            //Declaring variables equal to our database for eventId and eventName respectively
+                            int eventId = (int)reader["eventID"];
+                            string eventName = (string)reader["name"];
+
+                            //These values then get added to the list we return to the method that other methods are able to use.
+                            events.Add((eventId, eventName));
+
+                            //increment index
+                            index++;
+                        }
                     }
 
-                    if (!hasEvents)
-                    {
-                        Console.WriteLine("No upcoming events found.");
-                    }
                 }
             }
             catch (SqlException ex)
             {
-                Console.WriteLine("An error occurred while fetching event details: " + ex.Message);
+                //Displays error message is database could not be reached.
+                Console.WriteLine("An error occurred while displaying the events: " + ex.Message);
             }
-            finally
-            {
-                Console.WriteLine("Press any key to return to the main menu...");
-                Console.ReadKey(true);
-                Console.Clear();
-                Console.Out.Flush(); // Ensure output buffer is cleared
-                DisplayBack();
-            }
+
+            //returns the list back to method.
+            return events;
         }
 
 
@@ -278,8 +312,8 @@ namespace EventManagement
                 connection.Open();
 
                 // Retrieve all events
-               List<(int eventId, string eventName)> allEvents = DisplayAllUpcoming();
-               
+                List<(int eventId, string eventName)> allEvents = GetAllUpcoming();
+
 
                 foreach (var evt in allEvents)
                 {
@@ -287,6 +321,8 @@ namespace EventManagement
                     SqlCommand checkRegistrationCommand = new SqlCommand(
                         "SELECT COUNT(*) FROM attendee_event WHERE userID = @userID AND eventID = @eventID",
                         connection);
+
+
 
                     //Creation of new SqlParameter objects with the name "@userID" and "@eventID" with values this.id and evt.eventId
                     checkRegistrationCommand.Parameters.AddWithValue("@userID", this.id);
@@ -305,8 +341,9 @@ namespace EventManagement
                         // If not registered, add to available events list
                         availableEvents.Add(evt);
                     }
+
                 }
-                
+
             }
             //If registrationCount is != 0 then we add no events meaning the participant is already registered for all events
             //This then checks the list to see if any event has been added and since none has we execute this block of code.
@@ -350,13 +387,13 @@ namespace EventManagement
                 else if (userInput == "0")
                 {
                     //Returns participant to main menu
-                    DisplayBack();
+                    DisplayMenu();
                 }
                 else
                 {
                     //Error handling 
                     Console.WriteLine("Invalid selection. Please enter a number corresponding to the event.");
-                    
+
                     //Returns participant to main menu.
                     DisplayBack();
                 }
@@ -434,7 +471,7 @@ namespace EventManagement
         //Invoking event OnRegisteredForEvent
         public void OnRegisteredForEvent(string entryCode)
         {
-            RegisteredForEvent?.Invoke(this, new RegisteredForEventArgs() { entryCode = entryCode});
+            RegisteredForEvent?.Invoke(this, new RegisteredForEventArgs() { entryCode = entryCode });
         }
 
         private string GenerateEntryCode(string eventName, int eventYear, SqlConnection connection, int eventId)
@@ -513,26 +550,34 @@ namespace EventManagement
 
                     SqlDataReader reader = command.ExecuteReader();
 
-                    Console.WriteLine("Registered Events:");
-                    Console.WriteLine("====================");
-                    while (reader.Read())
+                    using (reader)
                     {
-                        //Displays all events participant is registered for.
-                        Console.WriteLine($"Name: {reader["name"]}\n" +
-                                          $"Date: {(DateTime)reader["date"]:yyyy-MM-dd}\n" +
-                                          $"Location: {reader["location"]}\n" +
-                                          $"Entry Code: {reader["entry_code"]}\n"+
-                                          $"Ticket Price: {Math.Round((decimal)reader["ticket_price"], 2)}\n"
-                                          );
+
+
+                        Console.WriteLine("Registered Events:");
+                        Console.WriteLine("====================");
+                        while (reader.Read())
+                        {
+                            //Displays all events participant is registered for.
+                            Console.WriteLine($"Name: {reader["name"]}\n" +
+                                              $"Date: {(DateTime)reader["date"]:yyyy-MM-dd}\n" +
+                                              $"Location: {reader["location"]}\n" +
+                                              $"Entry Code: {reader["entry_code"]}\n" +
+                                              $"Ticket Price: R{Math.Round((decimal)reader["ticket_price"], 2)}\n"
+                                              );
+                        }
+                        Console.WriteLine("====================");
                     }
-                    Console.WriteLine("====================");
-                    DisplayBack();
                 }
             }
             catch (SqlException ex)
             {
                 //Error checking
                 Console.WriteLine("An error occurred while fetching registered events: " + ex.Message);
+            }
+            finally
+            {
+                DisplayBack();
             }
         }
         //<---------------------------------------------------3-------------------------------------------------------->
@@ -555,15 +600,20 @@ namespace EventManagement
                 return;
             }
 
-            Console.Write("Enter the number of the event you wish to cancel registration for: ");
-            if (!int.TryParse(Console.ReadLine(), out int selectedIndex) || selectedIndex < 1 || selectedIndex > eventIds.Count)
+            Console.WriteLine("Enter the number of the event you wish to cancel registration for: \n(0: Back)");
+            int choice = ExceptionHandling.IntHandling(); 
+            if (choice < 0 || choice > eventIds.Count)
             {
                 Console.WriteLine("Invalid input. Please enter a valid number.");
-                DisplayBack();
+                Thread.Sleep(1000);
+                CancelRegistration();
                 return;
+            } else if (choice == 0)
+            {
+                DisplayMenu();
             }
 
-            int eventId = eventIds[selectedIndex - 1]; //putting variable equal to eventId in the list
+            int eventId = eventIds[choice - 1]; //putting variable equal to eventId in the list
 
             try
             {
@@ -580,7 +630,6 @@ namespace EventManagement
                     {
                         //Event trigger
                         OnUnregisteredForEvent();
-                        DisplayBack();
                     }
                     else
                     {
@@ -591,6 +640,10 @@ namespace EventManagement
             catch (SqlException ex)
             {
                 Console.WriteLine("An error occurred while canceling your registration: " + ex.Message);
+            }
+            finally
+            {
+                DisplayBack();
             }
         }
 
@@ -619,22 +672,27 @@ namespace EventManagement
 
                     SqlDataReader reader = command.ExecuteReader();
 
-                    Console.WriteLine("You are currently registered for the following events:");
-                    Console.WriteLine();
-                    int index = 1;
-                    while (reader.Read())
+                    using (reader)
                     {
-                        Console.WriteLine("====================");
-                        Console.WriteLine($"{index}. Event ID: {reader["eventID"]}");
-                        Console.WriteLine($"   Name: {reader["name"]}");
-                        Console.WriteLine($"   Date: {(DateTime)reader["date"]:yyyy-MM-dd}");
-                        Console.WriteLine($"   Location: {reader["location"]}");
-                        Console.WriteLine("====================");
+
+
+                        Console.WriteLine("You are currently registered for the following events:");
                         Console.WriteLine();
-                        eventIds.Add((int)reader["eventID"]);
-                        index++;
+                        int index = 1;
+                        while (reader.Read())
+                        {
+                            Console.WriteLine("====================");
+                            Console.WriteLine($"{index}. Event ID: {reader["eventID"]}");
+                            Console.WriteLine($"   Name: {reader["name"]}");
+                            Console.WriteLine($"   Date: {(DateTime)reader["date"]:yyyy-MM-dd}");
+                            Console.WriteLine($"   Location: {reader["location"]}");
+                            Console.WriteLine("====================");
+                            Console.WriteLine();
+                            eventIds.Add((int)reader["eventID"]);
+                            index++;
 
 
+                        }
                     }
 
                 }
@@ -835,28 +893,36 @@ namespace EventManagement
                         connection);
                     command.Parameters.AddWithValue("@userID", this.id);
                     SqlDataReader reader = command.ExecuteReader();
-
-                    Console.WriteLine("Ended events you can provide feedback for:");
-                    Console.WriteLine("====================");
-                    Console.WriteLine();
-                    int index = 1;
-                    while (reader.Read())
+                    using (reader)
                     {
-                        Console.WriteLine("====================");
-                        Console.WriteLine($"   Name: {reader["name"]}");
-                        Console.WriteLine($"   Description: {reader["description"]}");
-                        Console.WriteLine($"   Date: {(DateTime)reader["date"]:yyyy-MM-dd}");
-                        Console.WriteLine($"   Location: {reader["location"]}");
-                        Console.WriteLine($"   Ticket Price: R{reader["ticket_price"]}");
+
+
+                        Console.WriteLine("Ended events you can provide feedback for:");
                         Console.WriteLine("====================");
                         Console.WriteLine();
-                        index++;
+                        int index = 1;
+                        while (reader.Read())
+                        {
+                            Console.WriteLine("====================");
+                            Console.WriteLine($"   Name: {reader["name"]}");
+                            Console.WriteLine($"   Description: {reader["description"]}");
+                            Console.WriteLine($"   Date: {(DateTime)reader["date"]:yyyy-MM-dd}");
+                            Console.WriteLine($"   Location: {reader["location"]}");
+                            Console.WriteLine($"   Ticket Price: R{reader["ticket_price"]}");
+                            Console.WriteLine("====================");
+                            Console.WriteLine();
+                            index++;
+                        }
                     }
                 }
             }
             catch (SqlException ex)
             {
                 Console.WriteLine("An error occurred while fetching events: " + ex.Message);
+            }
+            finally
+            {
+                DisplayBack();
             }
         }
         //<---------------------------------------------------5-------------------------------------------------------->

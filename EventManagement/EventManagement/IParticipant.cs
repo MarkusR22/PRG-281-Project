@@ -9,8 +9,7 @@ namespace EventManagement
     public interface IParticipant
     {
         //1
-        List<(int eventId, string eventName)> DisplayAllUpcoming();
-        void ViewEventDetails();
+        void DisplayAllUpcoming();
         //1
 
         //2

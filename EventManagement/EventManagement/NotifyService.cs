@@ -64,7 +64,7 @@ namespace EventManagement
             Thread.Sleep(1000);
             Console.Write(".");
             Thread.Sleep(1000);
-            Console.WriteLine("\nsuccessfully registered for event!");
+            Console.WriteLine("\nSuccessfully registered for event!");
             Console.WriteLine($"Your entry code is: {e.entryCode}");
             Console.ResetColor();
         }
@@ -81,7 +81,7 @@ namespace EventManagement
             Thread.Sleep(1000);
             Console.Write(".");
             Thread.Sleep(1000);
-            Console.WriteLine("\nYou have successfully canceled your registration for the event.");
+            Console.WriteLine("\nYou have successfully cancelled your registration for the event.");
             Console.ResetColor();
         }
 

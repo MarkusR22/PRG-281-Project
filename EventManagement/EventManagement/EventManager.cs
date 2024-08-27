@@ -13,23 +13,31 @@ namespace EventManagement
     {
 
         //static User currentUser = Register_Login.CurrentUser;
-        //public const string connectionString = "Data Source=MACHINE;Initial Catalog=EventManagementTemp;Integrated Security=True;Connect Timeout=30;Encrypt=True;TrustServerCertificate=True;"; // Caydan
+        public const string ConnectionString = "Data Source=MACHINE;Initial Catalog=EventManagementTemp;Integrated Security=True;Connect Timeout=30;Encrypt=True;TrustServerCertificate=True;"; // Caydan
         //public const string connectionString = "Data Source=TIMOTHY\\MSSQLSERVER09;Initial Catalog=EventManagementTemp;Integrated Security=True;Connect Timeout=30;Encrypt=True;TrustServerCertificate=True;"; //Joseph's DB connection
         //public const string connectionString = "Data Source=DESKTOP-TDBJOM7;Initial Catalog=EventManagement;Integrated Security=True;Connect Timeout=30;Encrypt=True;TrustServerCertificate=True;"; //Markus' connection string
         //public const string connectionString = "Data Source=EE-GAMINGPC;Initial Catalog=EventManagementTheuns;Integrated Security=True;Connect Timeout=30;Encrypt=True;TrustServerCertificate=True;"; //Theuns db string
 
 
+        //public static string connectionString
+        //{
+
+        //    get {
+        //        SqlConnectionStringBuilder builder = new SqlConnectionStringBuilder();
+        //        builder.DataSource = "myfreesqldbserverkys.database.windows.net";
+        //        builder.UserID = "prg281EventManagementDB";
+        //        builder.Password = "1Vjs.B_%X$4sPjX0";
+        //        builder.InitialCatalog = "Event_Management";
+        //        string connectionString = builder.ConnectionString;
+        //        return connectionString; 
+        //    }
+        //}
+
         public static string connectionString
         {
-
-            get {
-                SqlConnectionStringBuilder builder = new SqlConnectionStringBuilder();
-                builder.DataSource = "myfreesqldbserverkys.database.windows.net";
-                builder.UserID = "prg281EventManagementDB";
-                builder.Password = "1Vjs.B_%X$4sPjX0";
-                builder.InitialCatalog = "Event_Management";
-                string connectionString = builder.ConnectionString;
-                return connectionString; 
+            get
+            {
+                return ConnectionString;
             }
         }
 
@@ -40,14 +48,18 @@ namespace EventManagement
 
         public void DisplayUpcommingEvents()
         {
+            Console.Clear();
             List<Event> events = GetEvents();
+            int count = 0;
 
             Console.WriteLine("Upcoming Events:");
             for (int i = 0; i < events.Count; i++)
             {
                 if (events[i].Status == "upcoming")
                 {
-                    Console.WriteLine($"{i + 1}. {events[i].Name} - {events[i].Location} - {events[i].Date.ToShortDateString()}");
+                    Console.WriteLine($"{count + 1}. {events[i].Name} - {events[i].Location} - {events[i].Date.ToShortDateString()}");
+                    Console.WriteLine("=======================================");
+                    count++;
                 }
             }
 
@@ -69,6 +81,8 @@ namespace EventManagement
                 Console.WriteLine("Invalid selection.");
             }
         }
+
+        
 
 
 
@@ -181,6 +195,8 @@ namespace EventManagement
             Console.WriteLine($"Ticket Price: R{ev.TicketPrice}");
             Console.WriteLine($"Participants: " + GetParticipantCount(ev.EventId));
         }
+
+        
 
         private int GetParticipantCount(int eventId)
         {
