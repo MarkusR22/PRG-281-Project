@@ -39,16 +39,6 @@ namespace EventManagement
             Log_out
         }
 
-        public void SetUserName(string userName)
-        {
-            base.userName = userName;
-        }
-
-        public void SetPassword(string password)
-        {
-            base.password = password;
-        }
-
 
         //Main Menu For Admin
         public override void DisplayMenu()
