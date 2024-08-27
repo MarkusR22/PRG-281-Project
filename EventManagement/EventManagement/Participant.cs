@@ -69,7 +69,7 @@ namespace EventManagement
                 }
 
                 Console.Write("Select an option (1-8): ");
-                string input = Console.ReadLine().Trim();
+                string input = ExceptionHandling.StringHandling();
 
                 if (Enum.TryParse(input, out ParticipantMenuOptions chosenOption) && Enum.IsDefined(typeof(ParticipantMenuOptions), chosenOption))
                 {
@@ -224,7 +224,7 @@ namespace EventManagement
                 Console.WriteLine();
                 Console.WriteLine("(0: Back)");
                 Console.Write("Enter the number corresponding to the event you want to register for: ");
-                string userInput = Console.ReadLine();
+                string userInput = ExceptionHandling.StringHandling();
 
                 if (int.TryParse(userInput, out int selectedIndex) && selectedIndex >= 1 && selectedIndex <= availableEvents.Count)
                 {
@@ -471,7 +471,7 @@ namespace EventManagement
                     Console.WriteLine();
                     Console.WriteLine("====================");
                     Console.Write("Enter your feedback: ");
-                    string feedbackComment = Console.ReadLine();
+                    string feedbackComment = ExceptionHandling.StringHandling();
 
                     Console.Write("Enter your rating (1 to 5): ");
                     int rating;
