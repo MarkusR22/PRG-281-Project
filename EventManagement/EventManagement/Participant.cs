@@ -249,12 +249,10 @@ namespace EventManagement
 
                         hasEvents = true;
                         Console.WriteLine("====================");
-                        Console.WriteLine($"Event ID: {reader["eventID"]}");
                         Console.WriteLine($"Name: {reader["name"]}");
                         Console.WriteLine($"Description: {reader["description"]}");
                         Console.WriteLine($"Date: {(DateTime)reader["date"]:yyyy-MM-dd}");
                         Console.WriteLine($"Location: {reader["location"]}");
-                        Console.WriteLine($"Status: {reader["status"]}");
                         Console.WriteLine($"Ticket Price: {Math.Round((decimal)reader["ticket_price"], 2)}");
                         Console.WriteLine("====================");
                         Console.WriteLine();
@@ -293,7 +291,8 @@ namespace EventManagement
                 connection.Open();
 
                 // Retrieve all events
-                List<(int eventId, string eventName)> allEvents = DisplayAllUpcoming();
+               List<(int eventId, string eventName)> allEvents = DisplayAllUpcoming();
+               
 
                 foreach (var evt in allEvents)
                 {
@@ -305,6 +304,7 @@ namespace EventManagement
                     //Creation of new SqlParameter objects with the name "@userID" and "@eventID" with values this.id and evt.eventId
                     checkRegistrationCommand.Parameters.AddWithValue("@userID", this.id);
                     checkRegistrationCommand.Parameters.AddWithValue("@eventID", evt.eventId);
+                    Console.Clear();
 
                     //The following is executed once this runs
                     //SELECT COUNT(*) FROM attendee_event WHERE userID = @userID AND eventID = @eventID
@@ -314,10 +314,12 @@ namespace EventManagement
                     //if a participant is not registered for an event we add to the list 
                     if (registrationCount == 0)
                     {
+
                         // If not registered, add to available events list
                         availableEvents.Add(evt);
                     }
                 }
+                
             }
             //If registrationCount is != 0 then we add no events meaning the participant is already registered for all events
             //This then checks the list to see if any event has been added and since none has we execute this block of code.
