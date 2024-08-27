@@ -25,7 +25,6 @@ namespace EventManagement
         public enum ParticipantMenuOptions
         {
             Display_All_Upcoming_Events = 1,
-            View_Event_Details,
             Register_For_Event,
             View_Registered_Events,
             Cancel_Registration,
@@ -65,7 +64,7 @@ namespace EventManagement
                     Console.WriteLine($"{(int)option}. {optionName}");
                 }
 
-                Console.Write("Select an option (1-8): ");
+                Console.Write("Select an option (1-7): ");
                 string input = ExceptionHandling.StringHandling();
 
                 if (Enum.TryParse(input, out ParticipantMenuOptions chosenOption) && Enum.IsDefined(typeof(ParticipantMenuOptions), chosenOption))
@@ -74,9 +73,6 @@ namespace EventManagement
                     {
                         case ParticipantMenuOptions.Display_All_Upcoming_Events:
                             DisplayAllUpcoming();
-                            break;
-
-                        case ParticipantMenuOptions.View_Event_Details:
                             ViewEventDetails();
                             break;
 
@@ -153,11 +149,6 @@ namespace EventManagement
                         index++;
                     }
                     Console.WriteLine("====================");
-
-                    if (showExitMessage)
-                    {
-                        DisplayBack();
-                    }
                 }
             }
             catch (SqlException ex)
@@ -733,10 +724,7 @@ namespace EventManagement
                 using (SqlConnection connection = new SqlConnection(EventManager.connectionString))
                 {
                     connection.Open();
-                    Console.Clear();
-                    Console.WriteLine("Viewing All Upcoming Event Details...");
-                    Thread.Sleep(1000);
-                    Console.Clear();
+                 
                     // Query to select all upcoming events
                     SqlCommand command = new SqlCommand("SELECT * FROM event WHERE status = 'upcoming'", connection);
                     SqlDataReader reader = command.ExecuteReader();
