@@ -352,28 +352,36 @@ namespace EventManagement
                         Console.WriteLine("Event Feedback Summary:");
                         int eventNumber = 1;
 
-                        while (reader.Read())
+                        if (!reader.Read())
                         {
-                            int eventID = (int)reader["eventID"];
-                            string eventName = reader["name"].ToString();
-                            // Safely retrieving the average rating
-                            double averageRating = reader["averageRating"] != DBNull.Value ? (double)reader["averageRating"] : 0;
-                            string[] comments = reader["latestComments"]?.ToString().Split('|') ?? new string[0];
-
-                            // Add event ID to list
-                            eventIDs.Add(eventID);
-
-                            Console.WriteLine($"\n{eventNumber}. Event: {eventName}");
-                            Console.WriteLine($"   Average Rating: {averageRating:F2}");
-                            Console.WriteLine("   Latest Comments:");
-
-                            for (int i = 0; i < Math.Min(comments.Length, 3); i++)
-                            {
-                                Console.WriteLine($"   - {comments[i]}");
-                            }
-
-                            eventNumber++;
+                            Console.WriteLine("No Feedback Available. Events have not ended");
                         }
+                        else
+                        {
+                            while (reader.Read())
+                            {
+                                int eventID = (int)reader["eventID"];
+                                string eventName = reader["name"].ToString();
+                                // Safely retrieving the average rating
+                                double averageRating = reader["averageRating"] != DBNull.Value ? (double)reader["averageRating"] : 0;
+                                string[] comments = reader["latestComments"]?.ToString().Split('|') ?? new string[0];
+
+                                // Add event ID to list
+                                eventIDs.Add(eventID);
+
+                                Console.WriteLine($"\n{eventNumber}. Event: {eventName}");
+                                Console.WriteLine($"   Average Rating: {averageRating:F2}");
+                                Console.WriteLine("   Latest Comments:");
+
+                                for (int i = 0; i < Math.Min(comments.Length, 3); i++)
+                                {
+                                    Console.WriteLine($"   - {comments[i]}");
+                                }
+
+                                eventNumber++;
+                            }
+                        }
+                        
                         reader.Close();
 
                         // Prompt the admin to select an event based on its number

@@ -253,7 +253,7 @@ namespace EventManagement
                         Console.WriteLine($"Description: {reader["description"]}");
                         Console.WriteLine($"Date: {(DateTime)reader["date"]:yyyy-MM-dd}");
                         Console.WriteLine($"Location: {reader["location"]}");
-                        Console.WriteLine($"Ticket Price: {Math.Round((decimal)reader["ticket_price"], 2)}");
+                        Console.WriteLine($"Ticket Price: R{Math.Round((decimal)reader["ticket_price"], 2)}");
                         Console.WriteLine("====================");
                         Console.WriteLine();
 
@@ -856,13 +856,11 @@ namespace EventManagement
                     while (reader.Read())
                     {
                         Console.WriteLine("====================");
-                        Console.WriteLine($"{index}. Event ID: {reader["eventID"]}");
                         Console.WriteLine($"   Name: {reader["name"]}");
                         Console.WriteLine($"   Description: {reader["description"]}");
                         Console.WriteLine($"   Date: {(DateTime)reader["date"]:yyyy-MM-dd}");
                         Console.WriteLine($"   Location: {reader["location"]}");
-                        Console.WriteLine($"   Status: {reader["status"]}");
-                        Console.WriteLine($"   Ticket Price: {reader["ticket_price"]}");
+                        Console.WriteLine($"   Ticket Price: R{reader["ticket_price"]}");
                         Console.WriteLine("====================");
                         Console.WriteLine();
                         index++;

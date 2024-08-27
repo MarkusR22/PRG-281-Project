@@ -77,6 +77,7 @@ namespace EventManagement
             Console.Write("Select an option (1-9): ");
             string input = ExceptionHandling.StringHandling();
 
+            Thread backToMainMenu = new Thread(BackToMainMenu);
 
             if (Enum.TryParse(input, out AdminMenuOptions chosenOption) && Enum.IsDefined(typeof(AdminMenuOptions), chosenOption))
             {
@@ -85,7 +86,6 @@ namespace EventManagement
                     case AdminMenuOptions.View_Upcoming_Events:
                         Console.Clear();
                         Thread displayingUpcomingEvents = new Thread(eventManager.DisplayUpcommingEvents);
-                        Thread backToMainMenu = new Thread(BackToMainMenu);
 
                         displayingUpcomingEvents.Start();
                         displayingUpcomingEvents.Join();
@@ -104,7 +104,10 @@ namespace EventManagement
                         backToMainMenu.Start();
                         backToMainMenu.Join();
 
-
+                        if(CreateEventThread.IsAlive)
+                        {
+                            CreateEventThread.Abort();
+                        }
                         break;
                     case AdminMenuOptions.Approve_Events:
                         ApproveEvent();
@@ -134,6 +137,10 @@ namespace EventManagement
                         Logout();
 
                         break;
+                }
+                if (backToMainMenu.IsAlive)
+                {
+                    backToMainMenu.Abort();
                 }
             }
             else
