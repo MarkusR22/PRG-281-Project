@@ -162,7 +162,7 @@ namespace EventManagement
             }
             catch (SqlException ex)
             {
-                Console.WriteLine("An error occurred while dislpaying the events: " + ex.Message);
+                Console.WriteLine("An error occurred while displaying the events: " + ex.Message);
                 DisplayBack();
             }
 

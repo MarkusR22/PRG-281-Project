@@ -19,8 +19,8 @@ namespace EventManagement
 
         public delegate void EventCancelledHandler(object sender, EventArgs e);
         public event EventCancelledHandler EventCancelled;
-        
-        
+
+
         public Admin(int id, string userName, string password) : base(id, userName, password)
         {
 
@@ -73,7 +73,7 @@ namespace EventManagement
                         backToMainMenu.Join();
                         //eventManager.DisplayUpcommingEvents();
                         //BackToMainMenu();
-                     
+
 
                         break;
                     case AdminMenuOptions.Create_New_Event:
@@ -135,17 +135,23 @@ namespace EventManagement
         {
             Console.Clear();
             Console.WriteLine("Create An Event\n==================================");
+            Thread.Sleep(500);
             eventManager.CreateEvent();
         }
 
         //Display all events with status "pending" to allow the admin to approve the event
         public void ApproveEvent()
         {
-            Console.Clear();
+            
             List<int> eventIds = new List<int>();
 
             try
             {
+                Thread.Sleep(500);
+                Console.Clear();
+                Console.WriteLine("Currently Pending Events:");
+                Console.WriteLine("==================================");
+                Thread.Sleep(500);
                 using (SqlConnection connection = new SqlConnection(EventManager.connectionString))
                 {
                     connection.Open();
@@ -157,8 +163,7 @@ namespace EventManagement
                     using (SqlDataReader reader = command.ExecuteReader())
                     {
                         int index = 1;
-                        Console.WriteLine("Currently Pending Events:");
-                        Console.WriteLine("==================================");
+                        
 
                         while (reader.Read())
                         {
@@ -188,7 +193,8 @@ namespace EventManagement
                 {
                     Console.WriteLine("Invalid selection.");
                     return;
-                } else if(selectedEventIndex == 0)
+                }
+                else if (selectedEventIndex == 0)
                 {
                     DisplayMenu();
                     return;
@@ -200,6 +206,7 @@ namespace EventManagement
                 Console.WriteLine("\n1. Approve");
                 Console.WriteLine("2. Deny");
                 int choice = ExceptionHandling.IntHandling();
+                Thread.Sleep(500);
 
                 using (SqlConnection connection = new SqlConnection(EventManager.connectionString))
                 {
@@ -273,6 +280,9 @@ namespace EventManagement
         public void CancelEvent()
         {
             Console.Clear();
+            Console.WriteLine("Retrieving Events...");
+            Thread.Sleep(1000);
+            Console.Clear();
             try
             {
 
@@ -339,7 +349,7 @@ namespace EventManagement
                             Console.WriteLine("Event cancellation aborted.");
                         }
                     }
-                    else if(selectedIndex == 0)
+                    else if (selectedIndex == 0)
                     {
                         DisplayMenu();
                         return;
@@ -376,6 +386,7 @@ namespace EventManagement
         {
             Console.Clear();
             Console.WriteLine("Register New Organizer\n==================================");
+            Thread.Sleep(500);
             Console.WriteLine("\n1. Create New User\n2. Select Existing User\n3. Cancel");
             switch (ExceptionHandling.IntHandling())
             {
@@ -425,27 +436,24 @@ namespace EventManagement
                             {
                                 Console.WriteLine("Failed to register user. Press any key to go back...");
                             }
-
-                            Console.ReadKey();
-                            DisplayMenu();
                         }
                     }
                     catch (SqlException ex)
                     {
                         Console.WriteLine("Error registering user: " + ex.Message);
-                        Console.ReadKey();
-                        DisplayMenu();
                     }
                     catch (Exception ex)
                     {
                         Console.WriteLine("An error occurred: " + ex.Message);
-                        Console.ReadKey();
-                        DisplayMenu();
+                    } finally
+                    {
+                        BackToMainMenu();
                     }
                     break;
                 case 2:
                     try
                     {
+                        Thread.Sleep(500);
                         using (SqlConnection connection = new SqlConnection(eventManager.ConnectionString))
                         {
                             connection.Open();
@@ -491,13 +499,17 @@ namespace EventManagement
         //Method to display all users by type
         public void DisplayAllUsers()
         {
-            Console.Clear();
+
             List<string> admins = new List<string>();
             List<string> organizers = new List<string>();
             List<string> regularUsers = new List<string>();
 
             try
             {
+                Console.Clear();
+                Console.WriteLine("Retrieving Users...");
+                Thread.Sleep(1000);
+                Console.Clear();
                 using (SqlConnection connection = new SqlConnection(EventManager.connectionString))
                 {
                     connection.Open();
@@ -583,7 +595,7 @@ namespace EventManagement
             }
         }
 
-        
+
         //Helper method for adding a user to the organizer table
         private void AddUserToOrganizer(SqlConnection connection, int userID)
         {
@@ -620,10 +632,14 @@ namespace EventManagement
         //View the feedback of all events including the most recent comments and the average rating
         public void ViewFeedback()
         {
-            Console.Clear();
+
 
             try
             {
+                Console.Clear();
+                Console.WriteLine("Retrieving Past Events...");
+                Thread.Sleep(1000);
+                Console.Clear();
                 using (SqlConnection connection = new SqlConnection(eventManager.ConnectionString))
                 {
                     connection.Open();
@@ -680,17 +696,25 @@ namespace EventManagement
                         reader.Close();
 
                         // Prompt the admin to select an event based on its number
-                        Console.WriteLine("\nSelect the event number to view all comments:\n (0: Back) ");
+                        Console.WriteLine("\nSelect the event number to view all comments:\n(0: Back) ");
                         int selectedEventNumber = ExceptionHandling.IntHandling();
+
+                        Console.WriteLine("Retrieving Feedback for event...");
+                        Thread.Sleep(500);
+
+                        int currentLineCursor = Console.CursorTop;
+                        Console.SetCursorPosition(0, Console.CursorTop);
+                        Console.Write(new string(' ', Console.WindowWidth));
+                        Console.SetCursorPosition(0, currentLineCursor);
 
                         if (selectedEventNumber > 0 && selectedEventNumber <= eventIDs.Count)
                         {
                             int selectedEventID = eventIDs[selectedEventNumber - 1];
                             ViewAllCommentsForEvent(connection, selectedEventID);
                         }
-                        else if(selectedEventNumber ==0)
+                        else if (selectedEventNumber == 0)
                         {
-                            
+
                         }
                         else
                         {
@@ -717,8 +741,6 @@ namespace EventManagement
         //This method will get all the comments for a selected event
         private void ViewAllCommentsForEvent(SqlConnection connection, int eventID)
         {
-            Console.Clear();
-
             try
             {
                 // Query to get all comments for the selected event
@@ -743,6 +765,7 @@ namespace EventManagement
                         string comment = reader["comment"].ToString();
                         Console.WriteLine($"- {comment}");
                     }
+                    
                 }
             }
             catch (SqlException ex)
@@ -753,11 +776,13 @@ namespace EventManagement
             {
                 Console.WriteLine("An error occurred: " + ex.Message);
             }
-            Console.ReadKey();
-            BackToMainMenu();
+            finally
+            {
+                BackToMainMenu();
+            }
         }
 
-        
+
 
 
         //Calls the Register_Login class to log out the user
@@ -768,7 +793,7 @@ namespace EventManagement
                 Console.WriteLine("\nAdmin logout successful!");
                 Thread.Sleep(1500);
                 Register_Login.DisplayMenu();
-                
+
 
             }
             catch (Exception ex)
