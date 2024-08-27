@@ -15,12 +15,11 @@ namespace EventManagement
         EventManager eventManager = new EventManager();
 
         public delegate void EventApprovedHandler(object sender, EventArgs e);
-        public static event EventApprovedHandler EventApproved;
+        public event EventApprovedHandler EventApproved;
 
         public delegate void EventCancelledHandler(object sender, EventArgs e);
-        public static event EventCancelledHandler EventCancelled;
-
-        NotifyService notify = new NotifyService();
+        public event EventCancelledHandler EventCancelled;
+        
         
         public Admin(int id, string userName, string password) : base(id, userName, password)
         {
@@ -54,6 +53,8 @@ namespace EventManagement
         //Main Menu For Admin
         public override void DisplayMenu()
         {
+            NotifyService notify = new NotifyService();
+
             Console.Clear();
             Console.WriteLine($"Welcome Admin {userName}:");
 
@@ -98,11 +99,15 @@ namespace EventManagement
 
                         break;
                     case AdminMenuOptions.Approve_Events:
+                        EventApproved += notify.OnEventApproved;
                         ApproveEvent();
+                        EventApproved -= notify.OnEventApproved;
 
                         break;
                     case AdminMenuOptions.Cancel_Event:
+                        EventCancelled += notify.OnEventCancelled;
                         CancelEvent();
+                        EventCancelled -= notify.OnEventCancelled;
 
                         break;
                     case AdminMenuOptions.Register_New_Organizer:
@@ -770,8 +775,6 @@ namespace EventManagement
         {
             try
             {
-                notify?.Unsubscribe();
-                notify = null;
                 Console.WriteLine("\nAdmin logout successful!");
                 Thread.Sleep(1500);
                 Register_Login.DisplayMenu();

@@ -12,12 +12,13 @@ namespace EventManagement
     internal class Participant : User
     {
         public delegate void RegisteredForEventHander(object source, RegisteredForEventArgs e);
-        public static event RegisteredForEventHander RegisteredForEvent;
+        public event RegisteredForEventHander RegisteredForEvent;
 
         public delegate void UnregisteredForEventHander(object source, EventArgs e);
-        public static event UnregisteredForEventHander UnregisteredForEvent;
+        public event UnregisteredForEventHander UnregisteredForEvent;
 
-        NotifyService notify = new NotifyService();
+        
+        
 
         public Participant(int id, string userName, string password) : base(id, userName, password)
         {
@@ -56,6 +57,7 @@ namespace EventManagement
         public override void DisplayMenu()
         {
             Console.Clear();
+            NotifyService notify = new NotifyService();
             while (true)
             {
                 Console.WriteLine($"Welcome {userName}:");
@@ -82,7 +84,9 @@ namespace EventManagement
                             break;
 
                         case ParticipantMenuOptions.Register_For_Event:
+                            RegisteredForEvent += notify.OnRegisteredForEvent;
                             RegisterForEvent();
+                            RegisteredForEvent -= notify.OnRegisteredForEvent;
                             break;
 
                         case ParticipantMenuOptions.View_Registered_Events:
@@ -90,7 +94,9 @@ namespace EventManagement
                             break;
 
                         case ParticipantMenuOptions.Cancel_Registration:
+                            UnregisteredForEvent += notify.OnUnregisteredForEvent;
                             CancelRegistration();
+                            UnregisteredForEvent -= notify.OnUnregisteredForEvent;
                             break;
 
                         case ParticipantMenuOptions.Submit_Feedback:

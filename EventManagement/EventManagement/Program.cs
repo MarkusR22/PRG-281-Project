@@ -17,6 +17,11 @@ namespace EventManagement
             Register_Login.DisplayMenu();
            
             Console.ReadKey();
+
+            Admin admin = null;
+            NotifyService notify = new NotifyService();
+            admin.EventApproved += notify.OnEventApproved;
+            admin.EventCancelled += notify.OnEventCancelled;
         }
 
 

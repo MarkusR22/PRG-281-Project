@@ -10,13 +10,6 @@ namespace EventManagement
 {
     public class NotifyService
     {
-        public NotifyService()
-        {
-            Admin.EventApproved += OnEventApproved;
-            Admin.EventCancelled += OnEventCancelled;
-            Participant.RegisteredForEvent += OnRegisteredForEvent;
-            Participant.UnregisteredForEvent += OnUnregisteredForEvent;
-        }
 
         public void OnEventApproved(object sender, EventArgs e)
         {
@@ -88,12 +81,6 @@ namespace EventManagement
             Console.ResetColor();
         }
 
-        public void Unsubscribe()
-        {
-            Admin.EventApproved -= OnEventApproved;
-            Admin.EventCancelled -= OnEventCancelled;
-            Participant.RegisteredForEvent -= OnRegisteredForEvent;
-            Participant.UnregisteredForEvent -= OnUnregisteredForEvent;
-        }
+        
     }
 }
