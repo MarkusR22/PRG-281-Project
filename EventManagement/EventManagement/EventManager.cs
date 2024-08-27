@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace EventManagement
@@ -88,6 +89,51 @@ namespace EventManagement
             return events;
         }
 
+
+
+        public DateTime CheckDate()
+        {
+            DateTime eventDate = ExceptionHandling.DateHandling();
+            if (eventDate > DateTime.Now)
+            {
+                return eventDate;
+            }
+            else
+            {
+                Console.WriteLine("You cannot enter {0}", eventDate == DateTime.Now ? "todays date (must be later)" : "a date which has passed");
+                Console.WriteLine("1. Enter a later date\n2. Go back to menu");
+                int option = ExceptionHandling.IntHandling();
+                switch (option)
+                {
+                    case 1:
+                        Console.WriteLine("Enter the later date:");
+                        return CheckDate();
+                        break;
+                    case 2:
+                        Register_Login.CurrentUser.DisplayMenu();
+                        break;
+                    default:
+                        Console.WriteLine("You have entered an invalid option");
+                        Thread.Sleep(1000);
+                        Console.WriteLine("Sending you back to the menu");
+                        Thread.Sleep(1000);
+                        Console.Write(".");
+                        Thread.Sleep(1000);
+                        Console.Write(".");
+                        Thread.Sleep(1000);
+                        Console.Write(".");
+                        Thread.Sleep(1000);
+                        Register_Login.CurrentUser.DisplayMenu();
+                        break;
+                }
+
+                return eventDate;
+            }
+        }
+
+
+
+
         public void CreateEvent()
         {
             try
@@ -98,7 +144,7 @@ namespace EventManagement
                 Console.Write("Enter description of event: ");
                 string eventDescription = ExceptionHandling.StringHandling();
                 Console.Write("Enter date of event: ");
-                DateTime eventDate = ExceptionHandling.DateHandling();
+                DateTime eventDate = CheckDate();
                 Console.Write("Enter location of event: ");
                 string eventLocation = ExceptionHandling.StringHandling();
                 Console.Write("Enter event organizer ID: ");
