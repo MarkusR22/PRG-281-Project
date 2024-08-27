@@ -134,7 +134,7 @@ namespace EventManagement
 
             if (input.ToLower() == "back")
             {
-                BackToMainMenu();
+                Console.Clear();
                 return;
             }
 
@@ -402,7 +402,7 @@ namespace EventManagement
             }
             finally
             {
-                BackToMainMenu();
+                
             }
         }
 
@@ -435,7 +435,9 @@ namespace EventManagement
                         string comment = reader["comment"].ToString();
                         Console.WriteLine($"- {comment}");
                     }
+                    
                 }
+                
             }
             catch (SqlException ex)
             {
@@ -445,8 +447,9 @@ namespace EventManagement
             {
                 Console.WriteLine("An error occurred: " + ex.Message);
             }
-            Console.ReadKey();
-            DisplayMenu();
+            BackToMainMenu();
+       
+
         }
 
         //Menu that displays when an organizer selects the Edit Event option
