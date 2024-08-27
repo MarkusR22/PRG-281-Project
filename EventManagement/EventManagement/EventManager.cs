@@ -56,6 +56,10 @@ namespace EventManagement
             }
         }
 
+
+
+
+
         public List<Event> GetEvents()
         {
             List<Event> events = new List<Event>();
@@ -160,7 +164,27 @@ namespace EventManagement
             Console.WriteLine($"Location: {ev.Location}");
             Console.WriteLine($"Organizer ID: {ev.OrganizerId}");
             Console.WriteLine($"Status: {ev.Status}");
-            Console.WriteLine($"Ticket Price: {ev.TicketPrice}");
+            Console.WriteLine($"Ticket Price: R{ev.TicketPrice}");
+            Console.WriteLine($"Participants: " + GetParticipantCount(ev.EventId));
+        }
+
+        private int GetParticipantCount(int eventId)
+        {
+            int participantCount = 0;
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                connection.Open();
+
+                // Query to count the number of participants for the given eventId
+                string sql = "SELECT COUNT(*) FROM attendee_event WHERE eventID = @EventID";
+                using (SqlCommand command = new SqlCommand(sql, connection))
+                {
+                    command.Parameters.AddWithValue("@EventID", eventId);
+
+                    participantCount = (int)command.ExecuteScalar();
+                }
+            }
+            return participantCount;
         }
     }
     public class Event
