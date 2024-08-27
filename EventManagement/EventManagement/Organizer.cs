@@ -48,7 +48,7 @@ namespace EventManagement
                 }
 
                 Console.Write("Select an option (1-5): ");
-                string input = Console.ReadLine().Trim();
+                string input = ExceptionHandling.StringHandling();
 
 
                 if (Enum.TryParse(input, out OrganizerMenuOptions chosenOption) && Enum.IsDefined(typeof(OrganizerMenuOptions), chosenOption))
@@ -137,7 +137,7 @@ namespace EventManagement
             }
 
             Console.WriteLine("\nSelect an event (enter number) or type 'back' to go back:");
-            string input = Console.ReadLine();
+            string input = ExceptionHandling.StringHandling();
 
             if (input.ToLower() == "back")
             {
@@ -383,7 +383,7 @@ namespace EventManagement
 
                         // Prompt the admin to select an event based on its number
                         Console.Write("\nSelect the event number to view all comments: ");
-                        int selectedEventNumber = int.Parse(Console.ReadLine());
+                        int selectedEventNumber = ExceptionHandling.IntHandling();
 
                         if (selectedEventNumber > 0 && selectedEventNumber <= eventIDs.Count)
                         {
