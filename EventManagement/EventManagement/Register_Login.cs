@@ -169,7 +169,7 @@ internal class Register_Login
     {
         Console.WriteLine("==================================");
         Console.Write("Enter username: ");
-        string username = Console.ReadLine();
+        string username = ExceptionHandling.StringHandling();
         Console.Write("Enter password: ");
         string password = ReadPasswordFromConsole();
         Console.WriteLine();

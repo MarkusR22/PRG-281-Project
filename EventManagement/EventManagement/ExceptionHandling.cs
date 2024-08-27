@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace EventManagement
@@ -45,9 +46,25 @@ namespace EventManagement
                         }
                         break;
                     default:
-                        Console.WriteLine("Something went wrong :( ");
-                        Console.WriteLine("=====================\n1. Try again\n2. Back to menu");
-                        return StringHandling();
+                        Console.WriteLine("Something went wrong :( again");
+                        Thread.Sleep(1000);
+                        Console.WriteLine("Sending you back to the menu");
+                        Thread.Sleep(1000);
+                        Console.Write(".");
+                        Thread.Sleep(1000);
+                        Console.Write(".");
+                        Thread.Sleep(1000);
+                        Console.Write(".");
+                        Thread.Sleep(1000);
+                        if (Register_Login.currentUser == null)
+                        {
+                            Register_Login.DisplayMenu();
+                        }
+                        else
+                        {
+                            Register_Login.currentUser.DisplayMenu();
+                        }
+                        break ;
                 }
 
                 return null;
@@ -83,9 +100,25 @@ namespace EventManagement
                         }
                         break;
                     default:
-                        Console.WriteLine("Something went wrong :( ");
-                        Console.WriteLine("=====================\n1. Try again\n2. Back to menu");
-                        return IntHandling();
+                        Console.WriteLine("Something went wrong :( again");
+                        Thread.Sleep(1000);
+                        Console.WriteLine("Sending you back to the menu");
+                        Thread.Sleep(1000);
+                        Console.Write(".");
+                        Thread.Sleep(1000);
+                        Console.Write(".");
+                        Thread.Sleep(1000);
+                        Console.Write(".");
+                        Thread.Sleep(1000);
+                        if (Register_Login.currentUser == null)
+                        {
+                            Register_Login.DisplayMenu();
+                        }
+                        else
+                        {
+                            Register_Login.currentUser.DisplayMenu();
+                        }
+                        break;
 
                 }
 
@@ -121,9 +154,25 @@ namespace EventManagement
                         }
                         break;
                     default:
-                        Console.WriteLine("Something went wrong :( ");
-                        Console.WriteLine("=====================\n1. Try again\n2. Back to menu");
-                        return DoubleHandling();
+                        Console.WriteLine("Something went wrong :( again");
+                        Thread.Sleep(1000);
+                        Console.WriteLine("Sending you back to the menu");
+                        Thread.Sleep(1000);
+                        Console.Write(".");
+                        Thread.Sleep(1000);
+                        Console.Write(".");
+                        Thread.Sleep(1000);
+                        Console.Write(".");
+                        Thread.Sleep(1000);
+                        if (Register_Login.currentUser == null)
+                        {
+                            Register_Login.DisplayMenu();
+                        }
+                        else
+                        {
+                            Register_Login.currentUser.DisplayMenu();
+                        }
+                        break;
                 }
 
                 return 0;
@@ -158,9 +207,25 @@ namespace EventManagement
                         }
                         break;
                     default:
-                        Console.WriteLine("Something went wrong :( ");
-                        Console.WriteLine("=====================\n1. Try again\n2. Back to menu");
-                        return DateHandling();
+                        Console.WriteLine("Something went wrong :( again");
+                        Thread.Sleep(1000);
+                        Console.WriteLine("Sending you back to the menu");
+                        Thread.Sleep(1000);
+                        Console.Write(".");
+                        Thread.Sleep(1000);
+                        Console.Write(".");
+                        Thread.Sleep(1000);
+                        Console.Write(".");
+                        Thread.Sleep(1000);
+                        if (Register_Login.currentUser == null)
+                        {
+                            Register_Login.DisplayMenu();
+                        }
+                        else
+                        {
+                            Register_Login.currentUser.DisplayMenu();
+                        }
+                        break;
                 }
 
                 return DateTime.Now;
@@ -208,9 +273,25 @@ namespace EventManagement
                         }
                         break;
                     default:
-                        Console.WriteLine("Something went wrong :( ");
-                        Console.WriteLine("=====================\n1. Try again\n2. Back to menu");
-                        return BoolHandling();
+                        Console.WriteLine("Something went wrong :( again");
+                        Thread.Sleep(1000);
+                        Console.WriteLine("Sending you back to the menu");
+                        Thread.Sleep(1000);
+                        Console.Write(".");
+                        Thread.Sleep(1000);
+                        Console.Write(".");
+                        Thread.Sleep(1000);
+                        Console.Write(".");
+                        Thread.Sleep(1000);
+                        if (Register_Login.currentUser == null)
+                        {
+                            Register_Login.DisplayMenu();
+                        }
+                        else
+                        {
+                            Register_Login.currentUser.DisplayMenu();
+                        }
+                        break;
                 }
                 return false;
             }

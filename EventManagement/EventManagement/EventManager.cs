@@ -11,9 +11,16 @@ namespace EventManagement
     {
         //static User currentUser = Register_Login.CurrentUser;
         //public const string connectionString = "Data Source=MACHINE;Initial Catalog=EventManagementTemp;Integrated Security=True;Connect Timeout=30;Encrypt=True;TrustServerCertificate=True;"; // Caydan
+<<<<<<< Updated upstream
         //public const string connectionString = "Data Source=TIMOTHY\\MSSQLSERVER09;Initial Catalog=EventManagementTemp;Integrated Security=True;Connect Timeout=30;Encrypt=True;TrustServerCertificate=True;"; //Joseph's DB connection
         //public const string connectionString = "Data Source=DESKTOP-TDBJOM7;Initial Catalog=EventManagement;Integrated Security=True;Connect Timeout=30;Encrypt=True;TrustServerCertificate=True;"; //Markus' connection string
         public const string connectionString = "Data Source=EE-GAMINGPC;Initial Catalog=EventManagementTheuns;Integrated Security=True;Connect Timeout=30;Encrypt=True;TrustServerCertificate=True;"; //Theuns db string
+=======
+        public const string connectionString = "Data Source=TIMOTHY\\MSSQLSERVER09;Initial Catalog=EventManagementTemp;Integrated Security=True;Connect Timeout=30;Encrypt=True;TrustServerCertificate=True;"; //Joseph's DB connection
+        //public const string connectionString = "Data Source=DESKTOP-TDBJOM7;Initial Catalog=EventManagement;Integrated Security=True;Connect Timeout=30;Encrypt=True;TrustServerCertificate=True;"; //Markus' connection string
+        //public const string connectionString = "Data Source=EE-GAMINGPC;Initial Catalog=EventManagementTheuns;Integrated Security=True;Connect Timeout=30;Encrypt=True;TrustServerCertificate=True;"; //Theuns db string
+
+>>>>>>> Stashed changes
         public string ConnectionString
         {
             get { return connectionString; }
@@ -38,7 +45,7 @@ namespace EventManagement
             }
 
             Console.WriteLine("\nSelect an event (enter number) or type 'back' to go back:");
-            string input = Console.ReadLine();
+            string input = ExceptionHandling.StringHandling();
 
             if (input.ToLower() == "back")
             {
@@ -98,7 +105,7 @@ namespace EventManagement
                 Console.Write("Enter description of event: ");
                 string eventDescription = ExceptionHandling.StringHandling();
                 Console.Write("Enter date of event: ");
-                DateTime eventDate = DateTime.Parse(Console.ReadLine());
+                DateTime eventDate = ExceptionHandling.DateHandling();
                 Console.Write("Enter location of event: ");
                 string eventLocation = ExceptionHandling.StringHandling();
                 Console.Write("Enter event organizer ID: ");
