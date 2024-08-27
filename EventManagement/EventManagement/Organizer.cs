@@ -28,7 +28,7 @@ namespace EventManagement
         //Displaying menu for organizer
         public override void DisplayMenu()
         {
-
+            Console.Clear();
             Console.WriteLine("Organizer Menu:");
 
             foreach (OrganizerMenuOptions option in Enum.GetValues(typeof(OrganizerMenuOptions)))
@@ -73,7 +73,7 @@ namespace EventManagement
                         break;
                     default:
                         Console.Clear();
-                        Console.WriteLine("Oops it seems you chose an incorrect opotion. Here is the menu again");
+                        Console.WriteLine("Invalid Selection. Try again:");
                         DisplayMenu();
                         break;
                 }
@@ -107,7 +107,7 @@ namespace EventManagement
 
         public static void BackToMainMenu()
         {
-            Console.WriteLine("Press any key to return to the organizer menu...");
+            Console.WriteLine("Press any key to return to the menu...");
             Console.ReadKey();
             Console.Clear();
         }
@@ -186,8 +186,7 @@ namespace EventManagement
         //Displaying all the details of a specific even
         public void DisplayEventDetails(Event ev)
         {
-            Console.Clear();
-            Console.WriteLine($"\nEvent Details:");
+            Console.WriteLine($"\nEvent Details\n==================================");
             Console.WriteLine($"Name: {ev.Name}");
             Console.WriteLine($"Description: {ev.Description}");
             Console.WriteLine($"Date: {ev.Date.ToShortDateString()}");
@@ -224,7 +223,7 @@ namespace EventManagement
                     default:
                         Console.WriteLine("You have entered an invalid option");
                         Thread.Sleep(1000);
-                        Console.WriteLine("Sending you back to the menu");
+                        Console.WriteLine("Returning to menu");
                         Thread.Sleep(1000);
                         Console.Write(".");
                         Thread.Sleep(1000);
@@ -272,7 +271,7 @@ namespace EventManagement
 
                     if (organizerIdObj == null)
                     {
-                        Console.WriteLine("You are not registered as an organizer. Press any key to return to the menu.");
+                        Console.WriteLine("You are not registered as an organizer.");
                         Console.ReadKey();
                         BackToMainMenu();
                         return;
@@ -294,11 +293,11 @@ namespace EventManagement
 
                     if (rowsAffected > 0)
                     {
-                        Console.WriteLine("Event created successfully! Press any key to return to the menu.");
+                        Console.WriteLine("Event created successfully!");
                     }
                     else
                     {
-                        Console.WriteLine("Failed to create event. Press any key to go back...");
+                        Console.WriteLine("Failed to create event.");
                     }
                 }
             }
@@ -453,7 +452,7 @@ namespace EventManagement
         //Menu that displays when an organizer selects the Edit Event option
         private void MenuEditEvent(Event ev)
         {
-            Console.WriteLine("");
+            Console.WriteLine();
             Console.WriteLine("1. Edit the event");
             Console.WriteLine("2. Go back to menu");
             int input = ExceptionHandling.IntHandling();
@@ -485,7 +484,7 @@ namespace EventManagement
                     DisplayMenu();
                     break;
                 default:
-                    Console.WriteLine("Something went wrong :(");
+                    Console.WriteLine("Something went wrong");
                     Console.WriteLine("Please enter a valid menu option");
                     MenuEditEvent(ev);
                     break;
@@ -498,9 +497,12 @@ namespace EventManagement
         //Editing the details of a specific event
         public void EditEvent(Event ev)
         {
+            Console.Clear();
+            Console.WriteLine("Edit Event\n==============================");
+            Console.WriteLine();
             //Getting the field that needs to be updated
             Console.WriteLine("What do you want to edit");
-            Console.WriteLine("1. Event Name\n2. Event Description\n3. Event Date\n4. Event location\n5. Event Ticket Price\n6. Go back to previous menu");
+            Console.WriteLine("1. Event Name\n2. Event Description\n3. Event Date\n4. Event location\n5. Event Ticket Price\n6. Back");
             int option = ExceptionHandling.IntHandling();
             switch (option)
             {
