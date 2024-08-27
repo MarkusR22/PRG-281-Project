@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace EventManagement
 {
-    internal class Organizer : User
+    internal class Organizer : User, IEventManager
     {
         public Organizer(int id, string userName, string password) : base(id, userName, password)
         {
@@ -23,16 +23,6 @@ namespace EventManagement
             Past_Feedback,
             Edit_Details,
             Log_out
-        }
-
-        public void SetUserName(string userName)
-        {
-            base.userName = userName;
-        }
-
-        public void SetPassword(string password)
-        {
-            base.password = password;
         }
 
         public override void DisplayMenu()

@@ -17,9 +17,6 @@ namespace EventManagement
         public delegate void UnregisteredForEventHander(object source, EventArgs e);
         public event UnregisteredForEventHander UnregisteredForEvent;
 
-        
-        
-
         public Participant(int id, string userName, string password) : base(id, userName, password)
         {
 

@@ -51,6 +51,7 @@
     <Compile Include="EventManager.cs" />
     <Compile Include="ExceptionHandling.cs" />
     <Compile Include="IAdmin.cs" />
+    <Compile Include="IEventManager.cs" />
     <Compile Include="IMenu.cs" />
     <Compile Include="Admin.cs" />
     <Compile Include="IParticipant.cs" />
