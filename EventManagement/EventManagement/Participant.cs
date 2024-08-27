@@ -97,7 +97,7 @@ namespace EventManagement
                         //Runs methods to display all upcoming events and details about these events.
                         case ParticipantMenuOptions.Display_All_Upcoming_Events:
                             DisplayAllUpcoming();
-                            ViewEventDetails();
+                            //ViewEventDetails();
                             break;
 
                         //This option allows a participant to register for any upcoming event.
@@ -158,56 +158,34 @@ namespace EventManagement
         //<---------------------------------------------------1-------------------------------------------------------->
         //This is a method called DisplayAllUpcoming that returns a List of (int eventId, string eventName)
         //It returns a list because this list is going to be called at other methods that want to display all upcoming events.
-        public List<(int eventId, string eventName) > DisplayAllUpcoming()
+        public List<(int eventId, string eventName)> DisplayAllUpcoming()
         {
             Console.Clear();
-
-            //Initialize an object for the return list.
             List<(int eventId, string eventName)> events = new List<(int eventId, string eventName)>();
+
             try
             {
-                //Loading screen
                 Console.WriteLine("Displaying Upcoming Events...");
                 Thread.Sleep(1000);
                 Console.Clear();
 
-                //Database usage
-                //A using block is defined to end all database tasks after they have finished running, for resource and security reasons
-                //In the using statement an object is instantiated to connect to the database.
                 using (SqlConnection connection = new SqlConnection(EventManager.connectionString))
                 {
-                    //This is a requirement to communicate with the database it prepares the object "connection" to execute SQL commands.
                     connection.Open();
-                    
-                    //With the connection now open we can declare SQL statements for our object
-                    //The command object allows the use of SQL via the SqlCommand class that takes two parameters
-                    //The first is the SQL itself and the 2nd is the connection to the database above.
                     SqlCommand command = new SqlCommand("SELECT eventID, name FROM event WHERE status = 'upcoming'", connection);
-                    
-                    //This line of code executes the SQL statement above via the method ExecuteReader(); 
-                    //It sends this command to the database server and executes giving us back the relevant data.
                     SqlDataReader reader = command.ExecuteReader();
-
 
                     Console.WriteLine("Upcoming Events:");
                     Console.WriteLine("====================");
                     int index = 1;
 
-                    //reader.Read() goes through each row in our database that was filtered by the reader execution of the SQL query command
-                    //it continues looping each row and returns a boolean till it finds the end and returns a false if no more rows are found.
                     while (reader.Read())
                     {
-                        //Declaring variables equal to our database for eventId and eventName respectively
                         int eventId = (int)reader["eventID"];
                         string eventName = (string)reader["name"];
 
-                        //These values then get added to the list we return to the method that other methods are able to use.
                         events.Add((eventId, eventName));
-
-                        //Displays all upcoming events
                         Console.WriteLine($"{index}. {eventName}");
-
-                        //increment index
                         index++;
                     }
                     Console.WriteLine("====================");
@@ -215,38 +193,39 @@ namespace EventManagement
             }
             catch (SqlException ex)
             {
-                //Displays error message is database could not be reached.
                 Console.WriteLine("An error occurred while displaying the events: " + ex.Message);
-                
-                //Allows participant to return to main menu.
-                DisplayBack();
+            }
+            finally
+            {
+                Console.WriteLine("Press any key to return to the main menu...");
+                Console.ReadKey(true); // Waits for a key press
+                Console.Clear();
             }
 
-            //returns the list back to method.
             return events;
         }
 
+
         public void ViewEventDetails()
         {
+            Console.Clear();
+
             try
             {
                 using (SqlConnection connection = new SqlConnection(EventManager.connectionString))
                 {
                     connection.Open();
 
-                    // Query to select all upcoming events
                     SqlCommand command = new SqlCommand("SELECT * FROM event WHERE status = 'upcoming'", connection);
                     SqlDataReader reader = command.ExecuteReader();
 
-                    // Check if there are any results
                     bool hasEvents = false;
 
-                    // Loop through all rows in the result set
                     Console.WriteLine("All Upcoming Event Details:");
                     Console.WriteLine();
+
                     while (reader.Read())
                     {
-
                         hasEvents = true;
                         Console.WriteLine("====================");
                         Console.WriteLine($"Name: {reader["name"]}");
@@ -256,10 +235,7 @@ namespace EventManagement
                         Console.WriteLine($"Ticket Price: R{Math.Round((decimal)reader["ticket_price"], 2)}");
                         Console.WriteLine("====================");
                         Console.WriteLine();
-
                     }
-                    DisplayBack();
-
 
                     if (!hasEvents)
                     {
@@ -271,7 +247,18 @@ namespace EventManagement
             {
                 Console.WriteLine("An error occurred while fetching event details: " + ex.Message);
             }
+            finally
+            {
+                Console.WriteLine("Press any key to return to the main menu...");
+                Console.ReadKey(true);
+                Console.Clear();
+                Console.Out.Flush(); // Ensure output buffer is cleared
+                DisplayBack();
+            }
         }
+
+
+
         //<---------------------------------------------------1-------------------------------------------------------->
 
 
