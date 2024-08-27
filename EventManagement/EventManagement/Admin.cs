@@ -114,9 +114,7 @@ namespace EventManagement
 
                         break;
                     case AdminMenuOptions.Cancel_Event:
-                        Console.WriteLine("Subscribing to event");
                         CancelEvent();
-                        Console.WriteLine("Unsubscribing to event");
                         
 
                         break;
