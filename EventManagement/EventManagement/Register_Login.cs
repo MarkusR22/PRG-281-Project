@@ -108,7 +108,7 @@ internal class Register_Login
                     Console.WriteLine("==================================");
                     Console.WriteLine("User registered successfully!");
                     Console.WriteLine("Logging In...");
-                    Thread.Sleep(1000);
+                    Thread.Sleep(250);
 
                     try
                     {
