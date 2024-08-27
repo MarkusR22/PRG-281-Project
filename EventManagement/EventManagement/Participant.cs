@@ -376,7 +376,7 @@ namespace EventManagement
                     Console.Clear();
 
                     SqlCommand command = new SqlCommand(
-                        "SELECT e.eventID, e.name, e.date, e.location, ae.entry_code " +
+                        "SELECT e.eventID, e.name, e.date, e.location, ae.entry_code, e.ticket_price " +
                         "FROM event e INNER JOIN attendee_event ae ON e.eventID = ae.eventID " +
                         "WHERE ae.userID = @userID", connection);
                     command.Parameters.AddWithValue("@userID", this.id);
@@ -387,7 +387,12 @@ namespace EventManagement
                     Console.WriteLine("====================");
                     while (reader.Read())
                     {
-                        Console.WriteLine($"Name: {reader["name"]}\nDate: {((DateTime)reader["date"]).ToString("yyyy-MM-dd")}\nLocation: {reader["location"]}\nEntry Code: {reader["entry_code"]}");
+                        Console.WriteLine($"Name: {reader["name"]}\n" +
+                                          $"Date: {(DateTime)reader["date"]:yyyy-MM-dd}\n" +
+                                          $"Location: {reader["location"]}\n" +
+                                          $"Entry Code: {reader["entry_code"]}\n"+
+                                          $"Ticket Price: {Math.Round((decimal)reader["ticket_price"], 2)}\n"
+                                          );
                     }
                     Console.WriteLine("====================");
                     DisplayBack();
@@ -418,8 +423,7 @@ namespace EventManagement
             // Display the user's registered events that have ended
             ViewUserRegisteredEndedEvents();
             Console.Write("Please select the correct number to add feedback to: ");
-            int selectedIndex;
-            if (!int.TryParse(Console.ReadLine(), out selectedIndex))
+            if (!int.TryParse(Console.ReadLine(), out int selectedIndex))
             {
                 Console.WriteLine("Invalid input. Please enter a number.");
                 DisplayBack();
@@ -471,8 +475,7 @@ namespace EventManagement
                     string feedbackComment = ExceptionHandling.StringHandling();
 
                     Console.Write("Enter your rating (1 to 5): ");
-                    int rating;
-                    if (!int.TryParse(Console.ReadLine(), out rating) || rating < 1 || rating > 5)
+                    if (!int.TryParse(Console.ReadLine(), out int rating) || rating < 1 || rating > 5)
                     {
                         Console.WriteLine("Invalid rating. Please enter a number between 1 and 5.");
                         DisplayBack();
@@ -595,7 +598,7 @@ namespace EventManagement
                         Console.WriteLine($"{index}. Event ID: {reader["eventID"]}");
                         Console.WriteLine($"   Name: {reader["name"]}");
                         Console.WriteLine($"   Description: {reader["description"]}");
-                        Console.WriteLine($"   Date: {((DateTime)reader["date"]).ToString("yyyy-MM-dd")}");
+                        Console.WriteLine($"   Date: {(DateTime)reader["date"]:yyyy-MM-dd}");
                         Console.WriteLine($"   Location: {reader["location"]}");
                         Console.WriteLine($"   Status: {reader["status"]}");
                         Console.WriteLine($"   Ticket Price: {reader["ticket_price"]}");
@@ -629,8 +632,7 @@ namespace EventManagement
             }
 
             Console.Write("Enter the number of the event you wish to cancel registration for: ");
-            int selectedIndex;
-            if (!int.TryParse(Console.ReadLine(), out selectedIndex) || selectedIndex < 1 || selectedIndex > eventIds.Count)
+            if (!int.TryParse(Console.ReadLine(), out int selectedIndex) || selectedIndex < 1 || selectedIndex > eventIds.Count)
             {
                 Console.WriteLine("Invalid input. Please enter a valid number.");
                 DisplayBack();
@@ -700,7 +702,7 @@ namespace EventManagement
                         Console.WriteLine("====================");
                         Console.WriteLine($"{index}. Event ID: {reader["eventID"]}");
                         Console.WriteLine($"   Name: {reader["name"]}");
-                        Console.WriteLine($"   Date: {((DateTime)reader["date"]).ToString("yyyy-MM-dd")}");
+                        Console.WriteLine($"   Date: {(DateTime)reader["date"]:yyyy-MM-dd}");
                         Console.WriteLine($"   Location: {reader["location"]}");
                         Console.WriteLine("====================");
                         Console.WriteLine();
@@ -753,10 +755,10 @@ namespace EventManagement
                         Console.WriteLine($"Event ID: {reader["eventID"]}");
                         Console.WriteLine($"Name: {reader["name"]}");
                         Console.WriteLine($"Description: {reader["description"]}");
-                        Console.WriteLine($"Date: {((DateTime)reader["date"]).ToString("yyyy-MM-dd")}");
+                        Console.WriteLine($"Date: {(DateTime)reader["date"]:yyyy-MM-dd}");
                         Console.WriteLine($"Location: {reader["location"]}");
                         Console.WriteLine($"Status: {reader["status"]}");
-                        Console.WriteLine($"Ticket Price: {reader["ticket_price"]}");
+                        Console.WriteLine($"Ticket Price: {Math.Round((decimal)reader["ticket_price"], 2)}");
                         Console.WriteLine("====================");
                         Console.WriteLine();
                       
