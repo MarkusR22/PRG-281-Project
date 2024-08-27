@@ -720,7 +720,7 @@ namespace EventManagement
                     MenuEditEvent(ev);
                     break;
             }
-            Console.Clear();
+            //Console.Clear();
             MenuEditEvent(ev);
 
 
