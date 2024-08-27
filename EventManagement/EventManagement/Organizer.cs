@@ -27,72 +27,71 @@ namespace EventManagement
 
         public override void DisplayMenu()
         {
-            while (true)
+
+            Console.WriteLine("Organizer Menu:");
+
+            foreach (OrganizerMenuOptions option in Enum.GetValues(typeof(OrganizerMenuOptions)))
             {
-                Console.WriteLine("Organizer Menu:");
-
-                foreach (OrganizerMenuOptions option in Enum.GetValues(typeof(OrganizerMenuOptions)))
-                {
-                    string optionName = option.ToString().Replace("_", " ");
-                    Console.WriteLine($"{(int)option}. {optionName}");
-                }
-
-                Console.Write("Select an option (1-5): ");
-                string input = ExceptionHandling.StringHandling();
-
-
-                if (Enum.TryParse(input, out OrganizerMenuOptions chosenOption) && Enum.IsDefined(typeof(OrganizerMenuOptions), chosenOption))
-                {
-                    switch (chosenOption)
-                    {
-                        case OrganizerMenuOptions.View_Upcoming_Events:
-                            DisplayOrganizedEvents();
-                            Console.WriteLine();
-                            Console.WriteLine("==============================================");
-                            DisplayMenu();
-                            break;
-                        case OrganizerMenuOptions.Create_New_Event:
-                            CreateEvent();
-                            Console.WriteLine();
-                            Console.WriteLine("==============================================");
-                            DisplayMenu();
-                            break;
-                        case OrganizerMenuOptions.Past_Feedback:
-                            ViewFeedback();
-                            Console.WriteLine();
-                            Console.WriteLine("==============================================");
-                            DisplayMenu();
-                            break;
-                        case OrganizerMenuOptions.Edit_Details:
-                            Register_Login.currentUser.ManageProfile();
-                            Thread.Sleep(500);
-                            DisplayMenu();
-                            break;
-                        case OrganizerMenuOptions.Log_out:
-                            Logout();
-                            break;
-                        default:
-                            Console.Clear();
-                            Console.WriteLine("Oops it seems you chose an incorrect opotion. Here is the menu again");
-                            DisplayMenu();
-                            break;
-                    }
-                }
-                else
-                {
-                    Console.Clear();
-                    Console.WriteLine("Invalid option, please try again.");
-                    continue;
-                }
-
+                string optionName = option.ToString().Replace("_", " ");
+                Console.WriteLine($"{(int)option}. {optionName}");
             }
+
+            Console.Write("Select an option (1-5): ");
+            string input = ExceptionHandling.StringHandling();
+
+
+            if (Enum.TryParse(input, out OrganizerMenuOptions chosenOption) && Enum.IsDefined(typeof(OrganizerMenuOptions), chosenOption))
+            {
+                switch (chosenOption)
+                {
+                    case OrganizerMenuOptions.View_Upcoming_Events:
+                        DisplayOrganizedEvents();
+                        Console.WriteLine();
+                        Console.WriteLine("==============================================");
+                        DisplayMenu();
+                        break;
+                    case OrganizerMenuOptions.Create_New_Event:
+                        CreateEvent();
+                        Console.WriteLine();
+                        Console.WriteLine("==============================================");
+                        DisplayMenu();
+                        break;
+                    case OrganizerMenuOptions.Past_Feedback:
+                        ViewFeedback();
+                        Console.WriteLine();
+                        Console.WriteLine("==============================================");
+                        DisplayMenu();
+                        break;
+                    case OrganizerMenuOptions.Edit_Details:
+                        Register_Login.currentUser.ManageProfile();
+                        Thread.Sleep(500);
+                        DisplayMenu();
+                        break;
+                    case OrganizerMenuOptions.Log_out:
+                        Logout();
+                        break;
+                    default:
+                        Console.Clear();
+                        Console.WriteLine("Oops it seems you chose an incorrect opotion. Here is the menu again");
+                        DisplayMenu();
+                        break;
+                }
+            }
+            else
+            {
+                Console.Clear();
+                Console.WriteLine("Invalid option, please try again.");
+                DisplayMenu();
+            }
+
+
         }
 
         public override void Logout()
         {
             try
             {
-                
+
                 Console.WriteLine("Organizer logout successful!");
                 Thread.Sleep(1000);
                 Register_Login.DisplayMenu();
