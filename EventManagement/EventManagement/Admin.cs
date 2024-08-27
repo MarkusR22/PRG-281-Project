@@ -161,7 +161,7 @@ namespace EventManagement
         //Display all events with status "pending" to allow the admin to approve the event
         public void ApproveEvent()
         {
-            
+
             List<int> eventIds = new List<int>();
 
             try
@@ -182,7 +182,7 @@ namespace EventManagement
                     using (SqlDataReader reader = command.ExecuteReader())
                     {
                         int index = 1;
-                        
+
 
                         while (reader.Read())
                         {
@@ -468,7 +468,8 @@ namespace EventManagement
                     catch (Exception ex)
                     {
                         Console.WriteLine("An error occurred: " + ex.Message);
-                    } finally
+                    }
+                    finally
                     {
                         BackToMainMenu();
                     }
@@ -687,12 +688,12 @@ namespace EventManagement
                     {
                         List<int> eventIDs = new List<int>(); // List to keep track of event IDs
 
-                        Console.WriteLine("Event Feedback Summary:");
                         int eventNumber = 1;
+                        Console.WriteLine("Event Feedback Summary:");
+                        Console.WriteLine("==================================");
 
-                        while (reader.Read())
+                        while (reader.Read() && reader.HasRows)
                         {
-                            Console.WriteLine("==================================");
                             int eventID = (int)reader["eventID"];
                             string eventName = reader["name"].ToString();
 
@@ -715,23 +716,25 @@ namespace EventManagement
 
                             eventNumber++;
                         }
-
                         reader.Close();
+
 
                         // Prompt the admin to select an event based on its number
                         Console.WriteLine("\nSelect the event number to view all comments:\n(0: Back) ");
                         int selectedEventNumber = ExceptionHandling.IntHandling();
 
-                        Console.WriteLine("Retrieving Feedback for event...");
-                        Thread.Sleep(500);
 
-                        int currentLineCursor = Console.CursorTop;
-                        Console.SetCursorPosition(0, Console.CursorTop);
-                        Console.Write(new string(' ', Console.WindowWidth));
-                        Console.SetCursorPosition(0, currentLineCursor);
 
                         if (selectedEventNumber > 0 && selectedEventNumber <= eventIDs.Count)
                         {
+                            Console.WriteLine("Retrieving Feedback for event...");
+                            Thread.Sleep(500);
+
+                            int currentLineCursor = Console.CursorTop;
+                            Console.SetCursorPosition(0, Console.CursorTop);
+                            Console.Write(new string(' ', Console.WindowWidth));
+                            Console.SetCursorPosition(0, currentLineCursor);
+
                             int selectedEventID = eventIDs[selectedEventNumber - 1];
                             ViewAllCommentsForEvent(connection, selectedEventID);
                         }
@@ -744,6 +747,7 @@ namespace EventManagement
                             Console.WriteLine("Invalid selection.");
                         }
                     }
+                    return;
                 }
             }
             catch (SqlException ex)
@@ -766,8 +770,11 @@ namespace EventManagement
         {
             try
             {
-                // Query to get all comments for the selected event
-                string commentsQuery = @"
+                using (connection)
+                {
+
+                    // Query to get all comments for the selected event
+                    string commentsQuery = @"
             SELECT 
                 comment 
             FROM 
@@ -777,18 +784,19 @@ namespace EventManagement
             ORDER BY 
                 comment DESC";
 
-                SqlCommand command = new SqlCommand(commentsQuery, connection);
-                command.Parameters.AddWithValue("@eventID", eventID);
+                    SqlCommand command = new SqlCommand(commentsQuery, connection);
+                    command.Parameters.AddWithValue("@eventID", eventID);
 
-                using (SqlDataReader reader = command.ExecuteReader())
-                {
-                    Console.WriteLine($"\nAll Comments for EventID: {eventID}");
-                    while (reader.Read())
+                    using (SqlDataReader reader = command.ExecuteReader())
                     {
-                        string comment = reader["comment"].ToString();
-                        Console.WriteLine($"- {comment}");
+                        Console.WriteLine($"\nAll Comments for EventID: {eventID}");
+                        while (reader.Read())
+                        {
+                            string comment = reader["comment"].ToString();
+                            Console.WriteLine($"- {comment}");
+                        }
+
                     }
-                    
                 }
             }
             catch (SqlException ex)
