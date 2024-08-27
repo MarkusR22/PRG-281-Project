@@ -219,6 +219,7 @@ namespace EventManagement
                 switch (option)
                 {
                     case 1:
+                        Console.WriteLine("Enter the later date:");
                         return CheckDate();
                         break;
                     case 2:
