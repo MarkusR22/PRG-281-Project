@@ -67,12 +67,6 @@ namespace EventManagement
                             Console.WriteLine("==============================================");
                             DisplayMenu();
                             break;
-                        //case OrganizerMenuOptions.Edit_Event:
-                        //    Console.WriteLine(OrganizerMenuOptions.Edit_Event);
-                        //    Console.WriteLine();
-                        //    Console.WriteLine("==============================================");
-                        //    DisplayMenu();
-                        //    break;
                         case OrganizerMenuOptions.Past_Feedback:
                             ViewFeedback();
                             Console.WriteLine();
@@ -86,7 +80,11 @@ namespace EventManagement
                             break;
                         case OrganizerMenuOptions.Log_out:
                             Logout();
-
+                            break;
+                        default:
+                            Console.Clear();
+                            Console.WriteLine("Oops it seems you chose an incorrect opotion. Here is the menu again");
+                            DisplayMenu();
                             break;
                     }
                 }
@@ -209,7 +207,7 @@ namespace EventManagement
         public DateTime CheckDate()
         {
             DateTime eventDate = ExceptionHandling.DateHandling();
-            if (eventDate < DateTime.Now)
+            if (eventDate > DateTime.Now)
             {
                 return eventDate;
             }
@@ -221,6 +219,7 @@ namespace EventManagement
                 switch (option)
                 {
                     case 1:
+                        Console.WriteLine("Enter the later date:");
                         return CheckDate();
                         break;
                     case 2:
@@ -583,7 +582,7 @@ namespace EventManagement
                 case 3:
                     Console.WriteLine("Previous event date: {0}", ev.Date);
                     Console.WriteLine("Enter the new Event Date.");
-                    DateTime date = ExceptionHandling.DateHandling();
+                    DateTime date = CheckDate();
 
                     try
                     {
@@ -705,7 +704,7 @@ namespace EventManagement
                     MenuEditEvent(ev);
                     break;
             }
-
+            Console.Clear();
             MenuEditEvent(ev);
 
 
