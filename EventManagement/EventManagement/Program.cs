@@ -11,12 +11,14 @@ namespace EventManagement
 
     internal class Program
     {
+        
 
         static void Main(string[] args)
         {
             Register_Login.DisplayMenu();
            
             Console.ReadKey();
+            
 
 
         }

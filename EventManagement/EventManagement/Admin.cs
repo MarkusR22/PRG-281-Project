@@ -416,7 +416,7 @@ namespace EventManagement
                         Console.Write("Enter password: ");
                         string password = Register_Login.ReadPasswordFromConsole();
                         Console.WriteLine();
-                        using (SqlConnection connection = new SqlConnection(eventManager.ConnectionString))
+                        using (SqlConnection connection = new SqlConnection(EventManager.connectionString))
                         {
                             connection.Open();
 
@@ -473,7 +473,7 @@ namespace EventManagement
                     try
                     {
                         Thread.Sleep(500);
-                        using (SqlConnection connection = new SqlConnection(eventManager.ConnectionString))
+                        using (SqlConnection connection = new SqlConnection(EventManager.connectionString))
                         {
                             connection.Open();
 
@@ -659,7 +659,7 @@ namespace EventManagement
                 Console.WriteLine("Retrieving Past Events...");
                 Thread.Sleep(1000);
                 Console.Clear();
-                using (SqlConnection connection = new SqlConnection(eventManager.ConnectionString))
+                using (SqlConnection connection = new SqlConnection(EventManager.connectionString))
                 {
                     connection.Open();
 
