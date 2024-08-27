@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace EventManagement
 {
-    internal class Organizer : User, IEventManager
+    internal class Organizer : User, IEventManager, IOrganizer
     {
         public Organizer(int id, string userName, string password) : base(id, userName, password)
         {
@@ -496,7 +496,7 @@ namespace EventManagement
 
 
         //Editing the details of a specific event
-        private void EditEvent(Event ev)
+        public void EditEvent(Event ev)
         {
             //Getting the field that needs to be updated
             Console.WriteLine("What do you want to edit");
@@ -557,8 +557,6 @@ namespace EventManagement
                             SqlCommand command = new SqlCommand("UPDATE [event] SET description = @description WHERE eventID = @eventID", connection);
                             command.Parameters.AddWithValue("@eventID", ev.EventId);
                             command.Parameters.AddWithValue("@description", description);
-
-
 
 
                             int rowsAffected = command.ExecuteNonQuery();

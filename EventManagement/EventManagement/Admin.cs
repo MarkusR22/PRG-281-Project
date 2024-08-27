@@ -91,9 +91,6 @@ namespace EventManagement
                         displayingUpcomingEvents.Join();
                         backToMainMenu.Start();
                         backToMainMenu.Join();
-                        //eventManager.DisplayUpcommingEvents();
-                        //BackToMainMenu();
-
 
                         break;
                     case AdminMenuOptions.Create_New_Event:

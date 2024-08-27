@@ -6,13 +6,11 @@ using System.Threading.Tasks;
 
 namespace EventManagement
 {
-    public interface IAdmin
+    public interface IOrganizer
     {
-        
-        void RegisterNewOrganizer();
-        void ViewFeedback();
-        void DisplayAllUsers();
+        void DisplayOrganizedEvents();
         void DisplayMenu();
-     
+        void DisplayEventDetails(Event ev);
+        void EditEvent(Event ev);
     }
 }

@@ -49,38 +49,9 @@ namespace EventManagement
             Console.Write(".");
             Thread.Sleep(1000);
             Console.WriteLine("\nAll attendees have been notified that the event was cancelled.");
-            //Thread notifyOrganizer = new Thread(NotifyOrganizerCancel);
-            //Thread notifyAttendee = new Thread(NotifyAttendeeCancel);
-            //notifyOrganizer.Start();
-            //notifyAttendee.Start();
             Console.ResetColor();
         }
 
-        public void NotifyOrganizerCancel()
-        {
-            Console.Write("Notifying organizer");
-            Thread.Sleep(1000);
-            Console.Write(".");
-            Thread.Sleep(1000);
-            Console.Write(".");
-            Thread.Sleep(1000);
-            Console.Write(".");
-            Thread.Sleep(1000);
-            Console.WriteLine("\nOrganizer has been notified that his event was cancelled.");
-        }
-
-        public void NotifyAttendeeCancel()
-        {
-            Console.Write("Notifying attendees");
-            Thread.Sleep(1000);
-            Console.Write(".");
-            Thread.Sleep(1000);
-            Console.Write(".");
-            Thread.Sleep(1000);
-            Console.Write(".");
-            Thread.Sleep(1000);
-            Console.WriteLine("\nAll attendees have been notified that the event was cancelled.");
-        }
         //Notifying participant that they succesfully registered for event
         public void OnRegisteredForEvent(object sender, RegisteredForEventArgs e)
         {

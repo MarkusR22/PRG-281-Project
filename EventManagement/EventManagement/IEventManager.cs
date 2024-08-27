@@ -8,6 +8,7 @@ namespace EventManagement
 {
     public interface IEventManager
     {
-          void CreateEvent();
+        void CreateEvent();
+        void ViewFeedback();
     }
 }
