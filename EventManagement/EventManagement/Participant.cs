@@ -73,7 +73,7 @@ namespace EventManagement
                     switch (chosenOption)
                     {
                         case ParticipantMenuOptions.Display_All_Upcoming_Events:
-                            SearchEvents();
+                            DisplayAllUpcoming();
                             break;
 
                         case ParticipantMenuOptions.View_Event_Details:
@@ -124,7 +124,7 @@ namespace EventManagement
 
 
         //NEW METHODS FOR NEW MENU
-        public List<(int eventId, string eventName) > SearchEvents(bool showExitMessage = true)
+        public List<(int eventId, string eventName) > DisplayAllUpcoming(bool showExitMessage = true)
         {
             Console.Clear();
             List<(int eventId, string eventName)> events = new List<(int eventId, string eventName)>();
@@ -181,7 +181,7 @@ namespace EventManagement
                 connection.Open();
 
                 // Retrieve all events
-                List<(int eventId, string eventName)> allEvents = SearchEvents(showExitMessage: false);
+                List<(int eventId, string eventName)> allEvents = DisplayAllUpcoming(showExitMessage: false);
 
                 foreach (var evt in allEvents)
                 {

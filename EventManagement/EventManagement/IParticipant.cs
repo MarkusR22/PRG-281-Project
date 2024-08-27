@@ -8,7 +8,7 @@ namespace EventManagement
 {
     public interface IParticipant
     {
-        List<(int eventId, string eventName)> SearchEvents(bool showExitMessage = true);
+        List<(int eventId, string eventName)> DisplayAllUpcoming(bool showExitMessage = true);
         void ViewEventDetails();
         void RegisterForEvent();
         void ViewRegisteredEvents();
