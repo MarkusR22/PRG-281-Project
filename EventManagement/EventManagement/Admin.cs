@@ -65,7 +65,7 @@ namespace EventManagement
             }
 
             Console.Write("Select an option (1-9): ");
-            string input = Console.ReadLine().Trim();
+            string input = ExceptionHandling.StringHandling();
 
 
             if (Enum.TryParse(input, out AdminMenuOptions chosenOption) && Enum.IsDefined(typeof(AdminMenuOptions), chosenOption))
@@ -192,7 +192,7 @@ namespace EventManagement
 
                 // Ask the user to select an event from list
                 Console.WriteLine("\nSelect an event by number:\n(0: Back)");
-                int selectedEventIndex = int.Parse(Console.ReadLine());
+                int selectedEventIndex = ExceptionHandling.IntHandling();
 
                 if (selectedEventIndex < 0 || selectedEventIndex > eventIds.Count)
                 {
@@ -209,7 +209,7 @@ namespace EventManagement
                 // Ask the user what they want to do with the selected event
                 Console.WriteLine("\n1. Approve");
                 Console.WriteLine("2. Deny");
-                int choice = int.Parse(Console.ReadLine());
+                int choice = ExceptionHandling.IntHandling();
 
                 using (SqlConnection connection = new SqlConnection(EventManager.connectionString))
                 {
@@ -309,14 +309,14 @@ namespace EventManagement
 
                     //Allow the admin to select an event on the list
                     Console.WriteLine("\nEnter the number of the event you want to cancel:\n(0: Back) ");
-                    int selectedIndex = int.Parse(Console.ReadLine());
+                    int selectedIndex = ExceptionHandling.IntHandling();
                     if (selectedIndex > 0 && selectedIndex <= upcomingEvents.Count)
                     {
                         Event selectedEvent = upcomingEvents[selectedIndex - 1];
 
                         //Confirming the cancellation
                         Console.Write($"Are you sure you want to cancel the event '{selectedEvent.Name}'? (y/n): ");
-                        string confirmation = Console.ReadLine();
+                        string confirmation = ExceptionHandling.StringHandling();
 
                         if (confirmation.ToLower() == "y")
                         {
@@ -387,13 +387,13 @@ namespace EventManagement
             Console.Clear();
             Console.WriteLine("Register New Organizer\n==================================");
             Console.WriteLine("\n1. Create New User\n2. Select Existing User\n3. Cancel");
-            switch (int.Parse(Console.ReadLine()))
+            switch (ExceptionHandling.IntHandling())
             {
                 case 1:
                     try
                     {
                         Console.Write("Enter username: ");
-                        string username = Console.ReadLine();
+                        string username = ExceptionHandling.StringHandling();
                         Console.Write("Enter password: ");
                         string password = Register_Login.ReadPasswordFromConsole();
                         Console.WriteLine();
@@ -474,7 +474,7 @@ namespace EventManagement
                             }
 
                             Console.Write("Enter the UserID of the user to add as an Organizer: ");
-                            int userID = int.Parse(Console.ReadLine());
+                            int userID = ExceptionHandling.IntHandling();
 
                             AddUserToOrganizer(connection, userID);
                         }
@@ -691,7 +691,7 @@ namespace EventManagement
 
                         // Prompt the admin to select an event based on its number
                         Console.WriteLine("\nSelect the event number to view all comments:\n (0: Back) ");
-                        int selectedEventNumber = int.Parse(Console.ReadLine());
+                        int selectedEventNumber = ExceptionHandling.IntHandling();
 
                         if (selectedEventNumber > 0 && selectedEventNumber <= eventIDs.Count)
                         {
