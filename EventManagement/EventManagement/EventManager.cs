@@ -13,7 +13,15 @@ namespace EventManagement
         //public const string connectionString = "Data Source=MACHINE;Initial Catalog=EventManagementTemp;Integrated Security=True;Connect Timeout=30;Encrypt=True;TrustServerCertificate=True;"; // Caydan
         //public const string connectionString = "Data Source=TIMOTHY\\MSSQLSERVER09;Initial Catalog=EventManagementTemp;Integrated Security=True;Connect Timeout=30;Encrypt=True;TrustServerCertificate=True;"; //Joseph's DB connection
         //public const string connectionString = "Data Source=DESKTOP-TDBJOM7;Initial Catalog=EventManagement;Integrated Security=True;Connect Timeout=30;Encrypt=True;TrustServerCertificate=True;"; //Markus' connection string
-        public const string connectionString = "Data Source=EE-GAMINGPC;Initial Catalog=EventManagementTheuns;Integrated Security=True;Connect Timeout=30;Encrypt=True;TrustServerCertificate=True;"; //Theuns db string
+        //public const string connectionString = "Data Source=EE-GAMINGPC;Initial Catalog=EventManagementTheuns;Integrated Security=True;Connect Timeout=30;Encrypt=True;TrustServerCertificate=True;"; //Theuns db string
+
+        public SqlConnectionStringBuilder builder = new SqlConnectionStringBuilder();
+        builder.DataSource = "myfreesqldbserverkys.database.windows.net";
+        builder.UserID = "prg281EventManagementDB";
+        builder.Password = "1Vjs.B_%X$4sPjX0";
+        builder.InitialCatalog = "Event_Management";
+        public const string connectionString = builder.ConnectionString;
+
         public string ConnectionString
         {
             get { return connectionString; }
@@ -150,9 +158,9 @@ namespace EventManagement
             catch (Exception ex)
             {
                 Console.WriteLine("An error occurred creating event: " + ex.Message);
-                
+
             }
-            
+
         }
 
         public void DisplayEventDetails(Event ev)
