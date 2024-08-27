@@ -64,7 +64,7 @@ namespace EventManagement
                 Console.WriteLine($"{(int)option}. {optionName}");
             }
 
-            Console.Write("Select an option (1-6): ");
+            Console.Write("Select an option (1-9): ");
             string input = Console.ReadLine().Trim();
 
 
