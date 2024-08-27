@@ -9,7 +9,7 @@ using System.Net;
 
 namespace EventManagement
 {
-    internal class Participant : User
+    internal class Participant : User, IParticipant
     {
         public delegate void RegisteredForEventHander(object source, RegisteredForEventArgs e);
         public event RegisteredForEventHander RegisteredForEvent;
@@ -127,7 +127,7 @@ namespace EventManagement
 
 
         //NEW METHODS FOR NEW MENU
-        public List<(int eventId, string eventName)> SearchEvents(bool showExitMessage = true)
+        public List<(int eventId, string eventName) > SearchEvents(bool showExitMessage = true)
         {
             Console.Clear();
             List<(int eventId, string eventName)> events = new List<(int eventId, string eventName)>();

@@ -8,15 +8,12 @@ namespace EventManagement
 {
     public interface IParticipant
     {
-        void SearchDisplay();
-        void ViewEvents();
-        void ViewParticipantDetails();
-        void EditParticipantDetails();
-        void RSVP();
-        void ViewRSVPEvents();
-        void ViewAgenda();
-        void SupportForEvent();
-        void CancelRSVP();
-        void GiveFeedback();
+        List<(int eventId, string eventName)> SearchEvents(bool showExitMessage = true);
+        void ViewEventDetails();
+        void RegisterForEvent();
+        void ViewRegisteredEvents();
+        void CancelRegistration();
+        void SubmitFeedback();
+        void DisplayMenu();
     }
 }
